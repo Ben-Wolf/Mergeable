@@ -1,0 +1,24 @@
+body {
+  background-color: rgb(40,40,50);
+}
+
+h1 {
+  padding-top: 70px;
+  text-align: left;
+  font-family: Monaco, monospace;
+  font-size: 150px;
+  color: rgb(220,220,220)
+}
+
+.numbering {
+  color: rgb(150,150,150)
+}
+
+h5 {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: 0px;
+  color: rgb(220,220,220);
+  background-color: rgb(60,60,70);
+}
