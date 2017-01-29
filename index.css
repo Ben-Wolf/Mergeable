@@ -52,6 +52,11 @@ h5 {
   font-size: 4.3em;
 }
 
+.form-group {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
 #page1 {
   height: 100vh;
 }
