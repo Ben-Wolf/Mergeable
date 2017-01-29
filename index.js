@@ -1,9 +1,25 @@
-logo = "Mergeable"
-i = 0;
+var logo = "Mergeable"
+var i = 0;
 
 $(document).ready(function() {
-    type();
-    setInterval ('cursorAnimation()', 500);
+  $(".buttons").hide();
+  type();
+  setInterval ('cursorAnimation()', 500);
+
+  //automatic scrolling
+  $('a[href^="#"]').on('click',function (e) {
+	    e.preventDefault();
+
+	    var target = this.hash;
+	    var $target = $(target);
+
+	    $('html, body').stop().animate({
+	        'scrollTop': $target.offset().top
+	    }, 900, 'swing', function () {
+	        window.location.hash = target;
+	    });
+	});
+
 });
 
 function cursorAnimation() {
@@ -17,6 +33,13 @@ function cursorAnimation() {
 function type() {
   $('#logo').html(logo.substr(0, i++));
   if (i < 10) {
-    setTimeout(type, 350)
+    setTimeout(type, 100)
   }
+  if (i==10) {
+    setTimeout(showButtons, 100)
+  }
+}
+
+function showButtons() {
+  $(".buttons").fadeIn();
 }
