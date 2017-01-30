@@ -6,7 +6,7 @@ $(document).ready(function() {
   type();
   setInterval ('cursorAnimation()', 500);
 
-  //automatic scrolling
+  // Automatic scrolling
   $('a[href^="#"]').on('click',function (e) {
 	    e.preventDefault();
 

@@ -1,12 +1,12 @@
 # Mergeable
 
 Mergeable aims to become a web-based text-editor with collaborative functionality.
-The main goal of mergeable is to become a code-oriented document sharing and saving website, with the web-based text-editor at the forefront.
+The main goal of Mergeable is to become a code-oriented document sharing and saving website, with the web-based text-editor at the forefront.
 
 ## Plans
 
   * Create landing page
-  * Documentation (Licensing, Contributors, etc…)
+  * Documentation (LICENSING.md, CONTRIBUTING.md, etc…)
   * Website Interactivity/Functionality
   * Give users ability to create accounts
   * Aesthetic design of website/resources
