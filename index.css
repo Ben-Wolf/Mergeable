@@ -1,0 +1,67 @@
+body {
+  background-color: rgb(40,40,50);
+  font-size: 100%;
+}
+
+/*Logo*/
+h1 {
+  padding-top: 90px;
+  padding-left: 30px;
+  text-align: left;
+  font-family: Monaco, monospace;
+  font-size: 15em;
+  color: rgb(220,220,220);
+}
+
+/*SignIn Header*/
+h2 {
+  padding-top: 0.6em;
+  font-size: 7em;
+  font-family: Monaco, monospace;
+  text-align: center;
+  color: rgb(220,220,220);
+}
+
+/*Project Info and Names On Bottom*/
+h5 {
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  bottom: 0px;
+  color: rgb(220,220,220);
+  background-color: rgb(60,60,70);
+}
+
+/*Main Page Numering*/
+.numbering {
+  color: rgb(150,150,150)
+}
+
+/*Main Page*/
+.buttons {
+  padding-top: 30px;
+  padding-right: 52px;
+  float: right;
+}
+
+.tab {
+  padding-left: 15px;
+}
+
+.btn {
+  font-size: 4.3em;
+}
+
+.form-group {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+#page1 {
+  height: 100vh;
+}
+
+#page2 {
+  padding-top: 10px;
+  height: 100vh;
+}

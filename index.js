@@ -1,0 +1,45 @@
+var logo = "Mergeable"
+var i = 0;
+
+$(document).ready(function() {
+  $(".buttons").hide();
+  type();
+  setInterval ('cursorAnimation()', 500);
+
+  //automatic scrolling
+  $('a[href^="#"]').on('click',function (e) {
+	    e.preventDefault();
+
+	    var target = this.hash;
+	    var $target = $(target);
+
+	    $('html, body').stop().animate({
+	        'scrollTop': $target.offset().top
+	    }, 900, 'swing', function () {
+	        window.location.hash = target;
+	    });
+	});
+
+});
+
+function cursorAnimation() {
+    $('#cursor').animate({
+        opacity: 0
+    }, 'slow', 'swing').animate({
+        opacity: 1
+    }, 'slow', 'swing');
+}
+
+function type() {
+  $('#logo').html(logo.substr(0, i++));
+  if (i < 10) {
+    setTimeout(type, 100)
+  }
+  if (i==10) {
+    setTimeout(showButtons, 100)
+  }
+}
+
+function showButtons() {
+  $(".buttons").fadeIn();
+}
