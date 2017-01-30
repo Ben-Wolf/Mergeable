@@ -1,6 +1,7 @@
 body {
   background-color: rgb(40,40,50);
   font-size: 100%;
+  font-family: Monaco, monospace;
 }
 
 /*Logo*/
@@ -8,7 +9,6 @@ h1 {
   padding-top: 90px;
   padding-left: 30px;
   text-align: left;
-  font-family: Monaco, monospace;
   font-size: 15em;
   color: rgb(220,220,220);
 }
@@ -17,7 +17,6 @@ h1 {
 h2 {
   padding-top: 0.6em;
   font-size: 7em;
-  font-family: Monaco, monospace;
   text-align: center;
   color: rgb(220,220,220);
 }
@@ -32,7 +31,7 @@ h5 {
   background-color: rgb(60,60,70);
 }
 
-/*Main Page Numering*/
+/*Main Page Numbering*/
 .numbering {
   color: rgb(150,150,150)
 }
