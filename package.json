@@ -1,0 +1,23 @@
+{
+  "name": "Mergeable",
+  "version": "0.0.1",
+  "description": "A web-based collaborative text-editing service",
+  "author": "Benjamin Wolf",
+  "email": "bwolfgns@gmail.com",
+  "contributors": [
+    {
+      "name": "Eva Jiang",
+      "email": "evajiang322@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://Github.com/Ben-Wolf/Mergeable"
+  },
+  "bugs": "https://Github.com/Ben-Wolf/Mergeable/issues",
+  "dependencies": {
+    "express": "^4.10.2",
+    "socket.io": "^1.7.2"
+  },
+  "license": "MIT"
+}
