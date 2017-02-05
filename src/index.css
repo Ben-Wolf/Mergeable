@@ -31,29 +31,29 @@ h5 {
   background-color: rgb(60,60,70);
 }
 
-/*Main Page Numbering*/
-.numbering {
-  color: rgb(150,150,150)
+/*Main Page*/
+.btn {
+  font-size: 4.3em;
 }
 
-/*Main Page*/
 .buttons {
   padding-top: 30px;
   padding-right: 52px;
   float: right;
 }
 
-.tab {
-  padding-left: 15px;
-}
-
-.btn {
-  font-size: 4.3em;
-}
-
 .form-group {
   text-align: center;
   padding-bottom: 5px;
+}
+
+/*Main Page Numbering*/
+.numbering {
+  color: rgb(150,150,150)
+}
+
+.tab {
+  padding-left: 15px;
 }
 
 #page1 {
