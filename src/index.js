@@ -1,6 +1,28 @@
 var logo = "Mergeable"
 var i = 0;
 
+function cursorAnimation() {
+    $('#cursor').animate({
+        opacity: 0
+    }, 'slow', 'swing').animate({
+        opacity: 1
+    }, 'slow', 'swing');
+}
+
+function showButtons() {
+  $(".buttons").fadeIn();
+}
+
+function type() {
+  $('#logo').html(logo.substr(0, i++));
+  if (i < 10) {
+    setTimeout(type, 100)
+  }
+  if (i==10) {
+    setTimeout(showButtons, 100)
+  }
+}
+
 $(document).ready(function() {
   $(".buttons").hide();
   type();
@@ -21,25 +43,3 @@ $(document).ready(function() {
 	});
 
 });
-
-function cursorAnimation() {
-    $('#cursor').animate({
-        opacity: 0
-    }, 'slow', 'swing').animate({
-        opacity: 1
-    }, 'slow', 'swing');
-}
-
-function type() {
-  $('#logo').html(logo.substr(0, i++));
-  if (i < 10) {
-    setTimeout(type, 100)
-  }
-  if (i==10) {
-    setTimeout(showButtons, 100)
-  }
-}
-
-function showButtons() {
-  $(".buttons").fadeIn();
-}
