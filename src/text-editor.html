@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <link rel="stylesheet" type="text/css" href="text-editor.css"/>
+
+    <title>Mergeable: New File</title>
+
+    <!-- Navigation to homepage, profile -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">Mergeable</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="user_profile.html"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        <li class="active"><a href="text-editor.html"><span class="glyphicon glyphicon-plus"></span> New</a></li>
+        <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+      </ul>
+      </div>
+    </nav>
+  </head>
+  <body>
+    <!-- File options --> 
+    <nav class="navbar navbar-footer">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">New File</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Save as</a></li>
+          <li><a href="#">Download</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Text-editor (using Ace) -->
+    <div id="editor"></div>
+
+    <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+    </script>
+  </body>
+</html>
