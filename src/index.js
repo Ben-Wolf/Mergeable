@@ -25,21 +25,39 @@ function type() {
 
 $(document).ready(function() {
   $(".buttons").hide();
+  $("#page2").hide();
+  $("#page3").hide();
   type();
   setInterval ('cursorAnimation()', 500);
 
-  // Automatic scrolling
-  $('a[href^="#"]').on('click',function (e) {
-	    e.preventDefault();
+// Show Sign In Page and Automatically Scroll Down
+  $("#sign_in_btn").click(function() {
+    $("#page3").hide();
+    $("#page2").show();
 
-	    var target = this.hash;
-	    var $target = $(target);
+    var target = this.hash;
+    var $target = $(target);
 
-	    $('html, body').stop().animate({
-	        'scrollTop': $target.offset().top
-	    }, 900, 'swing', function () {
-	        window.location.hash = target;
-	    });
-	});
+    $('html, body').stop().animate({
+        'scrollTop': $target.offset().top
+    }, 900, 'swing', function () {
+        window.location.hash = target;
+    });
+  });
+
+// Show Create Account Page and Automatically Scroll Down
+  $("#create_account_btn").click(function() {
+    $("#page2").hide();
+    $("#page3").show();
+
+    var target = this.hash;
+    var $target = $(target);
+
+    $('html, body').stop().animate({
+        'scrollTop': $target.offset().top
+    }, 900, 'swing', function () {
+        window.location.hash = target;
+    });
+  });
 
 });

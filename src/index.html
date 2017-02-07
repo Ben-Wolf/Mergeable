@@ -26,9 +26,9 @@
 		</h1>
 
 		<div class="buttons">
-			<a href="#page2" class="btn btn-info .btn-lg" role="button">Sign In</a>
+			<a id="sign_in_btn" href="#page2" class="btn btn-info .btn-lg" role="button">Sign In</a>
 			<span class="tab"></span>
-			<a href="#" class="btn btn-info .btn-lg" role="button">Create Account</a>
+			<a id="create_account_btn" href="#page3" class="btn btn-info .btn-lg" role="button">Create Account</a>
 		</div>
 
 	</div>
@@ -46,16 +46,53 @@
 				</div>
 				<div class="form-group">
 					<div class="col-md-4 col-md-offset-4">
-						<input type="password" class="form-control" id="pwd" placeholder="Enter password">
+						<input type="password" class="form-control" id="pass" placeholder="Enter password">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-md-4 col-md-offset-4">
-						<a href="user_profile.html" class="btn btn-info .btn-lg">Submit</a>
+						<a id="submit" href="user_profile.html" class="btn btn-info .btn-lg">Submit</a>
 					</div>
 				</div>
 			</form>
 
+	</div>
+
+	<!-- Account Creation -->
+	<div id="page3">
+
+		<h2> Create Account </h2>
+		<br><br>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-md-2 col-md-offset-4">
+					<input type="text" class="form-control" id="f_name" placeholder="First Name">
+				</div>
+				<div class="col-md-2">
+					<input type="text" class="form-control" id="l_name" placeholder="Last Name">
+				</div>
+			</div>
+			<div class="form-group">
+					<div class="col-md-4 col-md-offset-4">
+					<input type="email" class="form-control" id="e_mail" placeholder="Enter email">
+					</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-4">
+					<input type="password" class="form-control" id="pwd" placeholder="Enter password">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-4">
+					<input type="password" class="form-control" id="pwd2" placeholder="Confirm password">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-4">
+					<a id="create" class="btn btn-info .btn-lg">Submit</a>
+				</div>
+			</div>
+		</form>
 	</div>
 
 	<h5> 2017 - <a href="https://github.com/Ben-Wolf/Mergeable">GitHub Project</a> - Ben Wolf X Eva Jiang X Jessica Wang </h5>

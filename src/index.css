@@ -56,11 +56,10 @@ h5 {
   padding-left: 15px;
 }
 
-#page1 {
+#page1, #page2, #page3 {
   height: 100vh;
 }
 
-#page2 {
+#page2, #page3 {
   padding-top: 10px;
-  height: 100vh;
 }
