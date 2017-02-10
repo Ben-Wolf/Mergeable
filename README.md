@@ -12,7 +12,7 @@ Mergeable is currently a series of webpages that host Ace's text-editor.
 
 ## Goals and Milestones
 
-  ### Milestone 1 Setup - GOAL: 2/15/2017
+### Milestone 1 Setup - GOAL: 2/15/2017
 
     * Create landing page
     * Create account page
@@ -21,7 +21,7 @@ Mergeable is currently a series of webpages that host Ace's text-editor.
     * Ace integration
     * Aesthetic design/direction of website
 
-  ### Milestone 2 Text-Editor/Collaboration - GOAL: 3/20/2017
+### Milestone 2 Text-Editor/Collaboration - GOAL: 3/20/2017
 
     * Give users ability to choose text-editor language
     * Give users ability to choose text-editor theme
@@ -29,7 +29,7 @@ Mergeable is currently a series of webpages that host Ace's text-editor.
     * Allow for collaborative coding
     * Allow for restrictions to be made (view/edit)
 
-  ### Milestone 3 Account Management - GOAL: 4/15/2017
+### Milestone 3 Account Management - GOAL: 4/15/2017
 
     * Website Interactivity/Functionality
     * Give users ability to create accounts
@@ -37,11 +37,11 @@ Mergeable is currently a series of webpages that host Ace's text-editor.
     * Update and manage account options
     * Move from local server
 
-  ### Milestone 4 Checkpoint - Goal 5/8/2017
+### Milestone 4 Checkpoint - Goal 5/8/2017
 
     * Advance collaboration to "Teacher"/"Student" permissions
     * Set a setting for files to be "workshops"
     * Provide a method for running code within a workshop
     * Provide a methods and permissions for "Teachers" to grade workshops
 
-A specific list of issues filed under each respective milestone can be found under at http://github.com/ben-wolf/mergeable/issues.
+A specific list of issues filed under each respective milestone can be found under at [here](/github.com/ben-wolf/mergeable/issues).
