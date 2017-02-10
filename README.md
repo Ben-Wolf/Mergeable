@@ -44,4 +44,4 @@ Mergeable is currently a series of webpages that host Ace's text-editor.
     * Provide a method for running code within a workshop
     * Provide a methods and permissions for "Teachers" to grade workshops
 
-A specific list of issues filed under each respective milestone can be found under at [here](/github.com/ben-wolf/mergeable/issues).
+A specific list of issues filed under each respective milestone can be found [here](/github.com/ben-wolf/mergeable/issues).
