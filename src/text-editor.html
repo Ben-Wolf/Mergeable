@@ -24,26 +24,41 @@
     </nav>
   </head>
   <body>
-    <!-- File options --> 
-    <nav class="navbar navbar-footer">
+    <!-- File options -->
+    <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand">New File</a>
+          <a class="navbar-brand" href="#">New File</a>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Save as</a></li>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Language
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">JavaScript</a></li>
+              <li><a href="#">HTML</a></li>
+              <li><a href="#">CSS</a></li>
+            </li>
+          </ul>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Theme
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Eclipse</a></li>
+              <li><a href="#">Monokai</a></li>
+              <li><a href="#">Solarized Dark</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Save As</a></li>
           <li><a href="#">Download</a></li>
         </ul>
       </div>
     </nav>
     <!-- Text-editor (using Ace) -->
-    <div id="editor"></div>
+      <div id="editor"></div>
 
-    <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
-    </script>
+      <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+      <script src="text-editor.js" type="text/javascript" charset="utf-8"></script>
+    </div>
   </body>
 </html>
