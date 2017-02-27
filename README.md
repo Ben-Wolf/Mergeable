@@ -6,20 +6,28 @@ From there we would like to focus on creating the method of designing and implem
 
 ## Current State
 
-Mergeable is currently a series of webpages that host Ace's text-editor.
+Mergeable is currently a series of webpages that host Ace's text-editor, and exists only on local servers.
 
-![Mergeable Example](src/assets/ss.png)
+![Mergeable Example](src/assets/images/ss.png)
+
+In order to run Mergeable locally:
+
+  * Clone this repository.
+  * Run ```npm install``` while in the 'Mergeable' directory.
+  * Run ```node app.js```.
+  * Go to http://localhost:8080 in your browser of choice.
+
 
 ## Goals and Milestones
 
-### Milestone 1 Setup - GOAL: 2/15/2017
+### Milestone 1 Setup - GOAL: 2/15/2017 ✓ Completed
 
     * Create landing page
     * Create account page
     * Create text-editor page
     * Documentation (LICENSING.md, CONTRIBUTING.md, etc…)
     * Ace integration
-    * Aesthetic design/direction of website
+    * Aesthetic design/direction of website [Ongoing]
 
 ### Milestone 2 Text-Editor/Collaboration - GOAL: 3/20/2017
 
@@ -35,7 +43,7 @@ Mergeable is currently a series of webpages that host Ace's text-editor.
     * Give users ability to create accounts
     * Ability to save/download/upload documents.
     * Update and manage account options
-    * Move from local server
+    * Deploy to Heroku
 
 ### Milestone 4 Checkpoint - Goal 5/8/2017
 
