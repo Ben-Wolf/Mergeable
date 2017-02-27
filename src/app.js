@@ -7,3 +7,5 @@ var io = require('socket.io').listen(app.listen(port));
 
 require('./config')(app, io);
 require('./routes')(app, io);
+
+console.log("Your app is running on 'http://localhost:'" + port);
