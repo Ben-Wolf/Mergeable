@@ -6,9 +6,16 @@ From there we would like to focus on creating the method of designing and implem
 
 ## Current State
 
-Mergeable is currently a series of webpages that host Ace's text-editor.
+Mergeable is currently a series of webpages that host Ace's text-editor, and exists only on local servers.
 
-![Mergeable Example](src/assets/ss.png)
+![Mergeable Example](src/assets/images/ss.png)
+
+In order to run Mergeable locally:
+
+  * Clone this repository.
+  * Run ```npm install``` in the 'Mergeable' directory.
+  * Go to http://localhost:8080 in your browser of choice.
+
 
 ## Goals and Milestones
 
