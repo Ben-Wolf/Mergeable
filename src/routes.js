@@ -16,7 +16,7 @@ module.exports = function(app, io) {
   });
 
 /* USER-PROFILE PAGE */
-  app.get('/login', function(req, res) {
+  app.get('/profile', function(req, res) {
 
     // Move to user_profile
     res.redirect('/user_profile');

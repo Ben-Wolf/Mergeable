@@ -16,8 +16,8 @@
         <a class="navbar-brand" href="/">Mergeable</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/new"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-        <li class="active"><a href="text-editor.html"><span class="glyphicon glyphicon-plus"></span> New</a></li>
+        <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        <li class="active"><a href="/new"><span class="glyphicon glyphicon-plus"></span> New</a></li>
         <li><a href="/signout"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
       </ul>
       </div>
@@ -58,8 +58,12 @@
       <div id="editor"></div>
       <input type="hidden" name="code" style="display: none;">
 
+      <!-- JQuery -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
-      <script src="js/text-editor.js" type="text/javascript" charset="utf-8"></script>
+      <script type="text/javascript" src="../js/text-editor.js" ></script>
+      <!-- Compiled/Minified bootstrap JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </div>
   </body>
 </html>
