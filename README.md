@@ -13,7 +13,8 @@ Mergeable is currently a series of webpages that host Ace's text-editor, and exi
 In order to run Mergeable locally:
 
   * Clone this repository.
-  * Run ```npm install``` in the 'Mergeable' directory.
+  * Run ```npm install``` while in the 'Mergeable' directory.
+  * Run ```node app.js```.
   * Go to http://localhost:8080 in your browser of choice.
 
 
@@ -42,7 +43,7 @@ In order to run Mergeable locally:
     * Give users ability to create accounts
     * Ability to save/download/upload documents.
     * Update and manage account options
-    * Move from local server
+    * Deploy to Heroku
 
 ### Milestone 4 Checkpoint - Goal 5/8/2017
 
