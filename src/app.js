@@ -1,0 +1,9 @@
+var express = require('express'),
+  app = express();
+
+var port = 8080;
+
+var io = require('socket.io').listen(app.listen(port));
+
+require('./config')(app, io);
+require('./routes')(app, io);

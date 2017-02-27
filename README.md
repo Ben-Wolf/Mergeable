@@ -12,14 +12,14 @@ Mergeable is currently a series of webpages that host Ace's text-editor.
 
 ## Goals and Milestones
 
-### Milestone 1 Setup - GOAL: 2/15/2017
+### Milestone 1 Setup - GOAL: 2/15/2017 ✓ Completed
 
     * Create landing page
     * Create account page
     * Create text-editor page
     * Documentation (LICENSING.md, CONTRIBUTING.md, etc…)
     * Ace integration
-    * Aesthetic design/direction of website
+    * Aesthetic design/direction of website [Ongoing]
 
 ### Milestone 2 Text-Editor/Collaboration - GOAL: 3/20/2017
 
