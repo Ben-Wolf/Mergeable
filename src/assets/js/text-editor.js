@@ -17,8 +17,8 @@ $(document).ready(function() {
   editor.getSession().setValue("Your code here");
 
   /* Language Options */
-  $("#html").click(function() {
-    editor.session.setMode("ace/mode/html");
+  $("#csharp").click(function() {
+    editor.session.setMode("ace/mode/csharp");
   });
   $("#css").click(function() {
     // $("#html").removeClass("active");
@@ -26,8 +26,20 @@ $(document).ready(function() {
     // $(this).addClass("active");
     editor.session.setMode("ace/mode/css");
   });
+  $("#html").click(function() {
+    editor.session.setMode("ace/mode/html");
+  });
+  $("#java").click(function() {
+    editor.session.setMode("ace/mode/java");
+  });
   $("#javascript").click(function() {
     editor.session.setMode("ace/mode/javascript");
+  });
+  $("#python").click(function() {
+    editor.session.setMode("ace/mode/python");
+  });
+  $("#typescript").click(function() {
+    editor.session.setMode("ace/mode/typescript");
   });
 
   /* Theme Options */
