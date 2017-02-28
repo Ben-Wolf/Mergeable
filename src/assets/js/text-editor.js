@@ -17,13 +17,16 @@ $(document).ready(function() {
   editor.getSession().setValue("Your code here");
 
   /* Language Options */
-  $("html").click(function() {
+  $("#html").click(function() {
     editor.session.setMode("ace/mode/html");
   });
-  $("css").click(function() {
+  $("#css").click(function() {
+    // $("#html").removeClass("active");
+    // $("#javascript").removeClass("active");
+    // $(this).addClass("active");
     editor.session.setMode("ace/mode/css");
   });
-  $("javascript").click(function() {
+  $("#javascript").click(function() {
     editor.session.setMode("ace/mode/javascript");
   });
 
