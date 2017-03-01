@@ -30,22 +30,14 @@ module.exports = function(app, io) {
   });
 
 /* TEXT-EDITOR PAGE */
-  // app.get('/new', function(req, res) { HOW TO ADD UNIQUE ID's... BREAKS CODE FOR SOME REASON
-  //
-  //   // Generate unique id for file
-  //   var id = Math.round(Math.random() * 1000000);
-  //
-  //   // Move to text-editor w/ unique filename
-  //   res.redirect('/text-editor/' + id);
-  // });
-
   app.get('/new', function(req, res){
 
+    var id = Math.round(Math.random() * 1000000);
     // Move to text-editor
-    res.redirect('/text-editor');
+    res.redirect('/editor-' + id);
   });
 
-  app.get('/text-editor', function(req, res) {
+  app.get('/editor-:id', function(req, res) {
 
     // Render text-editor.html
     res.render('text-editor');

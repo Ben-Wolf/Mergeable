@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!-- Navigation Bar: Homepage, Profile, New Doc, Sign Out -->
+  <!-- Navigation Bar: Homepage, Profile, New Doc, Sign Out -->
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -24,13 +24,15 @@
     </ul>
     </div>
   </nav>
-<!-- File options: Change Language, Change Theme, Save As, Download -->
+  <!-- File options: Change Language, Change Theme, Save As, Download -->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">New File</a>
       </div>
       <ul class="nav navbar-nav">
+
+        <!-- LANGUAGE OPTIONS -->
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">Language
           <span class="caret"></span></a>
@@ -39,22 +41,31 @@
             <li><a id="css" href="#">CSS</a></li>
             <li><a id="html" href="#">HTML</a></li>
             <li><a id="java" href="#">Java</a></li>
-            <li><a id="javascript" href="#">JavaScript</a></li>
+            <li class="active"><a id="javascript" href="#">JavaScript</a></li>
             <li><a id="python" href="#">Python</a></li>
             <li><a id="typescript" href="#">TypeScript</a></li>
           </li>
         </ul>
+
+        <!-- THEME OPTIONS -->
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">Theme
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a id="eclipse" href="#">Eclipse</a></li>
-            <li><a id="monokai" href="#">Monokai</a></li>
+            <li><a id="chrome" href="#">Chrome</a></li>
+            <li><a id="clouds" href="#">Clouds</a></li>
             <li><a id="cobalt" href="#">Cobalt</a></li>
+            <li><a id="eclipse" href="#">Eclipse</a></li>
+            <li><a id="github" href="#">Github</a></li>
+            <li><a id="merbivore" href="#">Merbivore</a></li>
+            <li><a id="mono_industrial" href="#">Mono-Industrial</a></li>
+            <li class="active"><a id="monokai" href="#">Monokai</a></li>
+            <li><a id="terminal" href="#">Terminal</a></li>
           </ul>
         </li>
-        <li><a href="#">Save As</a></li>
-        <li><a href="#">Download</a></li>
+
+        <li><a id="save" href="#">Save As</a></li>
+        <li><a id="download" href="#">Download</a></li>
       </ul>
     </div>
   </nav>
