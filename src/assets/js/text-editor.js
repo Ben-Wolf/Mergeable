@@ -15,7 +15,7 @@ function unactivate(arr) {
 
 $(document).ready(function() {
 
-  editor.setTheme("ace/theme/merbivore");
+  editor.setTheme("ace/theme/monokai");
   editor.session.setMode("ace/mode/javascript");
   editor.getSession().setValue("Your code here");
 

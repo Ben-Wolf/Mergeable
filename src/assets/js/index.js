@@ -23,6 +23,21 @@ function type() {
   }
 }
 
+// Makes sure the e-mail provided is valid.
+function isValid(email) {
+  email = String(email);
+  for(i = 0; i < email.length; i++) {
+    if (email[i] == "@") {
+      for(var j = i; j < email.length; j++) {
+        if (email[j] == ".") {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 $(document).ready(function() {
   $(".buttons").hide();
   $("#page2").hide();
@@ -60,4 +75,35 @@ $(document).ready(function() {
     });
   });
 
+// Give the user an error if they don't enter a valid email/password
+  $("#submit").click(function() {
+    if ($("#pass").val().length < 8) {
+      alert("Invalid password.");
+    }
+    else if (isValid($("#email").val()) == false) {
+      alert("Invalid email.");
+    }
+    else {
+      window.location.href = "/profile";
+    }
+  })
+
+// Make sure all fields are accurate when a user tries to create an Account
+  $("#create").click(function() {
+    if($("#pwd").val().length < 8) {
+      alert("Passwords must be at least 8 characters.");
+    }
+    else if ($("#pwd").val() != $("#pwd2").val()) {
+      alert("Passwords do not match.");
+    }
+    else if ($("#f_name").val() < 1 || $("#l_name").val() < 1) {
+      alert("First and last name must be at least one character");
+    }
+    else if (isValid($("#e_mail").val()) == false) {
+      alert("Please enter a valid e-mail");
+    }
+    else {
+      window.location.href = "/profile";
+    }
+  });
 });
