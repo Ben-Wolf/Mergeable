@@ -16,6 +16,47 @@ module.exports = function(app, io) {
     res.render('index');
   });
 
+  // Send login form
+  app.post('/', function(req, res) {
+    var email = req.body.email;
+    var password = req.body.pass;
+
+    User.findOne({email: email, password: password}, function(err, user) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send();
+      }
+
+      if (!user) {
+        return res.status(404).send();
+      }
+
+      return res.status(200).send();
+    })
+  });
+
+  // Send registration form
+  app.post('/', function(req,res) {
+    var firstname = req.body.f_name;
+    var lastname = req.body.l_name;
+    var email = req.body.e_mail;
+    var pwd = req.body.pwd;
+
+    var newuser = new User();
+    newuser.email = email;
+    newuser.password = password;
+    newuser.firstname = firstname;
+    newuser.lastname = lastname;
+    newuser.save(function(err, savedUser) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send();
+      }
+
+      return res.status(200).send();
+    })
+  });
+
 /* USER-PROFILE PAGE */
   app.get('/profile', function(req, res) {
 
