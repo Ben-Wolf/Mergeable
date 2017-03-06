@@ -1,6 +1,6 @@
 var gravatar = require('gravatar');
 var id;
-var User = require('models/user')
+var User = require('./models/user.js')
 
 module.exports = function(app, io) {
 
@@ -17,6 +17,14 @@ module.exports = function(app, io) {
     res.render('index');
   });
 
+  // app.get('/login', function(req, res) {
+  //   res.render('user_profile');
+  // });
+  //
+  // app.get('/create', function(req, res) {
+  //   res.render('index');
+  // });
+
   // Send login form
   app.post('/login', function(req, res) {
     var email = req.body.email;
@@ -29,16 +37,17 @@ module.exports = function(app, io) {
       }
 
       if (!user) {
+        console.log('user does not exist');
         return res.status(404).send();
       }
-
+      console.log('user found');
       res.redirect('/user_profile')
       return res.status(200).send();
     })
   });
 
   // Send registration form
-  app.post('/signup', function(req,res) {
+  app.post('/create', function(req,res) {
     var firstname = req.body.f_name;
     var lastname = req.body.l_name;
     var email = req.body.e_mail;
@@ -54,7 +63,8 @@ module.exports = function(app, io) {
         console.log(err);
         return res.status(500).send();
       }
-
+      console.log('user created');
+      res.redirect('/create')
       return res.status(200).send();
     })
   });

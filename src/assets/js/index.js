@@ -83,9 +83,9 @@ $(document).ready(function() {
     else if (isValid($("#email").val()) == false) {
       alert("Invalid email.");
     }
-    else {
-      window.location.href = "/profile";
-    }
+    // else {
+    //   window.location.href = "/login";
+    // }
   })
 
 // Make sure all fields are accurate when a user tries to create an Account
@@ -102,8 +102,8 @@ $(document).ready(function() {
     else if (isValid($("#e_mail").val()) == false) {
       alert("Please enter a valid e-mail");
     }
-    else {
-      window.location.href = "/profile";
-    }
+    // else {
+    //   window.location.href = "/create";
+    // }
   });
 });
