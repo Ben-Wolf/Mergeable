@@ -1,5 +1,10 @@
 var express = require('express'),
   app = express();
+var bodyParser = require("body-parser");
+
+// Configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/test', function (err) {

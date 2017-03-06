@@ -17,19 +17,11 @@ module.exports = function(app, io) {
     res.render('index');
   });
 
-  // app.get('/login', function(req, res) {
-  //   res.render('user_profile');
-  // });
-  //
-  // app.get('/create', function(req, res) {
-  //   res.render('index');
-  // });
-
   // Send login form
   app.post('/login', function(req, res) {
     var email = req.body.email;
     var password = req.body.pass;
-
+    
     User.findOne({email: email, password: password}, function(err, user) {
       if (err) {
         console.log(err);

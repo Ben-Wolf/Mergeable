@@ -16,6 +16,7 @@
   },
   "bugs": "https://Github.com/Ben-Wolf/Mergeable/issues",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "ejs": "^1.0.0",
     "express": "^4.10.2",
     "gravatar": "~1.0.6",

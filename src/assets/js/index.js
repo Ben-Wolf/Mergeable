@@ -86,6 +86,10 @@ $(document).ready(function() {
     // else {
     //   window.location.href = "/login";
     // }
+
+    var email = $("#email").val();
+    var pass = $("#pass").val();
+    $.post("http://localhost:8080/login", {email: email, pass: pass});
   })
 
 // Make sure all fields are accurate when a user tries to create an Account
