@@ -1,6 +1,11 @@
 var express = require('express'),
   app = express();
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/test', function (err) {
+  if (err) throw err;
+});
+
 var port = 8080;
 
 var io = require('socket.io').listen(app.listen(port));

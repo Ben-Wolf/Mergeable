@@ -1,5 +1,6 @@
 var gravatar = require('gravatar');
 var id;
+var User = require('models/user')
 
 module.exports = function(app, io) {
 
@@ -17,7 +18,7 @@ module.exports = function(app, io) {
   });
 
   // Send login form
-  app.post('/', function(req, res) {
+  app.post('/login', function(req, res) {
     var email = req.body.email;
     var password = req.body.pass;
 
@@ -31,12 +32,13 @@ module.exports = function(app, io) {
         return res.status(404).send();
       }
 
+      res.redirect('/user_profile')
       return res.status(200).send();
     })
   });
 
   // Send registration form
-  app.post('/', function(req,res) {
+  app.post('/signup', function(req,res) {
     var firstname = req.body.f_name;
     var lastname = req.body.l_name;
     var email = req.body.e_mail;
