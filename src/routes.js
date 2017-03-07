@@ -1,6 +1,8 @@
 var gravatar = require('gravatar');
 var id;
 var User = require('./models/user.js')
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 
 module.exports = function(app, io) {
 
@@ -21,7 +23,7 @@ module.exports = function(app, io) {
   app.post('/login', function(req, res) {
     var email = req.body.email;
     var password = req.body.pass;
-    
+
     User.findOne({email: email, password: password}, function(err, user) {
       if (err) {
         console.log(err);
@@ -33,8 +35,8 @@ module.exports = function(app, io) {
         return res.status(404).send();
       }
       console.log('user found');
-      res.redirect('/user_profile')
-      return res.status(200).send();
+      res.redirect('/profile');
+      // return res.status(200).send();
     })
   });
 
@@ -43,7 +45,7 @@ module.exports = function(app, io) {
     var firstname = req.body.f_name;
     var lastname = req.body.l_name;
     var email = req.body.e_mail;
-    var pwd = req.body.pwd;
+    var password = req.body.pwd;
 
     var newuser = new User();
     newuser.email = email;
@@ -55,9 +57,11 @@ module.exports = function(app, io) {
         console.log(err);
         return res.status(500).send();
       }
-      console.log('user created');
-      res.redirect('/create')
-      return res.status(200).send();
+      else {
+        console.log('user created');
+        res.redirect('/')
+        return res.status(200).send();
+      }
     })
   });
 

@@ -76,6 +76,7 @@ $(document).ready(function() {
   });
 
 // Give the user an error if they don't enter a valid email/password
+// Sends user info to server
   $("#submit").click(function() {
     if ($("#pass").val().length < 8) {
       alert("Invalid password.");
@@ -83,9 +84,6 @@ $(document).ready(function() {
     else if (isValid($("#email").val()) == false) {
       alert("Invalid email.");
     }
-    // else {
-    //   window.location.href = "/login";
-    // }
 
     var email = $("#email").val();
     var pass = $("#pass").val();
@@ -93,6 +91,7 @@ $(document).ready(function() {
   })
 
 // Make sure all fields are accurate when a user tries to create an Account
+// Sends info and creates new user in database
   $("#create").click(function() {
     if($("#pwd").val().length < 8) {
       alert("Passwords must be at least 8 characters.");
@@ -106,8 +105,13 @@ $(document).ready(function() {
     else if (isValid($("#e_mail").val()) == false) {
       alert("Please enter a valid e-mail");
     }
-    // else {
-    //   window.location.href = "/create";
-    // }
+
+    var f_name = $("#f_name").val();
+    var l_name = $("#l_name").val();
+    var e_mail = $("#e_mail").val();
+    var pwd = $("#pwd").val();
+    $.post("http://localhost:8080/create",
+      {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd});
+
   });
 });
