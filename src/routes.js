@@ -42,4 +42,8 @@ module.exports = function(app, io) {
     // Render text-editor.html
     res.render('text-editor');
   });
+
+  var collab = io.on("connection", function(socket) {
+    console.log("logging works");
+  });
 };

@@ -1,4 +1,7 @@
 var editor = ace.edit("editor");
+editor.setTheme("ace/theme/monokai");
+editor.session.setMode("ace/mode/javascript");
+editor.getSession().setValue("Your code here");
 
 // Function to unactivate all other items in the dropdown list
 function unactivate(arr) {
@@ -24,14 +27,9 @@ $(document).ready(function() {
 
   var socket = io();
 
-  editor.setTheme("ace/theme/monokai");
-  editor.session.setMode("ace/mode/javascript");
-  editor.getSession().setValue("Your code here");
-
   // Function that sends changes to the editor to multiple viewers
   editor.getSession().on('change', function(e) {
-    socket.emit('update', e);
-    socket.on('retrieve', e);
+    console.log("something is happening");;
   });
 
   // Arrays to hold all the elements in each drop down list.
@@ -181,6 +179,12 @@ $(document).ready(function() {
   });
 
   /* Save Document */
-
+  // CODE TO COME
   /* Download Document */
+  // CODE TO COME
+  /* COLLABORATION */
+  socket.on('connection', function(socket) {
+
+    console.log("User connected");
+  });
 });
