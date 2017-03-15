@@ -1,11 +1,5 @@
 var editor = ace.edit("editor");
 
-// Function that sends changes to the editor to multiple viewers
-editor.getSession().on('change', function(e) {
-
-
-});
-
 // Function to unactivate all other items in the dropdown list
 function unactivate(arr) {
   for (var i = 0; i < arr.length; i++) {
@@ -13,11 +7,32 @@ function unactivate(arr) {
   }
 }
 
+// Function to get unique url of documents (will modify when database is set up to save docs)
+function getID(url) {
+  url = String(url);
+  var id = "";
+  for (var i = 0; i < 6; i++) {
+    id += url[url.length - 6 + i];
+  }
+  return id;
+}
+
 $(document).ready(function() {
+  // Access the socket
+  var id = getID(window.location.pathname);
+	console.log(id);
+
+  var socket = io();
 
   editor.setTheme("ace/theme/monokai");
   editor.session.setMode("ace/mode/javascript");
   editor.getSession().setValue("Your code here");
+
+  // Function that sends changes to the editor to multiple viewers
+  editor.getSession().on('change', function(e) {
+    socket.emit('update', e);
+    socket.on('retrieve', e);
+  });
 
   // Arrays to hold all the elements in each drop down list.
   var languages = ["#csharp", "#css", "#html", "#java", "#javascript", "#python", "#typescript"];

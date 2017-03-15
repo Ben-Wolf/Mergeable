@@ -42,4 +42,4 @@ module.exports = function(app, io) {
     // Render text-editor.html
     res.render('text-editor');
   });
-}
+};
