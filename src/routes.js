@@ -44,6 +44,15 @@ module.exports = function(app, io) {
   });
 
   var collab = io.on("connection", function(socket) {
-    console.log("logging works");
+
+    // Logs to console that user is in certain ID
+    socket.on("checkID", function(data) {
+      console.log("User logged in to ID: " + data);
+    });
+
+    socket.on("change", function(data) {
+      // console.log(data);
+      socket.emit("changed", data);
+    });
   });
 };

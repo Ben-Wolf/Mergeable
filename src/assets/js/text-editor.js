@@ -1,4 +1,5 @@
 var editor = ace.edit("editor");
+var socket = io();
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/javascript");
 editor.getSession().setValue("Your code here");
@@ -9,6 +10,11 @@ function unactivate(arr) {
     $(arr[i]).parent().removeClass("active");
   }
 }
+
+socket.on('changed', function(data) {
+  console.log(data);
+  editor.getSession().setValue(data);
+});
 
 // Function to get unique url of documents (will modify when database is set up to save docs)
 function getID(url) {
@@ -23,13 +29,13 @@ function getID(url) {
 $(document).ready(function() {
   // Access the socket
   var id = getID(window.location.pathname);
-	console.log(id);
 
-  var socket = io();
+  socket.emit("checkID", id);
 
   // Function that sends changes to the editor to multiple viewers
   editor.getSession().on('change', function(e) {
-    console.log("something is happening");;
+    data = editor.getSession().getValue();
+    // socket.emit('change', data);
   });
 
   // Arrays to hold all the elements in each drop down list.
