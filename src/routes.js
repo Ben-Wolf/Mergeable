@@ -52,7 +52,38 @@ module.exports = function(app, io) {
 
     socket.on("change", function(data) {
       // console.log(data);
-      socket.emit("changed", data);
+      io.emit("changed", data);
+    });
+
+    /*
+     *  SOCKET LANGUAGE CHANGES
+     */
+    socket.on("CSHARP", function(data) {
+     io.emit("csharp_", data);
+    });
+
+    socket.on("CSS", function(data) {
+     io.emit("css_", data);
+    });
+
+    socket.on("HTML", function(data) {
+      io.emit("html_", data);
+    });
+
+    socket.on("JAVA", function(data) {
+      io.emit("javascript_", data);
+    });
+
+    socket.on("JAVASCRIPT", function(data) {
+      io.emit("javascript_", data);
+    });
+
+    socket.on("PYTHON", function(data) {
+      io.emit("python_", data);
+    });
+
+    socket.on("TYPESCRIPT", function(data) {
+      io.emit("typescript_", data);
     });
   });
 };
