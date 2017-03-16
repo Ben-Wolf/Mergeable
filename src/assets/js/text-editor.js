@@ -11,6 +11,7 @@ $(document).ready(function() {
   var holder = 0;
 
   // Will use this to check for permissions in future?
+  // Currently sets the first person to work on a file as "pioneer"
   socket.emit("checkID", id);
 
   // Function that sends changes to the editor to multiple viewers
@@ -18,6 +19,7 @@ $(document).ready(function() {
     data = [id, holder, editor.getSession().getValue()];
     socket.emit('change', data);
   });
+
 
   // Arrays to hold all the elements in each drop down list.
   var languages = ["#CSharp", "#CSS", "#HTML", "#Java", "#JavaScript", "#Python", "#TypeScript"];
@@ -122,7 +124,21 @@ $(document).ready(function() {
       }
     }
   });
-  
+
+  socket.on('find_pioneer', function(data) {
+    console.log("finding_pioneer");
+    if (data == id)
+      socket.emit('return_info', editor.getSession().getValue());
+  });
+
+  socket.on('update', function(data) {
+    console.log("updating");
+    if (data[0] == id) {
+      console.log("setting value to:\n" + data[1]);
+      editor.getSession().setValue(data[1]);
+    }
+  });
+
 
   /*
    *  SOCKET FUNCTIONS FOR CHANGING LANGUAGES
