@@ -2,9 +2,13 @@ var ids = [];
 var email;
 var gravatar = require('gravatar');
 
+var express = require('express');
+var router = express.Router();
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/user.js')
-var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
+// var mongoose = require('mongoose');
+// mongoose.Promise = require('bluebird');
 
 module.exports = function(app, io) {
 
@@ -48,23 +52,33 @@ module.exports = function(app, io) {
     var lastname = req.body.l_name;
     var email = req.body.e_mail;
     var password = req.body.pwd;
+    var password2 = req.body.pwd2;
 
-    var newuser = new User();
-    newuser.email = email;
-    newuser.password = password;
-    newuser.firstname = firstname;
-    newuser.lastname = lastname;
-    newuser.save(function(err, savedUser) {
-      if (err) {
-        console.log(err);
-        return res.status(500).send();
-      }
-      else {
-        console.log('user created');
-        res.redirect('/')
-        return res.status(200).send();
-      }
-    })
+    var newUser = new User({
+      email: email,
+      password: password,
+      firstname: firstname,
+      lastname: lastname
+    });
+
+    User.createUser(newUser, function(err, user){
+			if(err) throw err;
+			console.log(user);
+		});
+
+    res.redirect('/');
+    return res.status(200).send();
+    // newuser.save(function(err, savedUser) {
+    //   if (err) {
+    //     console.log(err);
+    //     return res.status(500).send();
+    //   }
+    //   else {
+    //     console.log('user created');
+    //     res.redirect('/')
+    //     return res.status(200).send();
+    //   }
+    // })
   });
 
 /* USER-PROFILE PAGE */
@@ -166,3 +180,5 @@ module.exports = function(app, io) {
     });
   });
 };
+
+// module.exports = router;
