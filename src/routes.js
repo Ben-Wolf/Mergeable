@@ -94,11 +94,23 @@ module.exports = function(app, io) {
       return res.status(500).send();
 		};
 
-    User.createUser(newUser, function(err, user){
-			if(err) {throw err;
-      console.log('error')}
-			console.log(user);
-		});
+    User.findOne({email: email}, function(err, user) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send();
+      }
+      if (user) {
+        console.log('Email exists in system');
+        return res.status(500).send();
+      }
+      else {
+        User.createUser(newUser, function(err, user){
+    			if(err) {throw err;
+          console.log('error')}
+    			console.log(user);
+    		});
+      }
+    });
 
     res.redirect('/');
     return res.status(200).send();
