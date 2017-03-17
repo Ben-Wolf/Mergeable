@@ -94,7 +94,7 @@ module.exports = function(app, io) {
       return res.status(500).send();
 		};
 
-    User.findOne({email: email}, function(err, user) {
+    User.getUserByEmail(email, function(err, user) {
       if (err) {
         console.log(err);
         return res.status(500).send();
