@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/test', function (err) {
   if (err) throw err;
-  console.log("connected to mongodb");
+  else console.log("connected to mongodb");
 });
 
 var port = 8080;

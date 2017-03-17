@@ -1,10 +1,9 @@
-var gravatar = require('gravatar');
 var ids = [];
 var email;
+var gravatar = require('gravatar');
 var User = require('./models/user.js')
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-
 
 module.exports = function(app, io) {
 
@@ -38,7 +37,7 @@ module.exports = function(app, io) {
       }
       console.log('user found');
       res.redirect('/profile');
-      // return res.status(200).send();
+      return res.status(200).send();
     })
   });
 
