@@ -7,8 +7,6 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/user.js')
-// var mongoose = require('mongoose');
-// mongoose.Promise = require('bluebird');
 
 module.exports = function(app, io) {
 
@@ -25,25 +23,40 @@ module.exports = function(app, io) {
     res.render('index');
   });
 
+  passport.use(new LocalStrategy(
+  function(email, password, done) {
+   User.getUserByEmail(email, function(err, user){
+   	if(err) throw err;
+   	if(!user){
+   		return done(null, false, {message: 'Unknown User'});
+   	}
+
+   	User.comparePassword(password, user.password, function(err, isMatch){
+   		if(err) throw err;
+   		if(isMatch){
+   			return done(null, user);
+   		} else {
+   			return done(null, false, {message: 'Invalid password'});
+   		}
+   	});
+   });
+  }));
+
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    User.getUserById(id, function(err, user) {
+      done(err, user);
+    });
+  });
+
   // Send login form
-  app.post('/login', function(req, res) {
-    var email = req.body.email;
-    var password = req.body.pass;
-
-    User.findOne({email: email, password: password}, function(err, user) {
-      if (err) {
-        console.log(err);
-        return res.status(500).send();
-      }
-
-      if (!user) {
-        console.log('user does not exist');
-        return res.status(404).send();
-      }
-      console.log('user found');
-      res.redirect('/profile');
-      return res.status(200).send();
-    })
+  app.post('/login',
+    passport.authenticate('local', {successRedirect:'/user_profile', failureRedirect:'/',failureFlash: true}),
+    function(req, res) {
+      res.redirect('/user_profile');
   });
 
   // Send registration form
@@ -61,24 +74,29 @@ module.exports = function(app, io) {
       lastname: lastname
     });
 
+    // Validation
+  	req.checkBody('f_name', 'Name is required').notEmpty();
+    req.checkBody('l_name', 'Name is required').notEmpty();
+  	req.checkBody('email', 'Email is required').notEmpty();
+  	req.checkBody('email', 'Email is not valid').isEmail();
+  	req.checkBody('pwd', 'Password is required').notEmpty();
+  	req.checkBody('pwd2', 'Passwords do not match').equals(req.body.pwd);
+
+    var errors = req.validationErrors();
+
+  	if(errors){
+  		console.log(errors);
+      return res.status(500).send();
+		};
+
     User.createUser(newUser, function(err, user){
-			if(err) throw err;
+			if(err) {throw err;
+      console.log('error')}
 			console.log(user);
 		});
 
     res.redirect('/');
     return res.status(200).send();
-    // newuser.save(function(err, savedUser) {
-    //   if (err) {
-    //     console.log(err);
-    //     return res.status(500).send();
-    //   }
-    //   else {
-    //     console.log('user created');
-    //     res.redirect('/')
-    //     return res.status(200).send();
-    //   }
-    // })
   });
 
 /* USER-PROFILE PAGE */
@@ -180,5 +198,3 @@ module.exports = function(app, io) {
     });
   });
 };
-
-// module.exports = router;
