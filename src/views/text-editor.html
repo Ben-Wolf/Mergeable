@@ -34,33 +34,49 @@
 
         <!-- LANGUAGE OPTIONS -->
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown">Language
+          <a id="language" class="dropdown-toggle" data-toggle="dropdown">JavaScript
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a id="csharp" href="#">C#</a></li>
-            <li><a id="css" href="#">CSS</a></li>
-            <li><a id="html" href="#">HTML</a></li>
-            <li><a id="java" href="#">Java</a></li>
-            <li class="active"><a id="javascript" href="#">JavaScript</a></li>
-            <li><a id="python" href="#">Python</a></li>
-            <li><a id="typescript" href="#">TypeScript</a></li>
+            <li><a id="CSharp" href="#">C#</a></li>
+            <li><a id="CSS" href="#">CSS</a></li>
+            <li><a id="HTML" href="#">HTML</a></li>
+            <li><a id="Java" href="#">Java</a></li>
+            <li class="active"><a id="JavaScript" href="#">JavaScript</a></li>
+            <li><a id="Python" href="#">Python</a></li>
+            <li><a id="TypeScript" href="#">TypeScript</a></li>
           </li>
         </ul>
 
         <!-- THEME OPTIONS -->
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown">Theme
+          <a id="theme" class="dropdown-toggle" data-toggle="dropdown">Theme
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a id="chrome" href="#">Chrome</a></li>
-            <li><a id="clouds" href="#">Clouds</a></li>
-            <li><a id="cobalt" href="#">Cobalt</a></li>
-            <li><a id="eclipse" href="#">Eclipse</a></li>
-            <li><a id="github" href="#">Github</a></li>
-            <li><a id="merbivore" href="#">Merbivore</a></li>
-            <li><a id="mono_industrial" href="#">Mono-Industrial</a></li>
-            <li class="active"><a id="monokai" href="#">Monokai</a></li>
-            <li><a id="terminal" href="#">Terminal</a></li>
+            <li><a id="Chrome" href="#">Chrome</a></li>
+            <li><a id="Clouds" href="#">Clouds</a></li>
+            <li><a id="Cobalt" href="#">Cobalt</a></li>
+            <li><a id="Eclipse" href="#">Eclipse</a></li>
+            <li><a id="Github" href="#">Github</a></li>
+            <li><a id="Merbivore" href="#">Merbivore</a></li>
+            <li><a id="Mono_industrial" href="#">Mono-Industrial</a></li>
+            <li class="active"><a id="Monokai" href="#">Monokai</a></li>
+            <li><a id="Terminal" href="#">Terminal</a></li>
+          </ul>
+        </li>
+
+        <!-- FONT SIZE -->
+        <li class="dropdown">
+          <a id="fontsize" class="dropdown-toggle" data-toggle="dropdown">12px
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a id="size10" href="#">10px</a></li>
+            <li><a id="size11" href="#">11px</a></li>
+            <li class="active"><a id="size12" href="#">12px</a></li>
+            <li><a id="size13" href="#">13px</a></li>
+            <li><a id="size14" href="#">14px</a></li>
+            <li><a id="size16" href="#">16px</a></li>
+            <li><a id="size20" href="#">20px</a></li>
+            <li><a id="size24" href="#">24px</a></li>
           </ul>
         </li>
 
@@ -75,6 +91,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <!-- Ace Integration -->
   <script src="../ace/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="../js/text-editor.js" type="text/javascript"></script>
   <!-- Compiled/Minified bootstrap JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

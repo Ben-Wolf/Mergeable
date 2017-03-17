@@ -44,6 +44,7 @@ $(document).ready(function() {
   $("#page3").hide();
   type();
   setInterval ('cursorAnimation()', 500);
+  var socket = io();
 
 // Show Sign In Page and Automatically Scroll Down
   $("#sign_in_btn").click(function() {
@@ -84,7 +85,10 @@ $(document).ready(function() {
     else if (isValid($("#email").val()) == false) {
       alert("Invalid email.");
     }
-
+    else {
+      socket.emit('login', $("#email").val());
+      window.location.href = "/profile";
+    }
     var email = $("#email").val();
     var pass = $("#pass").val();
     $.post("http://localhost:8080/login", {email: email, pass: pass});
@@ -105,6 +109,10 @@ $(document).ready(function() {
     else if (isValid($("#e_mail").val()) == false) {
       alert("Please enter a valid e-mail");
     }
+    else {
+      socket.emit('login', $("#e_mail").val());
+      window.location.href = "/profile";
+    }
 
     var f_name = $("#f_name").val();
     var l_name = $("#l_name").val();
@@ -112,6 +120,5 @@ $(document).ready(function() {
     var pwd = $("#pwd").val();
     $.post("http://localhost:8080/create",
       {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd});
-
   });
 });
