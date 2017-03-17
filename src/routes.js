@@ -80,12 +80,12 @@ module.exports = function(app, io) {
     });
 
     // Validation
-  	req.checkBody('f_name', 'Name is required').notEmpty();
+    req.checkBody('f_name', 'Name is required').notEmpty();
     req.checkBody('l_name', 'Name is required').notEmpty();
-  	req.checkBody('e_mail', 'Email is required').notEmpty();
-  	req.checkBody('e_mail', 'Email is not valid').isEmail();
-  	req.checkBody('pwd', 'Password is required').notEmpty();
-  	req.checkBody('pwd2', 'Passwords do not match').equals(req.body.pwd);
+    req.checkBody('e_mail', 'Email is required').notEmpty();
+    req.checkBody('e_mail', 'Email is not valid').isEmail();
+    req.checkBody('pwd', 'Password is required').notEmpty();
+    req.checkBody('pwd2', 'Passwords do not match').equals(req.body.pwd);
 
     var errors = req.validationErrors();
 
