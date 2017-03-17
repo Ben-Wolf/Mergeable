@@ -87,11 +87,10 @@ $(document).ready(function() {
     }
     else {
       socket.emit('login', $("#email").val());
-      window.location.href = "/profile";
     }
     var email = $("#email").val();
-    var pass = $("#pass").val();
-    $.post("http://localhost:8080/login", {email: email, pass: pass});
+    var password = $("#pass").val();
+    $.post("http://localhost:8080/login", {email: email, password: password});
   })
 
 // Make sure all fields are accurate when a user tries to create an Account
@@ -111,14 +110,14 @@ $(document).ready(function() {
     }
     else {
       socket.emit('login', $("#e_mail").val());
-      window.location.href = "/profile";
     }
 
     var f_name = $("#f_name").val();
     var l_name = $("#l_name").val();
     var e_mail = $("#e_mail").val();
     var pwd = $("#pwd").val();
+    var pwd2 = $("#pwd2").val();
     $.post("http://localhost:8080/create",
-      {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd});
+      {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2});
   });
 });

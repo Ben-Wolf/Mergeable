@@ -17,29 +17,10 @@ module.exports = function(app, io) {
   });
 
   app.get('/signout', function(req, res) {
-
+    req.logout();
     // Render index.html
     res.render('index');
   });
-
-  passport.use(new LocalStrategy(
-  function(email, password, done) {
-   User.getUserByEmail(email, function(err, user){
-   	if(err) throw err;
-   	if(!user){
-   		return done(null, false, {message: 'Unknown User'});
-   	}
-
-   	User.comparePassword(password, user.password, function(err, isMatch){
-   		if(err) throw err;
-   		if(isMatch){
-   			return done(null, user);
-   		} else {
-   			return done(null, false, {message: 'Invalid password'});
-   		}
-   	});
-   });
-  }));
 
   passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -51,11 +32,36 @@ module.exports = function(app, io) {
     });
   });
 
+  passport.use(new LocalStrategy({
+    usernameField: 'email'
+  },
+  function(username, password, done) {
+   User.getUserByEmail(username, function(err, user){
+   	if(err) throw err;
+   	if(!user){
+      console.log('unknown user');
+   		return done(null, false);
+   	}
+
+   	User.comparePassword(password, user.password, function(err, isMatch){
+   		if(err) throw err;
+   		if(isMatch){
+        console.log('user found, password match');
+   			return done(null, user);
+   		} else {
+        console.log('Invalid password');
+   			return done(null, false);
+   		}
+   	});
+   });
+  }));
+
   // Send login form
   app.post('/login',
-    passport.authenticate('local', {successRedirect:'/user_profile', failureRedirect:'/',failureFlash: true}),
+    passport.authenticate('local', {failureRedirect:'/', failureFlash: 'Invalid username or password.'}),
     function(req, res) {
-      res.redirect('/user_profile');
+      console.log('here');
+      res.redirect('/profile');
   });
 
   // Send registration form
@@ -76,8 +82,8 @@ module.exports = function(app, io) {
     // Validation
   	req.checkBody('f_name', 'Name is required').notEmpty();
     req.checkBody('l_name', 'Name is required').notEmpty();
-  	req.checkBody('email', 'Email is required').notEmpty();
-  	req.checkBody('email', 'Email is not valid').isEmail();
+  	req.checkBody('e_mail', 'Email is required').notEmpty();
+  	req.checkBody('e_mail', 'Email is not valid').isEmail();
   	req.checkBody('pwd', 'Password is required').notEmpty();
   	req.checkBody('pwd2', 'Passwords do not match').equals(req.body.pwd);
 

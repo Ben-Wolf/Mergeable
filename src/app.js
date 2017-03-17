@@ -1,9 +1,7 @@
 var express = require('express');
-  app = express();
 var path = require('path');
 var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
-// var exphbs = require('express-handlebars');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session');
@@ -11,6 +9,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+
+// Init App
+var app = express();
 
 // Configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -67,6 +68,7 @@ app.use(function (req, res, next) {
 var port = 8080;
 
 var io = require('socket.io').listen(app.listen(port));
+
 
 require('./config')(app, io);
 require('./routes')(app, io);
