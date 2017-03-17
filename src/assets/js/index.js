@@ -44,6 +44,7 @@ $(document).ready(function() {
   $("#page3").hide();
   type();
   setInterval ('cursorAnimation()', 500);
+  var socket = io();
 
 // Show Sign In Page and Automatically Scroll Down
   $("#sign_in_btn").click(function() {
@@ -84,6 +85,7 @@ $(document).ready(function() {
       alert("Invalid email.");
     }
     else {
+      socket.emit('login', $("#email").val());
       window.location.href = "/profile";
     }
   })
@@ -103,6 +105,7 @@ $(document).ready(function() {
       alert("Please enter a valid e-mail");
     }
     else {
+      socket.emit('login', $("#e_mail").val());
       window.location.href = "/profile";
     }
   });

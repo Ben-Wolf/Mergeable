@@ -7,3 +7,13 @@
 //
 //   var propic = $("#propic");
 // })
+
+$(document).ready(function() {
+  var img = "";
+  var socket = io();
+
+  socket.emit('get_avatar');
+  socket.on('send_avatar', function(data) {
+    $("#propic").attr("src", data);
+  });
+});

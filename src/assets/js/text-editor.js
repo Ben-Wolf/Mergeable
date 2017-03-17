@@ -29,25 +29,25 @@ $(document).ready(function() {
   /* Language Options */
   // Emits a socket, because changing the language on a file should affect everyone working on the file.
   $("#CSharp").click(function() {
-    socket.emit("CSHARP", ["#CSharp", id]);
+    socket.emit("changeLanguage", ["#CSharp", id]);
   });
   $("#CSS").click(function() {
-    socket.emit("CSS", ["#CSS", id]);
+    socket.emit("changeLanguage", ["#CSS", id]);
   });
   $("#HTML").click(function() {
-    socket.emit("HTML", ["#HTML", id]);
+    socket.emit("changeLanguage", ["#HTML", id]);
   });
   $("#Java").click(function() {
-    socket.emit("JAVA", ["#Java", id]);
+    socket.emit("changeLanguage", ["#Java", id]);
   });
   $("#JavaScript").click(function() {
-    socket.emit("JAVASCRIPT", ["#JavaScript", id]);
+    socket.emit("changeLanguage", ["#JavaScript", id]);
   });
   $("#Python").click(function() {
-    socket.emit("PYTHON", ["#Python", id]);
+    socket.emit("changeLanguage", ["#Python", id]);
   });
   $("#TypeScript").click(function() {
-    socket.emit("TYPESCRIPT", ["#TypeScript", id]);
+    socket.emit("changeLanguage", ["#TypeScript", id]);
   });
 
   /* Theme Options */
@@ -116,8 +116,10 @@ $(document).ready(function() {
   socket.on('changed', function(data) {
     if (data[0] == id) {
       if (data[1] == 0) {
+        var pos = editor.session.selection.toJSON();
         holder = 1;
         editor.getSession().setValue(data[2]);
+        editor.session.selection.fromJSON(pos);
       }
       else {
         holder = 0;
@@ -140,46 +142,8 @@ $(document).ready(function() {
   });
 
 
-  /*
-   *  SOCKET FUNCTIONS FOR CHANGING LANGUAGES
-   */
-  socket.on('csharp_', function(data) {
-    if (data[1] == id) {
-      change(data[0], "mode", languages);
-    }
-  });
-
-  socket.on('css_', function(data) {
-    if (data[1] == id) {
-      change(data[0], "mode", languages);
-    }
-  });
-
-  socket.on('html_', function(data) {
-    if (data[1] == id) {
-      change(data[0], "mode", languages);
-    }
-  });
-
-  socket.on('java_', function(data) {
-    if (data[1] == id) {
-      change(data[0], "mode", languages);
-    }
-  });
-
-  socket.on('javascript_', function(data) {
-    if (data[1] == id) {
-      change(data[0], "mode", languages);
-    }
-  });
-
-  socket.on('python_', function(data) {
-    if (data[1] == id) {
-      change(data[0], "mode", languages);
-    }
-  });
-
-  socket.on('typescript_', function(data) {
+  // Socket function to change language.
+  socket.on('changeLanguage_', function(data) {
     if (data[1] == id) {
       change(data[0], "mode", languages);
     }

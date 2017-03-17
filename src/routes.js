@@ -1,5 +1,6 @@
 var gravatar = require('gravatar');
 var ids = [];
+var email;
 
 module.exports = function(app, io) {
 
@@ -43,8 +44,22 @@ module.exports = function(app, io) {
     res.render('text-editor');
   });
 
+
+  /////////////////////////////////////////////////////
+  //// SOCKET /////////////////////////////////////////
+  /////////////////////////////////////////////////////
   var collab = io.on("connection", function(socket) {
 
+    // Save email for gravatar image.
+    socket.on('login', function(data) {
+      email = gravatar.url(data, {s: '140', r: 'x', d: "mm"});
+      // console.log("avatar = " + email);
+    });
+
+    socket.on('get_avatar', function(data) {
+      // console.log("after = " + email);
+      socket.emit('send_avatar', email);
+    });
 
     // Logs to console that user is in certain ID
     socket.on("checkID", function(data) {
@@ -66,7 +81,6 @@ module.exports = function(app, io) {
 
     socket.on('return_info', function(data) {
       if (socket.pioneer == true) {
-        console.log("pioneer found");
         io.emit('update', [socket.id, data]);
       }
     });
@@ -76,37 +90,12 @@ module.exports = function(app, io) {
       io.emit("changed", data);
     });
 
-    /*
-     *  SOCKET LANGUAGE CHANGES
-     */
-    socket.on("CSHARP", function(data) {
-     io.emit("csharp_", data);
+    // Socket function to change language.
+    socket.on("changeLanguage", function(data) {
+      io.emit("changeLanguage_", data);
     });
 
-    socket.on("CSS", function(data) {
-     io.emit("css_", data);
-    });
-
-    socket.on("HTML", function(data) {
-      io.emit("html_", data);
-    });
-
-    socket.on("JAVA", function(data) {
-      io.emit("javascript_", data);
-    });
-
-    socket.on("JAVASCRIPT", function(data) {
-      io.emit("javascript_", data);
-    });
-
-    socket.on("PYTHON", function(data) {
-      io.emit("python_", data);
-    });
-
-    socket.on("TYPESCRIPT", function(data) {
-      io.emit("typescript_", data);
-    });
-
+    // Socket function to disconnect.
     socket.on("disconnect", function(data) {
       for (var i = 0; i < ids.length; i++) {
         if (ids[i] == socket.id) {
