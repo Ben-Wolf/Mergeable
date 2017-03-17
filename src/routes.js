@@ -1,6 +1,7 @@
 var ids = [];
 var email;
 var gravatar = require('gravatar');
+
 var User = require('./models/user.js')
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
