@@ -39,14 +39,14 @@ module.exports = function(app, io) {
    User.getUserByEmail(username, function(err, user){
    	if(err) throw err;
    	if(!user){
-      console.log('unknown user');
+      console.log('Unknown user');
    		return done(null, false);
    	}
 
    	User.comparePassword(password, user.password, function(err, isMatch){
    		if(err) throw err;
    		if(isMatch){
-        console.log('user found, password match');
+        console.log('User found, Password match');
    			return done(null, user);
    		} else {
         console.log('Invalid password');
@@ -60,7 +60,7 @@ module.exports = function(app, io) {
   app.post('/login',
     passport.authenticate('local', {failureRedirect:'/', failureFlash: 'Invalid username or password.'}),
     function(req, res) {
-      console.log('here');
+      console.log("Success")
       res.redirect('/profile');
   });
 
