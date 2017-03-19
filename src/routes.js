@@ -36,11 +36,11 @@ module.exports = function(app, io) {
     usernameField: 'email'
   },
   function(username, password, done) {
-   User.getUserByEmail(username, function(err, user){
-   	if(err) throw err;
-   	if(!user){
-      console.log('Unknown user');
-   		return done(null, false);
+    User.getUserByEmail(username, function(err, user){
+     	if(err) throw err;
+     	if(!user){
+        console.log('Unknown user');
+     		return done(null, false);
    	}
 
    	User.comparePassword(password, user.password, function(err, isMatch){
@@ -60,8 +60,8 @@ module.exports = function(app, io) {
   app.post('/login',
     passport.authenticate('local', {failureRedirect:'/', failureFlash: 'Invalid username or password.'}),
     function(req, res) {
-      console.log("Success")
-      res.redirect('/profile');
+      console.log("Success");
+      res.send({err: 0, redirectUrl: "/profile"});
   });
 
   // Send registration form
@@ -105,14 +105,14 @@ module.exports = function(app, io) {
       }
       else {
         User.createUser(newUser, function(err, user){
-    			if(err) {throw err;
-          console.log('error')}
-    			console.log(user);
+      		if(err) {throw err;
+            console.log('error')}
+      			console.log(user);
     		});
       }
     });
 
-    res.redirect('/');
+    res.send({err: 0, redirectUrl: "/"});
     return res.status(200).send();
   });
 

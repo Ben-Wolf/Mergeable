@@ -90,7 +90,10 @@ $(document).ready(function() {
     }
     var email = $("#email").val();
     var password = $("#pass").val();
-    $.post("http://localhost:8080/login", {email: email, password: password});
+    $.post("http://localhost:8080/login", {email: email, password: password})
+    .then(function(data) {
+      window.location.href = data.redirectUrl;
+    });
   })
 
 // Make sure all fields are accurate when a user tries to create an Account
@@ -118,6 +121,9 @@ $(document).ready(function() {
     var pwd = $("#pwd").val();
     var pwd2 = $("#pwd2").val();
     $.post("http://localhost:8080/create",
-      {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2});
+      {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2})
+      .then(function(data) {
+        window.location.href = data.redirectUrl;
+      });
   });
 });
