@@ -29,7 +29,7 @@ In order to run Mergeable locally:
     * Ace integration
     * Aesthetic design/direction of website [Ongoing]
 
-### Milestone 2 Text-Editor/Collaboration - GOAL: 3/20/2017
+### Milestone 2 Text-Editor/Collaboration - GOAL: 3/20/2017 ✓ Completed
 
     * Give users ability to choose text-editor language
     * Give users ability to choose text-editor theme
