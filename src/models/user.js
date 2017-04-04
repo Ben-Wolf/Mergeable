@@ -13,7 +13,7 @@ var userSchema = mongoose.Schema({
 		type: String
 	},
   lastname: {
-    type:String
+    type: String
   }
 });
 

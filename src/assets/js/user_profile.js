@@ -12,8 +12,9 @@ $(document).ready(function() {
   var img = "";
   var socket = io();
 
-  socket.emit('get_avatar');
-  socket.on('send_avatar', function(data) {
-    $("#propic").attr("src", data);
+  socket.emit('get_info');
+  socket.on('send_info', function(data) {
+    $("#propic").attr("src", data.avatar);
+    $('#name').html(data.firstname + " " + data.lastname);
   });
 });

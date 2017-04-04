@@ -1,4 +1,6 @@
 var ids = [];
+var acc;
+var userid = "";
 var data = {err: 0, redirectUrl: "/"};
 var emailCurr;
 var gravatar = require('gravatar');
@@ -24,6 +26,7 @@ module.exports = function(app, io) {
   });
 
   passport.serializeUser(function(user, done) {
+    userid = user.id;
     return done(null, user.id);
   });
 
@@ -41,19 +44,18 @@ module.exports = function(app, io) {
      	if(err) throw err;
      	if(!user){
         console.log('Unknown user');
-        data.err = 1;
      		return done(null, false);
    	}
 
-   	User.comparePassword(password, user.password, function(err, isMatch, res){
+   	User.comparePassword(password, user.password, function(err, isMatch){
    		if(err) throw err;
    		if(isMatch){
         console.log('User found, Password match');
+        acc = user;
    			done(null, user);
    		} else {
         console.log('Invalid password');
-        data.err = 2;
-   			return done(null, false);
+   			done(null, null);
    		}
    	});
    });
@@ -63,7 +65,7 @@ module.exports = function(app, io) {
   app.post('/login',
     passport.authenticate('local', {failureRedirect:'/', failureFlash: 'Invalid username or password.'}),
     function(req, res) {
-      emailCurr = gravatar.url(req.body.email, {s: '140', r: 'x', d: "mm"});
+      emailCurr = gravatar.url(acc.email, {s: '140', r: 'x', d: "mm"});
       console.log("Success");
       res.send({err: 0, redirectUrl: "/profile"});
   });
@@ -130,12 +132,11 @@ module.exports = function(app, io) {
 
 /* USER-PROFILE PAGE */
   app.get('/profile', function(req, res) {
-
     // Move to user_profile
-    res.redirect('/user_profile');
+    res.redirect('/user_profile-' + userid);
   });
 
-  app.get('/user_profile', function(req, res) {
+  app.get('/user_profile-:userid', function(req, res) {
 
     // Render user_profile
     res.render('user_profile');
@@ -167,9 +168,13 @@ module.exports = function(app, io) {
       console.log("avatar = " + email);
     });
 
-    socket.on('get_avatar', function(data) {
+    socket.on('get_info', function(data) {
       // console.log("after = " + email);
-      socket.emit('send_avatar', emailCurr);
+      var x = {};
+      x.avatar = gravatar.url(acc.email, {s: '140', r: 'x', d: 'mm'});
+      x.firstname = acc.firstname;
+      x.lastname = acc.lastname;
+      socket.emit('send_info', x);
     });
 
     // Logs to console that user is in certain ID

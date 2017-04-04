@@ -65,8 +65,10 @@ $(document).ready(function() {
     $.post("http://localhost:8080/create",
       {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2})
       .then(function(data) {
-        if (data.err == 0)
-          window.location.href = "/profile";
+        if (data.err == 0) {
+          alert("Account created");
+          window.location.href = "/";
+        }
         else if (data.err == 1) {
           alert(data.errors[0].msg);
         }
@@ -123,7 +125,7 @@ $(document).ready(function() {
     if (e.which == 13) {
       callLogin();
     }
-  })
+  });
 
 // Make sure all fields are accurate when a user tries to create an Account
 // Sends info and creates new user in database
