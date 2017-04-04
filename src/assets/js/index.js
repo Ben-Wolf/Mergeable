@@ -79,20 +79,17 @@ $(document).ready(function() {
 // Give the user an error if they don't enter a valid email/password
 // Sends user info to server
   $("#submit").click(function() {
-    if ($("#pass").val().length < 8) {
-      alert("Invalid password.");
-    }
-    else if (isValid($("#email").val()) == false) {
-      alert("Invalid email.");
-    }
-    else {
-      socket.emit('login', $("#email").val());
-    }
+
     var email = $("#email").val();
     var password = $("#pass").val();
     $.post("http://localhost:8080/login", {email: email, password: password})
     .then(function(data) {
-      window.location.href = data.redirectUrl;
+      if (data.err == 0)
+        window.location.href = data.redirectUrl;
+      else if (data.err == 1)
+        alert("Incorrect username");
+      else if (data.err == 2)
+        alert("Incorrect password");
     });
   });
 
@@ -111,7 +108,12 @@ $(document).ready(function() {
       var password = $("#pass").val();
       $.post("http://localhost:8080/login", {email: email, password: password})
       .then(function(data) {
-        window.location.href = data.redirectUrl;
+        if (data.err == 0)
+          window.location.href = data.redirectUrl;
+        else if (data.err == 1)
+          alert("Incorrect username");
+        else if (data.err == 2)
+          alert("Incorrect password");
       });
     }
   })
@@ -119,21 +121,6 @@ $(document).ready(function() {
 // Make sure all fields are accurate when a user tries to create an Account
 // Sends info and creates new user in database
   $("#create").click(function() {
-    if($("#pwd").val().length < 8) {
-      alert("Passwords must be at least 8 characters.");
-    }
-    else if ($("#pwd").val() != $("#pwd2").val()) {
-      alert("Passwords do not match.");
-    }
-    else if ($("#f_name").val() < 1 || $("#l_name").val() < 1) {
-      alert("First and last name must be at least one character");
-    }
-    else if (isValid($("#e_mail").val()) == false) {
-      alert("Please enter a valid e-mail");
-    }
-    else {
-      socket.emit('login', $("#e_mail").val());
-    }
 
     var f_name = $("#f_name").val();
     var l_name = $("#l_name").val();
@@ -143,7 +130,14 @@ $(document).ready(function() {
     $.post("http://localhost:8080/create",
       {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2})
       .then(function(data) {
-        window.location.href = data.redirectUrl;
+        if (data.err == 0)
+          window.location.href = "/profile";
+        else if (data.err == 1) {
+          alert(data.errors[0].msg);
+        }
+        else if (data.err == 3) {
+          alert("Email already exists in system");
+        }
       });
   });
 
@@ -173,7 +167,14 @@ $(".create-input").keypress(function(e) {
     $.post("http://localhost:8080/create",
       {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2})
       .then(function(data) {
-        window.location.href = data.redirectUrl;
+        if (data.err == 0)
+          window.location.href = "/profile";
+        else if (data.err == 1) {
+          alert(data.errors[0].msg);
+        }
+        else if (data.err == 3) {
+          alert("Email already exists in system");
+        }
       });
   }
 });

@@ -1,5 +1,6 @@
 var ids = [];
-var email;
+var data = {err: 0, redirectUrl: "/"};
+var emailCurr;
 var gravatar = require('gravatar');
 
 var express = require('express');
@@ -23,12 +24,12 @@ module.exports = function(app, io) {
   });
 
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    return done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
     User.getUserById(id, function(err, user) {
-      done(err, user);
+      return done(err, user);
     });
   });
 
@@ -40,16 +41,18 @@ module.exports = function(app, io) {
      	if(err) throw err;
      	if(!user){
         console.log('Unknown user');
+        data.err = 1;
      		return done(null, false);
    	}
 
-   	User.comparePassword(password, user.password, function(err, isMatch){
+   	User.comparePassword(password, user.password, function(err, isMatch, res){
    		if(err) throw err;
    		if(isMatch){
         console.log('User found, Password match');
-   			return done(null, user);
+   			done(null, user);
    		} else {
         console.log('Invalid password');
+        data.err = 2;
    			return done(null, false);
    		}
    	});
@@ -60,6 +63,7 @@ module.exports = function(app, io) {
   app.post('/login',
     passport.authenticate('local', {failureRedirect:'/', failureFlash: 'Invalid username or password.'}),
     function(req, res) {
+      emailCurr = gravatar.url(req.body.email, {s: '140', r: 'x', d: "mm"});
       console.log("Success");
       res.send({err: 0, redirectUrl: "/profile"});
   });
@@ -71,6 +75,7 @@ module.exports = function(app, io) {
     var email = req.body.e_mail;
     var password = req.body.pwd;
     var password2 = req.body.pwd2;
+    emailCurr = gravatar.url(req.body.e_mail, {s: '140', r: 'x', d: "mm"});
 
     var newUser = new User({
       email: email,
@@ -80,8 +85,8 @@ module.exports = function(app, io) {
     });
 
     // Validation
-    req.checkBody('f_name', 'Name is required').notEmpty();
-    req.checkBody('l_name', 'Name is required').notEmpty();
+    req.checkBody('f_name', 'First Name is required').notEmpty();
+    req.checkBody('l_name', 'Last Name is required').notEmpty();
     req.checkBody('e_mail', 'Email is required').notEmpty();
     req.checkBody('e_mail', 'Email is not valid').isEmail();
     req.checkBody('pwd', 'Password is required').notEmpty();
@@ -91,28 +96,35 @@ module.exports = function(app, io) {
 
   	if(errors){
   		console.log(errors);
-      return res.status(500).send();
-		};
+      data.err = 1;
+      data.errors = errors;
+		}
 
-    User.getUserByEmail(email, function(err, user) {
-      if (err) {
-        console.log(err);
-        return res.status(500).send();
-      }
-      if (user) {
-        console.log('Email exists in system');
-        return res.status(500).send();
-      }
-      else {
-        User.createUser(newUser, function(err, user){
-      		if(err) {throw err;
-            console.log('error')}
-      			console.log(user);
-    		});
-      }
-    });
+    else {
+      User.getUserByEmail(email, function(err, user) {
+        if (err) {
+          data.err = 2;
+        }
+        else {
+          if (data.err == 0) {
+            if (user) {
+              data.err = 3;
+            }
+            if (data.err == 0) {
+              User.createUser(newUser, function(err, user){
+            		if(err) {throw err;
+                  console.log('error')}
+                emailCurr = req.body.e_mail;
+          			console.log(user);
+          		});
+            }
+          }
+        }
+      });
+    }
 
-    res.send({err: 0, redirectUrl: "/"});
+    res.send(data);
+    data.err = 0;
     return res.status(200).send();
   });
 
@@ -152,12 +164,12 @@ module.exports = function(app, io) {
     // Save email for gravatar image.
     socket.on('login', function(data) {
       email = gravatar.url(data, {s: '140', r: 'x', d: "mm"});
-      // console.log("avatar = " + email);
+      console.log("avatar = " + email);
     });
 
     socket.on('get_avatar', function(data) {
       // console.log("after = " + email);
-      socket.emit('send_avatar', email);
+      socket.emit('send_avatar', emailCurr);
     });
 
     // Logs to console that user is in certain ID
