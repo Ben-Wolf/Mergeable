@@ -83,7 +83,8 @@ module.exports = function(app, io) {
       email: email,
       password: password,
       firstname: firstname,
-      lastname: lastname
+      lastname: lastname,
+      description: "An awesome Mergeable Developer!"
     });
 
     // Validation
@@ -174,6 +175,7 @@ module.exports = function(app, io) {
       x.avatar = gravatar.url(acc.email, {s: '140', r: 'x', d: 'mm'});
       x.firstname = acc.firstname;
       x.lastname = acc.lastname;
+      x.description = acc.description;
       socket.emit('send_info', x);
     });
 
@@ -197,7 +199,8 @@ module.exports = function(app, io) {
 
     socket.on('return_info', function(data) {
       if (socket.pioneer == true) {
-        io.emit('update', [socket.id, data]);
+        console.log("CHANGING LANGUAGE TO: " + data.language);
+        io.emit('update', [socket.id, data.info, data.language]);
       }
     });
 

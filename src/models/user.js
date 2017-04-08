@@ -14,6 +14,9 @@ var userSchema = mongoose.Schema({
 	},
   lastname: {
     type: String
+  },
+  description: {
+    type: String
   }
 });
 
