@@ -160,16 +160,35 @@ module.exports = function(app, io) {
   app.post('/save_new', function(req, res) {
     var title = req.body.title;
     var editors = req.body.additionalEditors;
+    var date = new Date();
+    var file = req.body.file;
 
     req.checkBody('title', 'Document name is required').notEmpty();
     var errors = req.validationErrors();
 
+    var newDocument = new Document({
+      owner: req.user.email,
+      dateCreated: date,
+      dateModified: date,
+      file: file,
+      otherEditors: editors
+    });
+
     if(errors){
   		console.log(errors);
+      data.err = 1;
+      data.errors = errors;
 		}else {
-
+      Document.createDocument(newDocument, function(err, doc){
+        if(err) {throw err;
+          console.log('error')}
+        console.log(doc);
+      });
     }
 
+    res.send(data);
+    data.err = 0;
+    return res.status(200).send();
   });
 
   /////////////////////////////////////////////////////

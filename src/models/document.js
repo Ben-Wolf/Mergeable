@@ -15,9 +15,12 @@ var documentSchema = mongoose.Schema ({
     type: String
   },
   otherEditors: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User'
+    type: [String]
   }
 });
 
 var Document = module.exports = mongoose.model('Document', documentSchema);
+
+module.exports.createDocument = function(newDocument, callback){
+  newDocument.save(callback);
+}
