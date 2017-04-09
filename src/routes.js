@@ -8,7 +8,8 @@ var gravatar = require('gravatar');
 var express = require('express');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./models/user.js')
+var User = require('./models/user.js');
+var Document = require('./models/document.js');
 
 module.exports = function(app, io) {
 
@@ -156,6 +157,83 @@ module.exports = function(app, io) {
     res.render('text-editor');
   });
 
+  app.post('/save_new', function(req, res) {
+    var owner = req.user.email;
+    var title = req.body.title;
+    var date = Date.now();
+    var file = req.body.file;
+    var otherEditors = req.body.otherEditors;
+
+    otherEditors = otherEditors.split(",");
+    for(var i=0; i<otherEditors.length; i++) {
+      otherEditors[i] = otherEditors[i].trim();
+    }
+
+    var newDocument = new Document({
+      owner: owner,
+      title: title,
+      dateCreated: date,
+      lastModified: date,
+      file: file,
+      otherEditors: otherEditors
+    });
+
+    req.checkBody('title', 'Document name is required').notEmpty();
+    var errors = req.validationErrors();
+
+    if(errors){
+  		console.log(errors);
+      data.err = 1;
+      data.errors = errors;
+		}else {
+      Document.createDocument(newDocument, function(err, doc){
+        if(err) {
+          console.log('error');
+        } else {
+          console.log(doc);
+
+          // Add document to user account
+          var user = req.user;
+          user.documents.push(doc._id);
+          user.save(function(err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("New document added under owner: " + user.email);
+            }
+          });
+          
+          console.log("editors...");
+          console.log(otherEditors);
+          // Add document to otherEditors' accounts
+          for (var i=0; i<otherEditors.length; i++){
+            User.getUserByEmail(otherEditors[i], function(err, user) {
+              if (err) {
+                console.log(err);
+              } else {
+                if (!user) {
+                  console.log("Account does not exist.");
+                } else {
+                  user.documents.push(doc._id);
+                  user.save(function(err) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log("New document added under: " + user.email);
+                    }
+                  });
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+
+    res.send(data);
+    data.err = 0;
+    return res.status(200).send();
+  });
 
   /////////////////////////////////////////////////////
   //// SOCKET /////////////////////////////////////////

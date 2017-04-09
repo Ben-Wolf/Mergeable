@@ -14,6 +14,13 @@ var userSchema = mongoose.Schema({
 	},
   lastname: {
     type: String
+  },
+  profile: {
+    type: String
+  },
+  documents: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Document'
   }
 });
 
