@@ -8,7 +8,8 @@ var gravatar = require('gravatar');
 var express = require('express');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./models/user.js')
+var User = require('./models/user.js');
+var Document = require('./models/document.js');
 
 module.exports = function(app, io) {
 
@@ -144,7 +145,7 @@ module.exports = function(app, io) {
 
 /* TEXT-EDITOR PAGE */
   app.get('/new', function(req, res){
-  
+
     var id = Math.round(Math.random() * 1000000);
     // Move to text-editor
     res.redirect('/editor-' + id);
@@ -157,7 +158,18 @@ module.exports = function(app, io) {
   });
 
   app.post('/save_new', function(req, res) {
-    //not implemented yet..
+    var title = req.body.title;
+    var editors = req.body.additionalEditors;
+
+    req.checkBody('title', 'Document name is required').notEmpty();
+    var errors = req.validationErrors();
+
+    if(errors){
+  		console.log(errors);
+		}else {
+
+    }
+
   });
 
   /////////////////////////////////////////////////////

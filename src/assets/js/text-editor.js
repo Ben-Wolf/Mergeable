@@ -107,7 +107,17 @@ $(document).ready(function() {
 
   /* Save Document */
   $("#save").click(function() {
-    
+    var title = $("#title").val();
+    var additionalEditors = $("#additionalEditors").val().split(',');
+    for(var i=0; i<additionalEditors.length; i++) {
+      additionalEditors[i] = additionalEditors[i].trim();
+    }
+
+    $.post("http://localhost:8080/save_new",
+          {title: title, additionalEditors: additionalEditors})
+          .then(function(data) {
+
+          });
   });
 
   /* Download Document */
