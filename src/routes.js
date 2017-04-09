@@ -160,7 +160,7 @@ module.exports = function(app, io) {
   app.post('/save_new', function(req, res) {
     var owner = req.user.email;
     var title = req.body.title;
-    var date = new Date();
+    var date = Date.now();
     var file = req.body.file;
     var otherEditors = req.body.otherEditors;
 
