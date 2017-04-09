@@ -106,7 +106,10 @@ $(document).ready(function() {
   });
 
   /* Save Document */
-  // CODE TO COME
+  $("#save").click(function() {
+    
+  });
+
   /* Download Document */
   // CODE TO COME
   /*

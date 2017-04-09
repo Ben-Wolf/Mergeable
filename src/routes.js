@@ -144,7 +144,7 @@ module.exports = function(app, io) {
 
 /* TEXT-EDITOR PAGE */
   app.get('/new', function(req, res){
-
+  
     var id = Math.round(Math.random() * 1000000);
     // Move to text-editor
     res.redirect('/editor-' + id);
@@ -156,6 +156,9 @@ module.exports = function(app, io) {
     res.render('text-editor');
   });
 
+  app.post('/save_new', function(req, res) {
+    //not implemented yet..
+  });
 
   /////////////////////////////////////////////////////
   //// SOCKET /////////////////////////////////////////

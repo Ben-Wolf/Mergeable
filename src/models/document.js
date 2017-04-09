@@ -15,7 +15,8 @@ var documentSchema = mongoose.Schema ({
     type: String
   },
   otherEditors: {
-    type: [String]
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'User'
   }
 });
 
