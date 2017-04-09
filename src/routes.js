@@ -187,9 +187,23 @@ module.exports = function(app, io) {
       data.errors = errors;
 		}else {
       Document.createDocument(newDocument, function(err, doc){
-        if(err) {throw err;
-          console.log('error')}
-        console.log(doc);
+        if(err) {
+          throw err;
+          console.log('error');
+        } else {
+          console.log(doc);
+
+          // Add document to user account
+          var user = req.user;
+          user.documents.push(doc._id);
+          user.save(function(err) {
+            if (err) {
+              data.err = 2;
+            } else {
+              console.log("New document added under owner: " + user.email);
+            }
+          });
+        }
       });
     }
 
