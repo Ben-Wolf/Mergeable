@@ -188,7 +188,6 @@ module.exports = function(app, io) {
 		}else {
       Document.createDocument(newDocument, function(err, doc){
         if(err) {
-          throw err;
           console.log('error');
         } else {
           console.log(doc);
@@ -198,11 +197,35 @@ module.exports = function(app, io) {
           user.documents.push(doc._id);
           user.save(function(err) {
             if (err) {
-              data.err = 2;
+              console.log(err);
             } else {
               console.log("New document added under owner: " + user.email);
             }
           });
+          
+          console.log("editors...");
+          console.log(otherEditors);
+          // Add document to otherEditors' accounts
+          for (var i=0; i<otherEditors.length; i++){
+            User.getUserByEmail(otherEditors[i], function(err, user) {
+              if (err) {
+                console.log(err);
+              } else {
+                if (!user) {
+                  console.log("Account does not exist.");
+                } else {
+                  user.documents.push(doc._id);
+                  user.save(function(err) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log("New document added under: " + user.email);
+                    }
+                  });
+                }
+              }
+            });
+          }
         }
       });
     }
