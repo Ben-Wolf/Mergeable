@@ -158,21 +158,28 @@ module.exports = function(app, io) {
   });
 
   app.post('/save_new', function(req, res) {
+    var owner = req.user.email;
     var title = req.body.title;
-    var editors = req.body.additionalEditors;
     var date = new Date();
     var file = req.body.file;
+    var otherEditors = req.body.otherEditors;
+
+    otherEditors = otherEditors.split(",");
+    for(var i=0; i<otherEditors.length; i++) {
+      otherEditors[i] = otherEditors[i].trim();
+    }
+
+    var newDocument = new Document({
+      owner: owner,
+      title: title,
+      dateCreated: date,
+      lastModified: date,
+      file: file,
+      otherEditors: otherEditors
+    });
 
     req.checkBody('title', 'Document name is required').notEmpty();
     var errors = req.validationErrors();
-
-    var newDocument = new Document({
-      owner: req.user.email,
-      dateCreated: date,
-      dateModified: date,
-      file: file,
-      otherEditors: editors
-    });
 
     if(errors){
   		console.log(errors);

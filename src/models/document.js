@@ -5,6 +5,9 @@ var documentSchema = mongoose.Schema ({
   owner: {
     type: String
   },
+  title: {
+    type: String
+  },
   dateCreated: {
     type: Date
   },

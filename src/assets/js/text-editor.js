@@ -106,18 +106,16 @@ $(document).ready(function() {
   });
 
   /* Save Document */
-  $("#save").click(function() {
+  $("#save_new").click(function() {
     var title = $("#title").val();
     var file = editor.getValue();
-    var additionalEditors = $("#additionalEditors").val().split(',');
-    for(var i=0; i<additionalEditors.length; i++) {
-      additionalEditors[i] = additionalEditors[i].trim();
-    }
+    var otherEditors = $("#additionalEditors").val();
 
     $.post("http://localhost:8080/save_new",
-          {title: title, additionalEditors: additionalEditors, file: file})
+          {title: title, otherEditors: otherEditors, file: file})
           .then(function(data) {
-
+            if (data.err == 0)
+              alert("Document Saved");
           });
   });
 
