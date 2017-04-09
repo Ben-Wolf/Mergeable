@@ -116,6 +116,7 @@ $(document).ready(function() {
           .then(function(data) {
             if (data.err == 0)
               alert("Document Saved");
+              $('#savedoc-modal').modal('hide');
           });
   });
 
