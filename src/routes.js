@@ -135,6 +135,9 @@ module.exports = function(app, io) {
     info.firstname = req.user.firstname;
     info.lastname = req.user.lastname;
     info.description = req.user.description;
+    for (var i = 0; i < req.user.documents.length; i++) {
+      info.documents.push(req.user.documents[i]);
+    }
 
     for (var i=0; i<info.documents.length; i++) {
       Document.getDocumentById(info.documents[i], function(err, doc) {
@@ -148,13 +151,14 @@ module.exports = function(app, io) {
             data.lastModified = doc.lastModified;
             data.file = doc.file;
             data.otherEditors = doc.otherEditors;
-            info.documents.push(data);
+            info..push(data);
           } else {
             console.log("Document not found");
           }
         }
       });
     }
+
 
     console.log(info);
     res.send(info);
