@@ -1,8 +1,6 @@
-var curr = "";
-
 $(document).ready(function() {
   var img = "";
-  var socket = io();
+  var curr = "";
 
   $.post("http://localhost:8080/get_info")
   .then(function(data) {

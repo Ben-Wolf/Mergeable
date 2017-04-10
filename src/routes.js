@@ -259,19 +259,6 @@ module.exports = function(app, io) {
   /////////////////////////////////////////////////////
   var collab = io.on("connection", function(socket) {
 
-    socket.on('get_info', function(data) {
-      // console.log("after = " + email);
-      var x = {avatar: "", firstname: "", lastname: "", description: "", documents: []};
-      x.avatar = gravatar.url(acc.email, {s: '140', r: 'x', d: 'mm'});
-      x.firstname = acc.firstname;
-      x.lastname = acc.lastname;
-      x.description = acc.description;
-      for (var i = 0; i < acc.documents.length; i++) {
-        x.documents.push(acc.documents[i]);
-      }
-      socket.emit('send_info', x);
-    });
-
     // Saves profile description.
     socket.on('save_description', function(data) {
       console.log("DATA = " + acc.description);
