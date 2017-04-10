@@ -135,23 +135,21 @@ module.exports = function(app, io) {
     info.firstname = req.user.firstname;
     info.lastname = req.user.lastname;
     info.description = req.user.description;
-    for (var i = 0; i < req.user.documents.length; i++) {
-      info.documents.push(req.user.documents[i]);
-    }
 
-    for (var i=0; i<info.documents.length; i++) {
-      Document.getDocumentById(info.documents[i], function(err, doc) {
+    for (var i=0; i<req.user.documents.length; i++) {
+      Document.getDocumentById(req.user.documents[i], function(err, doc) {
         if (err) {
           console.log(err);
         } else {
           if (doc) {
+            console.log("Document found");
             var data = {};
             data.title = doc.title;
             data.dateCreated = doc.dateCreated;
             data.lastModified = doc.lastModified;
             data.file = doc.file;
             data.otherEditors = doc.otherEditors;
-            info..push(data);
+            info.documents.push(data);
           } else {
             console.log("Document not found");
           }
@@ -159,11 +157,11 @@ module.exports = function(app, io) {
       });
     }
 
-
     console.log(info);
     res.send(info);
     return res.status(200).send();
   });
+
   app.get('/profile', function(req, res) {
     // Move to user_profile
     res.redirect('/user_profile-' + userid);

@@ -10,13 +10,13 @@ $(document).ready(function() {
     $('#name').html(data.firstname + " " + data.lastname);
     $('#description').html(data.description);
     var listed = "";
-
+    
     if (data.documents.length == 0) {
       listed = '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">' + data.documents[i].title + '</h3> <p class="list-group-item-text"></p>' + data.documents[i].file[:100] + '</a>\n'
-        console.log(data.documents[i].title);
+        listed += '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">' + data.documents[i].title + '</h3> <p class="list-group-item-text"></p>' + data.documents[i].file + '</a>\n'
+        console.log(data.documents[i]);
       }
     }
 

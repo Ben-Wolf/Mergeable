@@ -28,6 +28,6 @@ module.exports.createDocument = function(newDocument, callback){
   newDocument.save(callback);
 }
 
-module.exports.getUserById = function(id, callback){
+module.exports.getDocumentById = function(id, callback){
   Document.findById(id, callback);
 }
