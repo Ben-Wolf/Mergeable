@@ -135,8 +135,25 @@ module.exports = function(app, io) {
     info.firstname = req.user.firstname;
     info.lastname = req.user.lastname;
     info.description = req.user.description;
-    for (var i = 0; i < req.user.documents.length; i++) {
-      info.documents.push(req.user.documents[i]);
+
+    for (var i=0; i<info.documents.length; i++) {
+      Document.getDocumentById(info.documents[i], function(err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (doc) {
+            var data = {};
+            data.title = doc.title;
+            data.dateCreated = doc.dateCreated;
+            data.lastModified = doc.lastModified;
+            data.file = doc.file;
+            data.otherEditors = doc.otherEditors;
+            info.documents.push(data);
+          } else {
+            console.log("Document not found");
+          }
+        }
+      });
     }
 
     console.log(info);
