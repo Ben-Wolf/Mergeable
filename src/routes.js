@@ -84,7 +84,8 @@ module.exports = function(app, io) {
       email: email,
       password: password,
       firstname: firstname,
-      lastname: lastname
+      lastname: lastname,
+      description: "An awesome Mergeable Developer!"
     });
 
     // Validation
@@ -141,6 +142,14 @@ module.exports = function(app, io) {
 
     // Render user_profile
     res.render('user_profile');
+  });
+
+  app.post('/save_description', function(req, res) {
+    req.user.description = req.body.description;
+    req.user.save(function(err) {
+      if (err) console.log(err);
+      else console.log("Saved description");
+    });
   });
 
 /* TEXT-EDITOR PAGE */
@@ -202,7 +211,7 @@ module.exports = function(app, io) {
               console.log("New document added under owner: " + user.email);
             }
           });
-          
+
           console.log("editors...");
           console.log(otherEditors);
           // Add document to otherEditors' accounts
@@ -252,7 +261,15 @@ module.exports = function(app, io) {
       x.avatar = gravatar.url(acc.email, {s: '140', r: 'x', d: 'mm'});
       x.firstname = acc.firstname;
       x.lastname = acc.lastname;
+      x.description = acc.description;
       socket.emit('send_info', x);
+    });
+
+    // Saves profile description.
+    socket.on('save_description', function(data) {
+      console.log("DATA = " + acc.description);
+      acc.description = data;
+      console.log("DATA AFTER = " + acc.description);
     });
 
     // Logs to console that user is in certain ID
@@ -275,7 +292,8 @@ module.exports = function(app, io) {
 
     socket.on('return_info', function(data) {
       if (socket.pioneer == true) {
-        io.emit('update', [socket.id, data]);
+        console.log("CHANGING LANGUAGE TO: " + data.language);
+        io.emit('update', [socket.id, data.info, data.language]);
       }
     });
 

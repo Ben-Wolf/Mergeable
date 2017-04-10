@@ -142,8 +142,13 @@ $(document).ready(function() {
 
   socket.on('find_pioneer', function(data) {
     console.log("finding_pioneer");
+    // get the current mode
+    var mode = editor.session.$modeId;
+
+    // modeid returns the full string (ace/mode/html), cut to the mode name only
+    mode = mode.substr(mode.lastIndexOf('/') + 1);
     if (data == id)
-      socket.emit('return_info', editor.getSession().getValue());
+      socket.emit('return_info', {info: editor.getSession().getValue(), language: mode});
   });
 
   socket.on('update', function(data) {
@@ -151,6 +156,7 @@ $(document).ready(function() {
     if (data[0] == id) {
       console.log("setting value to:\n" + data[1]);
       editor.getSession().setValue(data[1]);
+      change("#" + data[2], "mode", languages);
     }
   });
 
@@ -176,11 +182,13 @@ function change(curr, type, arr) {
   var temp = "";
   // Removes "#" in front of object name
   for (var i = 1; i < curr.length; i++) {
-    temp += curr[i];
+    if (i == 1) temp += curr[i].toUpperCase();
+    else temp += curr[i];
   }
+  console.log(temp);
   // Creates string for file to be modified (lower case to avoid file problems)
   var file = ("ace/" + type + "/" + temp).toLowerCase();
-  $(curr).parent().addClass("active");
+  $("#" + temp).parent().addClass("active");
   // Checks if we wanted to change language (editor mode)
   if (type == "mode") {
     editor.session.setMode(file);
