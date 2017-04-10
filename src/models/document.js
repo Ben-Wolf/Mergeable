@@ -5,6 +5,9 @@ var documentSchema = mongoose.Schema ({
   owner: {
     type: String
   },
+  title: {
+    type: String
+  },
   dateCreated: {
     type: Date
   },
@@ -20,3 +23,7 @@ var documentSchema = mongoose.Schema ({
 });
 
 var Document = module.exports = mongoose.model('Document', documentSchema);
+
+module.exports.createDocument = function(newDocument, callback){
+  newDocument.save(callback);
+}

@@ -106,7 +106,20 @@ $(document).ready(function() {
   });
 
   /* Save Document */
-  // CODE TO COME
+  $("#save_new").click(function() {
+    var title = $("#title").val();
+    var file = editor.getValue();
+    var otherEditors = $("#additionalEditors").val();
+
+    $.post("http://localhost:8080/save_new",
+          {title: title, otherEditors: otherEditors, file: file})
+          .then(function(data) {
+            if (data.err == 0)
+              alert("Document Saved");
+              $('#savedoc-modal').modal('hide');
+          });
+  });
+
   /* Download Document */
   // CODE TO COME
   /*

@@ -17,6 +17,10 @@ var userSchema = mongoose.Schema({
   },
   description: {
     type: String
+  },
+  documents: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Document'
   }
 });
 
