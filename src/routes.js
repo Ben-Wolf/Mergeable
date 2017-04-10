@@ -2,9 +2,8 @@ var ids = [];
 var acc;
 var userid = "";
 var data = {err: 0, redirectUrl: "/"};
-var emailCurr;
-var gravatar = require('gravatar');
 
+var gravatar = require('gravatar');
 var express = require('express');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -66,7 +65,6 @@ module.exports = function(app, io) {
   app.post('/login',
     passport.authenticate('local', {failureRedirect:'/', failureFlash: 'Invalid username or password.'}),
     function(req, res) {
-      emailCurr = gravatar.url(acc.email, {s: '140', r: 'x', d: "mm"});
       console.log("Success");
       res.send({err: 0, redirectUrl: "/profile"});
   });
@@ -78,7 +76,6 @@ module.exports = function(app, io) {
     var email = req.body.e_mail;
     var password = req.body.pwd;
     var password2 = req.body.pwd2;
-    emailCurr = gravatar.url(req.body.e_mail, {s: '140', r: 'x', d: "mm"});
 
     var newUser = new User({
       email: email,
@@ -118,7 +115,6 @@ module.exports = function(app, io) {
               User.createUser(newUser, function(err, user){
             		if(err) {throw err;
                   console.log('error')}
-                emailCurr = req.body.e_mail;
           			console.log(user);
           		});
             }
@@ -257,11 +253,14 @@ module.exports = function(app, io) {
 
     socket.on('get_info', function(data) {
       // console.log("after = " + email);
-      var x = {};
+      var x = {avatar: "", firstname: "", lastname: "", description: "", documents: []};
       x.avatar = gravatar.url(acc.email, {s: '140', r: 'x', d: 'mm'});
       x.firstname = acc.firstname;
       x.lastname = acc.lastname;
       x.description = acc.description;
+      for (var i = 0; i < acc.documents.length; i++) {
+        x.documents.push(acc.documents[i]);
+      }
       socket.emit('send_info', x);
     });
 
