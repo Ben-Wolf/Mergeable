@@ -6,9 +6,10 @@ From there we would like to focus on creating the method of designing and implem
 
 ## Current State
 
-Mergeable is currently a series of webpages that host Ace's text-editor, and exists only on local servers.
+Mergeable is a website that hosts account creation and collaborative document editing through Ace's text-editor.
 
-![Mergeable Example](src/assets/images/ss.png)
+![Mergeable Accounts](src/assets/images/account.png)
+![Mergeable Example](src/assets/images/text-editor.png)
 
 In order to run Mergeable locally:
 
@@ -39,17 +40,19 @@ In order to run Mergeable locally:
 
 ### Milestone 3 Account Management - GOAL: 4/15/2017
 
+    * Set up database
+    * Create user and document schemas
     * Website Interactivity/Functionality
     * Give users ability to create accounts
     * Ability to save/download/upload documents.
     * Update and manage account options
-    * Deploy to Heroku
 
-### Milestone 4 Checkpoint - Goal 5/8/2017
+### Milestone 4 Stretch Goals - Goal 5/8/2017
 
-    * Advance collaboration to "Teacher"/"Student" permissions
+    * Clean up code architecture
+    * Ability to run code
+    * Deploy to AWS
     * Set a setting for files to be "workshops"
-    * Provide a method for running code within a workshop
     * Provide a methods and permissions for "Teachers" to grade workshops
 
 A specific list of issues filed under each respective milestone can be found [here](http://github.com/ben-wolf/mergeable/issues).

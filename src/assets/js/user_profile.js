@@ -4,8 +4,8 @@ $(document).ready(function() {
   var img = "";
   var socket = io();
 
-  socket.emit('get_info');
-  socket.on('send_info', function(data) {
+  $.post("http://localhost:8080/get_info")
+  .then(function(data) {
     $("#propic").attr("src", data.avatar);
     $('#name').html(data.firstname + " " + data.lastname);
     $('#description').html(data.description);

@@ -129,6 +129,20 @@ module.exports = function(app, io) {
   });
 
 /* USER-PROFILE PAGE */
+  app.post('/get_info', function(req, res) {
+    var info = {documents: []};
+    info.avatar = gravatar.url(req.user.email, {s: '140', r: 'x', d: 'mm'});
+    info.firstname = req.user.firstname;
+    info.lastname = req.user.lastname;
+    info.description = req.user.description;
+    for (var i = 0; i < req.user.documents.length; i++) {
+      info.documents.push(req.user.documents[i]);
+    }
+
+    console.log(info);
+    res.send(info);
+    return res.status(200).send();
+  });
   app.get('/profile', function(req, res) {
     // Move to user_profile
     res.redirect('/user_profile-' + userid);
@@ -244,12 +258,6 @@ module.exports = function(app, io) {
   //// SOCKET /////////////////////////////////////////
   /////////////////////////////////////////////////////
   var collab = io.on("connection", function(socket) {
-
-    // Save email for gravatar image.
-    socket.on('login', function(data) {
-      email = gravatar.url(data, {s: '140', r: 'x', d: "mm"});
-      console.log("avatar = " + email);
-    });
 
     socket.on('get_info', function(data) {
       // console.log("after = " + email);
