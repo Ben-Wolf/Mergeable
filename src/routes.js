@@ -136,11 +136,8 @@ module.exports = function(app, io) {
     info.lastname = req.user.lastname;
     info.description = req.user.description;
 
-    var finished = false;
     for (var i=0; i<req.user.documents.length; i++) {
-      console.log("1");
       Document.getDocumentById(req.user.documents[i], function(err, doc) {
-          console.log("2");
         if (err) {
           console.log(err);
         } else {
@@ -153,28 +150,16 @@ module.exports = function(app, io) {
             data.file = doc.file;
             data.otherEditors = doc.otherEditors;
             info.documents.push(data);
-            console.log("here");
-            console.log(info);
+            if (info.documents.length == req.user.documents.length) {
+              res.send(info);
+              return res.status(200).send();
+            }
           } else {
             console.log("Document not found");
           }
         }
       });
-      console.log("in loop");
-      if (i == req.user.documents.length -1) {
-        finished = true;
-      }
     }
-
-    while (true) {
-      if (finished) {
-        console.log("3");
-        console.log(info);
-        res.send(info);
-        return res.status(200).send();
-      }
-    }
-
   });
 
   app.get('/profile', function(req, res) {
