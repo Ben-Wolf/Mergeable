@@ -27,3 +27,7 @@ var Document = module.exports = mongoose.model('Document', documentSchema);
 module.exports.createDocument = function(newDocument, callback){
   newDocument.save(callback);
 }
+
+module.exports.getDocumentById = function(id, callback){
+  Document.findById(id, callback);
+}

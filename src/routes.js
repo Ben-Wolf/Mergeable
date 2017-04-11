@@ -135,14 +135,33 @@ module.exports = function(app, io) {
     info.firstname = req.user.firstname;
     info.lastname = req.user.lastname;
     info.description = req.user.description;
-    for (var i = 0; i < req.user.documents.length; i++) {
-      info.documents.push(req.user.documents[i]);
-    }
 
-    console.log(info);
-    res.send(info);
-    return res.status(200).send();
+    for (var i=0; i<req.user.documents.length; i++) {
+      Document.getDocumentById(req.user.documents[i], function(err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (doc) {
+            console.log("Document found");
+            var data = {};
+            data.title = doc.title;
+            data.dateCreated = doc.dateCreated;
+            data.lastModified = doc.lastModified;
+            data.file = doc.file;
+            data.otherEditors = doc.otherEditors;
+            info.documents.push(data);
+            if (info.documents.length == req.user.documents.length) {
+              res.send(info);
+              return res.status(200).send();
+            }
+          } else {
+            console.log("Document not found");
+          }
+        }
+      });
+    }
   });
+
   app.get('/profile', function(req, res) {
     // Move to user_profile
     res.redirect('/user_profile-' + userid);

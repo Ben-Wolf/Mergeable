@@ -4,6 +4,7 @@ $(document).ready(function() {
 
   $.post("http://localhost:8080/get_info")
   .then(function(data) {
+    console.log("4");
     $("#propic").attr("src", data.avatar);
     $('#name').html(data.firstname + " " + data.lastname);
     $('#description').html(data.description);
@@ -13,7 +14,7 @@ $(document).ready(function() {
       listed = '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">' + data.documents[i] + '</h3> <p class="list-group-item-text"></p>' + data.documents[i] + '</a>\n'
+        listed += '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">' + data.documents[i].title + '</h3> <p class="list-group-item-text"></p>' + data.documents[i].file + '</a>\n'
         console.log(data.documents[i]);
       }
     }
