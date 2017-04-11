@@ -14,7 +14,7 @@ $(document).ready(function() {
       listed = '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="#" class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '</h3> <p class="list-group-item-text"></p>' + data.documents[i].file + '</a>\n'
+        listed += '<a href="#" class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span class="glyphicon glyphicon-trash"></span></button></h3><p class="list-group-item-text">' + data.documents[i].file + '</p></a>\n'
         console.log(data.documents[i]);
       }
     }
