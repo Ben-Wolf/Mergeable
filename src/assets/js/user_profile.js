@@ -14,7 +14,7 @@ $(document).ready(function() {
       listed = '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">' + data.documents[i].title + '</h3> <p class="list-group-item-text"></p>' + data.documents[i].file + '</a>\n'
+        listed += '<a href="#" class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '</h3> <p class="list-group-item-text"></p>' + data.documents[i].file + '</a>\n'
         console.log(data.documents[i]);
       }
     }
@@ -37,4 +37,10 @@ $(document).ready(function() {
       $('#description').html('<textarea id="txt" name="txt" class="form-control" style="overflow:auto;resize:none" rows="5">' + curr + '</textarea>');
     }
   });
+
+  $(".saved-doc").click(function() {
+    //not implemented yet.
+  });
+
+  // End of document.ready
 });
