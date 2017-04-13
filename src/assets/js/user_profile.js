@@ -7,12 +7,14 @@ $(document).ready(function() {
   // Remove document
   delete_document = function (id) {
       alert(id);
-      $.post("http://localhost:8080/remove_document", {id: id});
+      $.post("http://localhost:8080/remove_document", {id: id})
+      .then(function(data) {
+        window.location.reload();
+      });
   }
 
   $.post("http://localhost:8080/get_info")
   .then(function(data) {
-    console.log("4");
     $("#propic").attr("src", data.avatar);
     $('#name').html(data.firstname + " " + data.lastname);
     $('#description').html(data.description);

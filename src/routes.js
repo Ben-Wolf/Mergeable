@@ -184,7 +184,77 @@ module.exports = function(app, io) {
 
   app.post('/remove_document', function(req, res) {
     var id = req.body.id;
+    var info = {};
     console.log(id);
+
+    // Remove document from user account
+    Document.findById(id, function(err, doc) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (doc) {
+          // Remove file from owner
+          User.getUserByEmail(doc.owner, function(err, user) {
+            if (user) {
+              var index = user.documents.indexOf(id);
+              if (index > -1) {
+                user.documents.splice(index, 1);
+                user.save(function(err) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log("Document removed from owner");
+                  }
+                });
+              }
+            } else {
+              console.log("Owner not found");
+            }
+          });
+
+          // Remove file from other editors
+          for (var i=0; i<doc.otherEditors.length; i++){
+            console.log("doc editors length: ");
+            console.log(doc.otherEditors.length);
+            console.log(doc.otherEditors);
+            // User.getUserByEmail(doc.otherEditors[i], function(err, user) {
+            //   if (user) {
+            //     var index = user.documents.indexOf(id);
+            //     if (index > -1) {
+            //       user.documents.splice(index, 1);
+            //       user.save(function(err) {
+            //         if (err) {
+            //           console.log(err);
+            //         } else {
+            //           console.log("Document removed from editor");
+            //         }
+            //       });
+            //     }
+            //   } else {
+            //     console.log("Editor not found");
+            //   }
+            // });
+          }
+
+        } else {
+          console.log("Document not found in database");
+        }
+      }
+    });
+
+    // Remove document
+    Document.removeDocumentById(id, function(err) {
+      if (err) {
+        console.log(err);
+        info.err = 1;
+      } else {
+        console.log("Document deleted!");
+        info.err = 0;
+      }
+    });
+
+    res.send(info);
+    return res.status(200).send();
   });
 
 /* TEXT-EDITOR PAGE */
