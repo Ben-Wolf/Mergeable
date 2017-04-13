@@ -1,12 +1,14 @@
-// Remove document
-function delete_document(id) {
-    alert(id);
-}
-
+var delete_document;
 
 $(document).ready(function() {
   var img = "";
   var curr = "";
+
+  // Remove document
+  delete_document = function (id) {
+      alert(id);
+      $.post("http://localhost:8080/remove_document", {id: id});
+  }
 
   $.post("http://localhost:8080/get_info")
   .then(function(data) {

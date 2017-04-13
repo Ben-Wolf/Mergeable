@@ -182,6 +182,11 @@ module.exports = function(app, io) {
     });
   });
 
+  app.post('/remove_document', function(req, res) {
+    var id = req.body.id;
+    console.log(id);
+  });
+
 /* TEXT-EDITOR PAGE */
   app.get('/new', function(req, res){
 
