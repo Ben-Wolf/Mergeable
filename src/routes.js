@@ -1,5 +1,4 @@
 var ids = [];
-var acc;
 var userid = "";
 var data = {err: 0, redirectUrl: "/"};
 
@@ -51,7 +50,6 @@ module.exports = function(app, io) {
    		if(err) throw err;
    		if(isMatch){
         console.log('User found, Password match');
-        acc = user;
    			done(null, user);
    		} else {
         console.log('Invalid password');
@@ -149,6 +147,7 @@ module.exports = function(app, io) {
             data.lastModified = doc.lastModified;
             data.file = doc.file;
             data.otherEditors = doc.otherEditors;
+            data.id = doc._id;
             info.documents.push(data);
             if (info.documents.length == req.user.documents.length) {
               res.send(info);
@@ -180,6 +179,10 @@ module.exports = function(app, io) {
       else console.log("Saved description");
     });
   });
+
+  // app.post('/save_file', function(req, res) {
+  //
+  // });
 
 /* TEXT-EDITOR PAGE */
   app.get('/new', function(req, res){
@@ -280,9 +283,7 @@ module.exports = function(app, io) {
 
     // Saves profile description.
     socket.on('save_description', function(data) {
-      console.log("DATA = " + acc.description);
-      acc.description = data;
-      console.log("DATA AFTER = " + acc.description);
+      req.user.description = data;
     });
 
     // Logs to console that user is in certain ID
