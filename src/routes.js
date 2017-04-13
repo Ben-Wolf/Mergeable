@@ -144,6 +144,7 @@ module.exports = function(app, io) {
           if (doc) {
             console.log("Document found");
             var data = {};
+            data._id = doc._id;
             data.title = doc.title;
             data.dateCreated = doc.dateCreated;
             data.lastModified = doc.lastModified;
