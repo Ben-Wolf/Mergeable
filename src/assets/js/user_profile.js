@@ -1,6 +1,17 @@
+var delete_document;
+
 $(document).ready(function() {
   var img = "";
   var curr = "";
+
+  // Remove document
+  delete_document = function (id) {
+      alert(id);
+      $.post("http://localhost:8080/remove_document", {id: id})
+      .then(function(data) {
+        window.location.reload();
+      });
+  }
 
   $.post("http://localhost:8080/get_info")
   .then(function(data) {
@@ -17,7 +28,7 @@ $(document).ready(function() {
         if (temp.length > 405) {
           temp = temp.substr(0,405);
         }
-        listed += '<a href="/new" class="list-group-item"><h3 class="list-group-item-heading">' + data.documents[i].title + '</h3> <p class="list-group-item-text">' + temp + '</p></a>\n';
+        listed += '<a href="/new" class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button></h3><p class="list-group-item-text">' + temp + '</p></a>\n';
       }
     }
 
@@ -39,4 +50,10 @@ $(document).ready(function() {
       $('#description').html('<textarea id="txt" name="txt" class="form-control" style="overflow:auto;resize:none" rows="5">' + curr + '</textarea>');
     }
   });
+
+  $(".saved-doc").click(function() {
+    //not implemented yet.
+  });
+
+  // End of document.ready
 });
