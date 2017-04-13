@@ -136,6 +136,11 @@ module.exports = function(app, io) {
     info.lastname = req.user.lastname;
     info.description = req.user.description;
 
+    if (req.user.documents.length == 0) {
+      res.send(info);
+      return res.status(200).send();
+    }
+
     for (var i=0; i<req.user.documents.length; i++) {
       Document.getDocumentById(req.user.documents[i], function(err, doc) {
         if (err) {
@@ -214,26 +219,23 @@ module.exports = function(app, io) {
 
           // Remove file from other editors
           for (var i=0; i<doc.otherEditors.length; i++){
-            console.log("doc editors length: ");
-            console.log(doc.otherEditors.length);
-            console.log(doc.otherEditors);
-            // User.getUserByEmail(doc.otherEditors[i], function(err, user) {
-            //   if (user) {
-            //     var index = user.documents.indexOf(id);
-            //     if (index > -1) {
-            //       user.documents.splice(index, 1);
-            //       user.save(function(err) {
-            //         if (err) {
-            //           console.log(err);
-            //         } else {
-            //           console.log("Document removed from editor");
-            //         }
-            //       });
-            //     }
-            //   } else {
-            //     console.log("Editor not found");
-            //   }
-            // });
+            User.getUserByEmail(doc.otherEditors[i], function(err, user) {
+              if (user) {
+                var index = user.documents.indexOf(id);
+                if (index > -1) {
+                  user.documents.splice(index, 1);
+                  user.save(function(err) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log("Document removed from editor");
+                    }
+                  });
+                }
+              } else {
+                console.log("Editor not found");
+              }
+            });
           }
 
         } else {
@@ -278,9 +280,13 @@ module.exports = function(app, io) {
     var file = req.body.file;
     var otherEditors = req.body.otherEditors;
 
-    otherEditors = otherEditors.split(",");
-    for(var i=0; i<otherEditors.length; i++) {
-      otherEditors[i] = otherEditors[i].trim();
+    if (otherEditors != "") {
+      otherEditors = otherEditors.split(",");
+      for(var i=0; i<otherEditors.length; i++) {
+        otherEditors[i] = otherEditors[i].trim();
+      }
+    } else {
+      otherEditors = [];
     }
 
     var newDocument = new Document({
@@ -317,8 +323,6 @@ module.exports = function(app, io) {
             }
           });
 
-          console.log("editors...");
-          console.log(otherEditors);
           // Add document to otherEditors' accounts
           for (var i=0; i<otherEditors.length; i++){
             User.getUserByEmail(otherEditors[i], function(err, user) {
