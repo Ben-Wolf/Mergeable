@@ -23,11 +23,14 @@ $(document).ready(function() {
     console.log(data.documents.length);
     console.log(data.documents);
     if (data.documents.length == 0) {
-      listed = '<a href="#" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
+      listed = '<a href="/new" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="#" class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button></h3><p class="list-group-item-text">' + data.documents[i].file + '</p></a>\n'
-        console.log(data.documents[i]);
+        var temp = data.documents[i].file;
+        if (temp.length > 405) {
+          temp = temp.substr(0,405);
+        }
+        listed += '<a href="#" class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button></h3><p class="list-group-item-text">' + temp + '</p></a>\n'
       }
     }
 
