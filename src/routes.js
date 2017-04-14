@@ -303,7 +303,6 @@ module.exports = function(app, io) {
       dateCreated: date,
       lastModified: date,
       file: file,
-      // otherEditors: otherEditors
     });
 
     req.checkBody('title', 'Document name is required').notEmpty();

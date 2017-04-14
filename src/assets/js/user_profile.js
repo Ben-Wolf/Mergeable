@@ -6,7 +6,6 @@ $(document).ready(function() {
 
   // Remove document
   delete_document = function (id) {
-      alert(id);
       $.post("http://localhost:8080/remove_document", {id: id})
       .then(function(data) {
         window.location.reload();
