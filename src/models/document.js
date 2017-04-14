@@ -31,3 +31,7 @@ module.exports.createDocument = function(newDocument, callback){
 module.exports.getDocumentById = function(id, callback){
   Document.findById(id, callback);
 }
+
+module.exports.removeDocumentById = function(id, callback){
+  Document.findByIdAndRemove(id, callback);
+}

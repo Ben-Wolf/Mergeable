@@ -134,6 +134,11 @@ module.exports = function(app, io) {
     info.lastname = req.user.lastname;
     info.description = req.user.description;
 
+    if (req.user.documents.length == 0) {
+      res.send(info);
+      return res.status(200).send();
+    }
+
     for (var i=0; i<req.user.documents.length; i++) {
       Document.getDocumentById(req.user.documents[i], function(err, doc) {
         if (err) {
@@ -142,6 +147,7 @@ module.exports = function(app, io) {
           if (doc) {
             console.log("Document found");
             var data = {};
+            data._id = doc._id;
             data.title = doc.title;
             data.dateCreated = doc.dateCreated;
             data.lastModified = doc.lastModified;
@@ -180,9 +186,77 @@ module.exports = function(app, io) {
     });
   });
 
-  // app.post('/save_file', function(req, res) {
-  //
-  // });
+  app.post('/remove_document', function(req, res) {
+    var id = req.body.id;
+    var info = {};
+    console.log(id);
+
+    // Remove document from user account
+    Document.findById(id, function(err, doc) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (doc) {
+          // Remove file from owner
+          User.getUserByEmail(doc.owner, function(err, user) {
+            if (user) {
+              var index = user.documents.indexOf(id);
+              if (index > -1) {
+                user.documents.splice(index, 1);
+                user.save(function(err) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log("Document removed from owner");
+                  }
+                });
+              }
+            } else {
+              console.log("Owner not found");
+            }
+          });
+
+          // Remove file from other editors
+          for (var i=0; i<doc.otherEditors.length; i++){
+            User.getUserByEmail(doc.otherEditors[i], function(err, user) {
+              if (user) {
+                var index = user.documents.indexOf(id);
+                if (index > -1) {
+                  user.documents.splice(index, 1);
+                  user.save(function(err) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log("Document removed from editor");
+                    }
+                  });
+                }
+              } else {
+                console.log("Editor not found");
+              }
+            });
+          }
+
+        } else {
+          console.log("Document not found in database");
+        }
+      }
+    });
+
+    // Remove document
+    Document.removeDocumentById(id, function(err) {
+      if (err) {
+        console.log(err);
+        info.err = 1;
+      } else {
+        console.log("Document deleted!");
+        info.err = 0;
+      }
+    });
+
+    res.send(info);
+    return res.status(200).send();
+  });
 
 /* TEXT-EDITOR PAGE */
   app.get('/new', function(req, res){
@@ -205,18 +279,23 @@ module.exports = function(app, io) {
     var file = req.body.file;
     var otherEditors = req.body.otherEditors;
 
-    otherEditors = otherEditors.split(",");
-    // var j = -1;
-    for(var i=0; i<otherEditors.length; i++) {
-      otherEditors[i] = otherEditors[i].trim();
-      // if (otherEditors[i] == req.user.email) {
-      //   j == i;
-      // }
+    if (otherEditors != "") {
+      var j = -1;
+      otherEditors = otherEditors.split(",");
+      for(var i=0; i<otherEditors.length; i++) {
+        otherEditors[i] = otherEditors[i].trim();
+        if (otherEditors[i].valueOf() == req.user.email.valueOf()) {
+          j = i;
+        }
+      }
+      // If owner's email was added to additional editors
+      if (j>-1) {
+        otherEditors.splice(j,1);
+      }
+    } else {
+      otherEditors = [];
     }
-    // If owner's email was added to additional editors
-    // if (j>0) {
-    //   otherEditors.splice(j,1);
-    // }
+
 
     var newDocument = new Document({
       owner: owner,
@@ -252,8 +331,6 @@ module.exports = function(app, io) {
             }
           });
 
-          console.log("editors...");
-          console.log(otherEditors);
           // Add document to otherEditors' accounts
           for (var i=0; i<otherEditors.length; i++){
             User.getUserByEmail(otherEditors[i], function(err, user) {
