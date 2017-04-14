@@ -206,9 +206,17 @@ module.exports = function(app, io) {
     var otherEditors = req.body.otherEditors;
 
     otherEditors = otherEditors.split(",");
+    // var j = -1;
     for(var i=0; i<otherEditors.length; i++) {
       otherEditors[i] = otherEditors[i].trim();
+      // if (otherEditors[i] == req.user.email) {
+      //   j == i;
+      // }
     }
+    // If owner's email was added to additional editors
+    // if (j>0) {
+    //   otherEditors.splice(j,1);
+    // }
 
     var newDocument = new Document({
       owner: owner,
