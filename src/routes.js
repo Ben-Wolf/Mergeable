@@ -303,7 +303,7 @@ module.exports = function(app, io) {
       dateCreated: date,
       lastModified: date,
       file: file,
-      otherEditors: otherEditors
+      // otherEditors: otherEditors
     });
 
     req.checkBody('title', 'Document name is required').notEmpty();
@@ -340,6 +340,14 @@ module.exports = function(app, io) {
                 if (!user) {
                   console.log("Account does not exist.");
                 } else {
+                  doc.otherEditors.push(user.email);
+                  doc.save(function(err) {
+                    if (err) {
+                      console.log(err);
+                    }
+                  });
+                  console.log("here");
+                  console.log(doc.otherEditors);
                   user.documents.push(doc._id);
                   user.save(function(err) {
                     if (err) {
