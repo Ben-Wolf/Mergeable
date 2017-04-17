@@ -10,6 +10,16 @@ $(document).ready(function() {
   var id = getID(window.location.pathname);
   var holder = 0;
 
+
+  // Updates editor info if trying to load a document
+  if (id.length > 10) {
+    $.post("populate_editor", {id: id})
+    .then(function(data) {
+      editor.getSession().setValue(data.file);
+      $("#fileTitle").html(data.title);
+    });
+  }
+
   // Will use this to check for permissions in future?
   // Currently sets the first person to work on a file as "pioneer"
   socket.emit("checkID", id);
@@ -105,7 +115,7 @@ $(document).ready(function() {
     changeSize("#size24", 24, sizes);
   });
 
-  /* Save Document */
+  // Saves document for user and all other editors
   $("#save_new").click(function() {
     var title = $("#title").val();
     var file = editor.getValue();
@@ -118,6 +128,15 @@ $(document).ready(function() {
               alert("Document Saved");
               $('#savedoc-modal').modal('hide');
           });
+  });
+
+  // Updates a previously saved document
+  $("#save").click(function() {
+    if(id.length < 10) alert("Document can't be updated. Please 'Save As' first.");
+    else {
+      var file = editor.getValue();
+      $.post("http://localhost:8080/save", {id: id, file: file});
+    }
   });
 
   /* Download Document */
@@ -214,8 +233,8 @@ function changeSize(curr, size, arr) {
 function getID(url) {
   url = String(url);
   var id = "";
-  for (var i = 0; i < 6; i++) {
-    id += url[url.length - 6 + i];
+  for (var i = 8; i < url.length; i++) {
+    id += url[i];
   }
   return id;
 }
