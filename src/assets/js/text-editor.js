@@ -15,8 +15,29 @@ $(document).ready(function() {
   if (id.length > 10) {
     $.post("populate_editor", {id: id})
     .then(function(data) {
-      editor.getSession().setValue(data.file);
-      $("#fileTitle").html(data.title);
+      var title = data.title;
+      var file = data.file;
+      var lang = data.lang;
+      if (data.permission) {
+        editor.getSession().setValue(file);
+        $("#fileTitle").html(title);
+        change(lang, "mode", languages);
+      }
+      else {
+        $.post("check_id", {id: id})
+        .then(function(e) {
+          console.log("E = " + e.permission);
+          if (e.permission) {
+            editor.getSession().setValue(file);
+            $("#fileTitle").html(title);
+            change(lang, "mode", languages);
+          }
+          else {
+            alert("You do not have adequate permissions to access this file.");
+            window.location.href = "/new"
+          }
+        })
+      }
     });
   }
 
@@ -34,7 +55,7 @@ $(document).ready(function() {
   // Arrays to hold all the elements in each drop down list.
   var languages = ["#CSharp", "#CSS", "#HTML", "#Java", "#JavaScript", "#Python", "#TypeScript"];
   var themes = ["#Chrome", "#Clouds", "#Cobalt", "#Eclipse", "#Github", "#Merbivore", "#Mono_industrial", "#Monokai", "#Terminal"];
-  var sizes = ["#size10", "#size11", "#size12", "#size13", "#size14", "#size16", "#size20", "#size24"];
+  var sizes = ["#size10", "#size11", "#size12", "#size13", "#size14", "#size16", "#size20", "#size24", "#size30", "#size48"];
 
   /* Language Options */
   // Emits a socket, because changing the language on a file should affect everyone working on the file.
@@ -114,15 +135,25 @@ $(document).ready(function() {
   $("#size24").click(function() {
     changeSize("#size24", 24, sizes);
   });
+  $("#size30").click(function() {
+    changeSize("#size30", 30, sizes);
+  });
+  $("#size48").click(function() {
+    changeSize("#size48", 48, sizes);
+  });
 
   // Saves document for user and all other editors
   $("#save_new").click(function() {
     var title = $("#title").val();
+    var description = $("#description").val();
     var file = editor.getValue();
     var otherEditors = $("#additionalEditors").val();
+    var mode = editor.session.$modeId;
+    var hidden = ($('#private').is(':checked'));
+    mode = mode.substr(mode.lastIndexOf('/') + 1);
 
     $.post("http://localhost:8080/save_new",
-          {title: title, otherEditors: otherEditors, file: file})
+          {title: title, otherEditors: otherEditors, description: description, file: file, lang: mode, hidden: hidden})
           .then(function(data) {
             if (data.err == 0)
               alert("Document Saved");
@@ -135,9 +166,68 @@ $(document).ready(function() {
     if(id.length < 10) alert("Document can't be updated. Please 'Save As' first.");
     else {
       var file = editor.getValue();
-      $.post("http://localhost:8080/save", {id: id, file: file});
+      var mode = editor.session.$modeId;
+      mode = mode.substr(mode.lastIndexOf('/') + 1);
+
+      $.post("http://localhost:8080/save", {id: id, file: file, lang: mode})
+      .then(function(data) {
+        window.location.href = "/editor-" + data;
+      });
     }
   });
+
+  // Function to change a theme or language
+  // Takes in jQuery id as first argument, language/theme as second, array of langauges/themes as third
+  function change(curr, type, arr) {
+    unactivate(arr);
+    var temp = "";
+    // Removes "#" in front of object name
+    if (curr[0] == "#") {
+      for (var i = 1; i < curr.length; i++) {
+        if (i == 1) temp += curr[i].toUpperCase();
+        else temp += curr[i];
+      }
+    }
+    else {
+      for (var i = 0; i < curr.length; i++) {
+        if (i == 0) temp += curr[i].toUpperCase();
+        else temp += curr[i];
+      }
+    }
+    // Creates string for file to be modified (lower case to avoid file problems)
+    var file = ("ace/" + type + "/" + temp).toLowerCase();
+    $("#" + temp).parent().addClass("active");
+    // Checks if we wanted to change language (editor mode)
+    if (type == "mode") {
+      editor.session.setMode(file);
+      $("#language").html(temp + " <span class='caret'></span>");
+    }
+    // Checks if we wanted to change theme (editor theme)
+    if (type == "theme") {
+      editor.setTheme(file);
+      $("#theme").html(temp + " <span class='caret'></span>");
+    }
+  }
+
+  // Function to change size
+  function changeSize(curr, size, arr) {
+    unactivate(arr);
+    var temp = ""
+    temp += size;
+    $(curr).parent().addClass("active");
+    editor.setFontSize(size);
+    $("#fontsize").html(temp + "px <span class='caret'></span>");
+  }
+
+  // Function to get unique url of documents (will modify when database is set up to save docs)
+  function getID(url) {
+    url = String(url);
+    var id = "";
+    for (var i = 8; i < url.length; i++) {
+      id += url[i];
+    }
+    return id;
+  }
 
   /* Download Document */
   // CODE TO COME
@@ -160,7 +250,6 @@ $(document).ready(function() {
   });
 
   socket.on('find_pioneer', function(data) {
-    console.log("finding_pioneer");
     // get the current mode
     var mode = editor.session.$modeId;
 
@@ -171,9 +260,7 @@ $(document).ready(function() {
   });
 
   socket.on('update', function(data) {
-    console.log("updating");
     if (data[0] == id) {
-      console.log("setting value to:\n" + data[1]);
       editor.getSession().setValue(data[1]);
       change("#" + data[2], "mode", languages);
     }
@@ -192,49 +279,4 @@ $(document).ready(function() {
 function unactivate(arr) {
   for (var i = 0; i < arr.length; i++)
     $(arr[i]).parent().removeClass("active");
-}
-
-// Function to change a theme or language
-// Takes in jQuery id as first argument, language/theme as second, array of langauges/themes as third
-function change(curr, type, arr) {
-  unactivate(arr);
-  var temp = "";
-  // Removes "#" in front of object name
-  for (var i = 1; i < curr.length; i++) {
-    if (i == 1) temp += curr[i].toUpperCase();
-    else temp += curr[i];
-  }
-  console.log(temp);
-  // Creates string for file to be modified (lower case to avoid file problems)
-  var file = ("ace/" + type + "/" + temp).toLowerCase();
-  $("#" + temp).parent().addClass("active");
-  // Checks if we wanted to change language (editor mode)
-  if (type == "mode") {
-    editor.session.setMode(file);
-    $("#language").html(temp + " <span class='caret'></span>");
-  }
-  // Checks if we wanted to change theme (editor theme)
-  if (type == "theme") {
-    editor.setTheme(file);
-    $("#theme").html(temp + " <span class='caret'></span>");
-  }
-}
-
-function changeSize(curr, size, arr) {
-  unactivate(arr);
-  var temp = ""
-  temp += size;
-  $(curr).parent().addClass("active");
-  editor.setFontSize(size);
-  $("#fontsize").html(temp + "px <span class='caret'></span>");
-}
-
-// Function to get unique url of documents (will modify when database is set up to save docs)
-function getID(url) {
-  url = String(url);
-  var id = "";
-  for (var i = 8; i < url.length; i++) {
-    id += url[i];
-  }
-  return id;
 }

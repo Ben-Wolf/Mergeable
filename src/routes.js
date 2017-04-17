@@ -155,6 +155,7 @@ module.exports = function(app, io) {
             data.file = doc.file;
             data.otherEditors = doc.otherEditors;
             data.id = doc._id;
+            data.description = doc.description
             info.documents.push(data);
             if (info.documents.length == req.user.documents.length) {
               res.send(info);
@@ -275,8 +276,7 @@ module.exports = function(app, io) {
 
   app.post('/populate_editor', function(req, res) {
     var id = req.body.id;
-    console.log("Loading file: ID = " + id);
-    var info = {title: "", file: ""};
+    var info = {title: "", file: "", lang: "", permission: true};
 
     Document.findById(id, function(err, doc) {
       if (err) console.log(err);
@@ -284,6 +284,8 @@ module.exports = function(app, io) {
         if (doc) {
           info.title = doc.title;
           info.file = doc.file;
+          info.lang = doc.language;
+          info.permission = !doc.hidden;
         }
         if (info.title != "") {
           console.log("Found file... " + info.title);
@@ -294,12 +296,30 @@ module.exports = function(app, io) {
     });
   });
 
+  app.post('/check_id', function(req, res) {
+    var id = req.body.id;
+    var data = {permission: false};
+
+    for (var i = 0; i < req.user.documents.length; i++) {
+      if (id == req.user.documents[i]) {
+        console.log("id = " + id + "; curr = " + req.user.documents[i])
+        data.permission = true;
+      }
+    }
+
+    res.send(data);
+    return res.status(200).send();
+  });
+
   app.post('/save_new', function(req, res) {
     var owner = req.user.email;
     var title = req.body.title;
     var date = Date.now();
     var file = req.body.file;
     var otherEditors = req.body.otherEditors;
+    var lang = req.body.lang;
+    var description = req.body.description;
+    var hidden = req.body.hidden;
 
     if (otherEditors != "") {
       var j = -1;
@@ -325,6 +345,9 @@ module.exports = function(app, io) {
       dateCreated: date,
       lastModified: date,
       file: file,
+      lang: lang,
+      description: description,
+      hidden: hidden
     });
 
     req.checkBody('title', 'Document name is required').notEmpty();
@@ -394,13 +417,16 @@ module.exports = function(app, io) {
     var date = Date.now();
     var file = req.body.file;
     var id = req.body.id;
+    var lang = req.body.lang;
     var temp = "";
 
     Document.findById(id, function(err, doc) {
       if (err) console.log(err);
       else {
         if (doc) {
+          console.log("CURRENT LANGUAGE " + lang);
           doc.file = file;
+          doc.language = lang;
           doc.lastModified = date;
           temp = doc.title;
         }
@@ -411,6 +437,8 @@ module.exports = function(app, io) {
               console.log("Saved Document: " + temp);
             }
           });
+          console.log("ACTUALLY " + doc.language);
+          res.send(doc._id);
           return res.status(200).send();
         }
       }
