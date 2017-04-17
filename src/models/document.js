@@ -17,8 +17,17 @@ var documentSchema = mongoose.Schema ({
   file: {
     type: String
   },
+  description: {
+    type: String
+  },
   otherEditors: {
     type: [String]
+  },
+  language: {
+    type: String
+  },
+  hidden: {
+    type: Boolean
   }
 });
 
