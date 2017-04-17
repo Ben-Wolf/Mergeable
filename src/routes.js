@@ -1,6 +1,7 @@
 var ids = [];
 var userid = "";
 var data = {err: 0, redirectUrl: "/"};
+var temp;
 
 var gravatar = require('gravatar');
 var express = require('express');
@@ -272,6 +273,27 @@ module.exports = function(app, io) {
     res.render('text-editor');
   });
 
+  app.post('/populate_editor', function(req, res) {
+    var id = req.body.id;
+    console.log("Loading file: ID = " + id);
+    var info = {title: "", file: ""};
+
+    Document.findById(id, function(err, doc) {
+      if (err) console.log(err);
+      else {
+        if (doc) {
+          info.title = doc.title;
+          info.file = doc.file;
+        }
+        if (info.title != "") {
+          console.log("Found file... " + info.title);
+          res.send(info);
+          return res.status(200).send();
+        }
+      }
+    });
+  });
+
   app.post('/save_new', function(req, res) {
     var owner = req.user.email;
     var title = req.body.title;
@@ -318,7 +340,7 @@ module.exports = function(app, io) {
           console.log('error');
         } else {
           console.log(doc);
-
+          data.docId = doc._id;
           // Add document to user account
           var user = req.user;
           user.documents.push(doc._id);
@@ -366,6 +388,35 @@ module.exports = function(app, io) {
     res.send(data);
     data.err = 0;
     return res.status(200).send();
+  });
+
+  app.post('/save', function(req, res) {
+    var date = Date.now();
+    var file = req.body.file;
+    var id = req.body.id;
+    var temp = "";
+
+    Document.findById(id, function(err, doc) {
+      if (err) console.log(err);
+      else {
+        if (doc) {
+          doc.file = file;
+          doc.lastModified = date;
+          temp = doc.title;
+        }
+        if (temp != "") {
+          doc.save(function(err) {
+            if(err) console.log(err);
+            else {
+              console.log("Saved Document: " + temp);
+            }
+          });
+          return res.status(200).send();
+        }
+      }
+    });
+
+    console.log("Document not found");
   });
 
   /////////////////////////////////////////////////////
