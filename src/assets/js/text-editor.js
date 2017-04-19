@@ -26,7 +26,6 @@ $(document).ready(function() {
       else {
         $.post("check_id", {id: id})
         .then(function(e) {
-          console.log("E = " + e.permission);
           if (e.permission) {
             editor.getSession().setValue(file);
             $("#fileTitle").html(title);

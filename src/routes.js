@@ -146,7 +146,6 @@ module.exports = function(app, io) {
           console.log(err);
         } else {
           if (doc) {
-            console.log("Document found");
             var data = {};
             data._id = doc._id;
             data.title = doc.title;
@@ -302,7 +301,6 @@ module.exports = function(app, io) {
 
     for (var i = 0; i < req.user.documents.length; i++) {
       if (id == req.user.documents[i]) {
-        console.log("id = " + id + "; curr = " + req.user.documents[i])
         data.permission = true;
       }
     }
@@ -390,7 +388,6 @@ module.exports = function(app, io) {
                       console.log(err);
                     }
                   });
-                  console.log("here");
                   console.log(doc.otherEditors);
                   user.documents.push(doc._id);
                   user.save(function(err) {
@@ -424,7 +421,6 @@ module.exports = function(app, io) {
       if (err) console.log(err);
       else {
         if (doc) {
-          console.log("CURRENT LANGUAGE " + lang);
           doc.file = file;
           doc.language = lang;
           doc.lastModified = date;
@@ -437,7 +433,6 @@ module.exports = function(app, io) {
               console.log("Saved Document: " + temp);
             }
           });
-          console.log("ACTUALLY " + doc.language);
           res.send(doc._id);
           return res.status(200).send();
         }
@@ -447,9 +442,7 @@ module.exports = function(app, io) {
     console.log("Document not found");
   });
 
-  /////////////////////////////////////////////////////
-  //// SOCKET /////////////////////////////////////////
-  /////////////////////////////////////////////////////
+  // Text-editor socket interactions
   var collab = io.on("connection", function(socket) {
 
     // Saves profile description.
@@ -477,13 +470,11 @@ module.exports = function(app, io) {
 
     socket.on('return_info', function(data) {
       if (socket.pioneer == true) {
-        console.log("CHANGING LANGUAGE TO: " + data.language);
         io.emit('update', [socket.id, data.info, data.language]);
       }
     });
 
     socket.on("change", function(data) {
-      // console.log(data);
       io.emit("changed", data);
     });
 
@@ -500,7 +491,6 @@ module.exports = function(app, io) {
             console.log("Pioneer has left " + socket.id + "... finding next pioneer");
             ids.splice(i, 1);
             break;
-            // ADD CODE TO FIND NEXT PIONEER
           }
 
           else {

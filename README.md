@@ -38,21 +38,25 @@ In order to run Mergeable locally:
     * Allow for collaborative coding
     * Allow for restrictions to be made (view/edit)
 
-### Milestone 3 Account Management - GOAL: 4/15/2017
+### Milestone 3 Website Interactivity/Functionality - GOAL: 4/15/2017 ✓ Completed
 
     * Set up database
     * Create user and document schemas
-    * Website Interactivity/Functionality
+    * Account management
+    * Base permissions systems for files
     * Give users ability to create accounts
-    * Ability to save/download/upload documents.
+    * Ability to save documents
+    * Ability to update and share documents
     * Update and manage account options
 
 ### Milestone 4 Stretch Goals - Goal 5/8/2017
 
     * Clean up code architecture
+    * Aesthetic rework
+    * Provide more intuitive permissions
+    * Ability to download documents
     * Ability to run code
     * Deploy to AWS
-    * Set a setting for files to be "workshops"
-    * Provide a methods and permissions for "Teachers" to grade workshops
+    * Create classroom style workshop tools
 
 A specific list of issues filed under each respective milestone can be found [here](http://github.com/ben-wolf/mergeable/issues).
