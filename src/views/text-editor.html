@@ -10,7 +10,7 @@
   <title>Mergeable: Text-Editor</title>
 </head>
 
-<body>
+<body class="loading">
   <!-- Navigation Bar: Homepage, Profile, New Doc, Sign Out -->
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -84,7 +84,8 @@
 
         <li><a id="saveAs" href="#" data-toggle="modal" data-target="#savedoc-modal">Save As</a></li>
         <li><a id="save" href="#">Save</a></li>
-        <li><a id="download" href="#">Download</a></li>
+        <li><a href="" id="link" onclick="setupDownloadLink(this)" download="MergeableDoc">Download</a></li>
+        <li><a id="run" href="#">Run</button></li>
       </ul>
     </div>
   </nav>
@@ -143,6 +144,7 @@
       </div>
   </div>
 
+  <div class="loadal"></div>
   <!-- Text-editor (using Ace) -->
   <div id="editor"></div>
   <!-- JQuery -->

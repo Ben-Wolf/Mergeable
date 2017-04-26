@@ -10,7 +10,6 @@ $(document).ready(function() {
   var id = getID(window.location.pathname);
   var holder = 0;
 
-
   // Updates editor info if trying to load a document
   if (id.length > 10) {
     $.post("populate_editor", {id: id})
@@ -22,6 +21,7 @@ $(document).ready(function() {
         editor.getSession().setValue(file);
         $("#fileTitle").html(title);
         change(lang, "mode", languages);
+        $("body").removeClass("loading");
       }
       else {
         $.post("check_id", {id: id})
@@ -31,6 +31,7 @@ $(document).ready(function() {
             editor.getSession().setValue(file);
             $("#fileTitle").html(title);
             change(lang, "mode", languages);
+            $("body").removeClass("loading");
           }
           else {
             alert("You do not have adequate permissions to access this file.");
@@ -39,6 +40,9 @@ $(document).ready(function() {
         })
       }
     });
+  }
+  else {
+    $("body").removeClass("loading");
   }
 
   // Will use this to check for permissions in future?
@@ -142,6 +146,18 @@ $(document).ready(function() {
     changeSize("#size48", 48, sizes);
   });
 
+  $("#run").click(function() {
+    var code = editor.getValue();
+    alert($("#JavaScript").hasClass("active"));
+    if ($("#JavaScript").hasClass("active")) {
+      alert(eval(code));
+    }
+
+    else {
+      alert("Currently only supports JavaScript");
+    }
+  });
+
   // Saves document for user and all other editors
   $("#save_new").click(function() {
     var title = $("#title").val();
@@ -175,6 +191,12 @@ $(document).ready(function() {
       });
     }
   });
+
+  // Document downloading as found from http://cwestblog.com/2014/10/21/javascript-creating-a-downloadable-file-in-the-browser/
+  setupDownloadLink = function(link) {
+    var code = editor.getValue();
+    link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
+  };
 
   // Function to change a theme or language
   // Takes in jQuery id as first argument, language/theme as second, array of langauges/themes as third
@@ -229,8 +251,6 @@ $(document).ready(function() {
     return id;
   }
 
-  /* Download Document */
-  // CODE TO COME
   /*
    *  Socket interactions
    */
