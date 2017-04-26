@@ -6,10 +6,15 @@ $(document).ready(function() {
 
   // Remove document
   delete_document = function (id) {
-      $.post("http://localhost:8080/remove_document", {id: id})
-      .then(function(data) {
-        window.location.reload();
-      });
+    $.post("http://localhost:8080/remove_document", {id: id})
+    .then(function(data) {
+      window.location.reload();
+    });
+  }
+
+  // Edit document details
+  edit_details = function(id) {
+    alert("not implemented yet");
   }
 
   $.post("http://localhost:8080/get_info")
@@ -23,11 +28,12 @@ $(document).ready(function() {
       listed = '<a href="/new" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="/editor-' + data.documents[i]._id + '"  class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button></h3><p id=' + data.documents[i]._id + ' class="list-group-item-text">' + data.documents[i].description + '</p></a>\n';
+        listed += '<a href="/editor-' + data.documents[i]._id + '"  class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button><button type="button" class="pull-right"><span id="' + data.documents[i]._id + '" class="glyphicon glyphicon-wrench" onClick="edit_details(this.id)"></span></button></h3><p id=' + data.documents[i]._id + ' class="list-group-item-text">' + data.documents[i].description + '</p></a>\n';
       }
     }
 
     $('#savedList').html(listed);
+    $("body").removeClass("loading");
   });
 
   $("#editButton").click(function() {
