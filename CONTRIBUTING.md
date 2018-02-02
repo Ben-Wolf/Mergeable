@@ -1,15 +1,78 @@
-# Contributing
+# Contributor Mergeable Code of Conduct
 
-Before contributing to Mergeable please make an effort to communicate your plans with the owners of the repository through Github issues or via email.
+## Contribution and Code Usage
 
-## Pull Requests
+Before Contributing to Mergeable, please make an effort to communicate your plans with the owners od the repository through Github issues or via email.
 
-All pull requests should be made from a forked repository.
+###Pull Requests
 
-* Outline all changes made within the pull request description.
-* Refer to any issues your pull request addresses.
-* Request a code review, if approved by an owner it may be merged at any time after review.
+All pull requests should be made from a forked repository:
 
-## Style
+* Outlione all changes made withinthe pull request description
+* Refer to any issues your pull request addresses
+* Requests a code review, and if approved by an owner, it may be merged at any time after review
 
-All code should follow the Google style guide for the relevant language files.
+###Style 
+
+All code should follow the [Google Style Guide](https://google.github.io/styleguide/) for the relevant language files.
+
+
+## General Guidelines
+### Our Pledge
+
+In the interest of fostering an open and welcoming environment, we as
+contributors and maintainers pledge to making participation in our project and
+our community a harassment-free experience for everyone, regardless of age, body
+size, disability, ethnicity, gender identity and expression, level of experience,
+education, socio-economic status, nationality, personal appearance, race,
+religion, or sexual identity and orientation.
+
+### Our Standards
+
+Examples of behavior that contributes to creating a positive environment
+include:
+
+* Using welcoming and inclusive language
+* Being respectful of differing viewpoints and experiences
+* Gracefully accepting constructive criticism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
+
+Examples of unacceptable behavior by participants include:
+
+* The use of sexualized language or imagery and unwelcome sexual attention or
+  advances
+* Trolling, insulting/derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information, such as a physical or electronic
+  address, without explicit permission
+* Other conduct which could reasonably be considered inappropriate in a
+  professional setting
+
+### Our Responsibilities
+
+Project maintainers are responsible for clarifying the standards of acceptable
+behavior and are expected to take appropriate and fair corrective action in
+response to any instances of unacceptable behavior.
+
+Project maintainers have the right and responsibility to remove, edit, or
+reject comments, commits, code, wiki edits, issues, and other contributions
+that are not aligned to this Code of Conduct, or to ban temporarily or
+permanently any contributor for other behaviors that they deem inappropriate,
+threatening, offensive, or harmful.
+
+### Scope
+
+This Code of Conduct applies both within project spaces and in public spaces
+when an individual is representing the project or its community. Examples of
+representing a project or community include using an official project e-mail
+address, posting via an official social media account, or acting as an appointed
+representative at an online or offline event. Representation of a project may be
+further defined and clarified by project maintainers.
+
+## Attribution
+
+This Code of Conduct is modified and adapted from the [Contributor Covenant][homepage], version 1.4,
+available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+
+[homepage]: https://www.contributor-covenant.org
