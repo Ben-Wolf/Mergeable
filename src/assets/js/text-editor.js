@@ -56,7 +56,7 @@ $(document).ready(function() {
 
 
   // Arrays to hold all the elements in each drop down list.
-  var languages = ["#CSharp", "#CSS", "#HTML", "#Java", "#JavaScript", "#Python", "#TypeScript"];
+  var languages = ["#CSharp", "#CSS", "#HTML", "#Java", "#JavaScript", "#Python", "#TypeScript", "#c_cpp"];
   var themes = ["#Chrome", "#Clouds", "#Cobalt", "#Eclipse", "#Github", "#Merbivore", "#Mono_industrial", "#Monokai", "#Terminal"];
   var sizes = ["#size10", "#size11", "#size12", "#size13", "#size14", "#size16", "#size20", "#size24", "#size30", "#size48"];
 
@@ -82,6 +82,9 @@ $(document).ready(function() {
   });
   $("#TypeScript").click(function() {
     socket.emit("changeLanguage", ["#TypeScript", id]);
+  });
+  $("#c_cpp").click(function() {
+    socket.emit("changeLanguage", ["#c_cpp", id]);
   });
 
   /* Theme Options */
