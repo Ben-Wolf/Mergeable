@@ -14,49 +14,54 @@ Mergeable is a website that hosts account creation and collaborative document ed
 In order to run Mergeable locally:
 
   * Clone this repository.
+  * Start a MongoDB instance
+    * If you don't know how to do this refer to [this guide.](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#run-mongodb-community-edition)
   * Run ```npm install``` while in the 'Mergeable' directory.
-  * Run ```node app.js```.
+  * Run ```node app.js``` in the 'src' directory (inside the 'Mergeable' directory).
   * Go to http://localhost:8080 in your browser of choice.
 
 
 ## Goals and Milestones
 
-### Milestone 1 Setup - GOAL: 2/15/2017 ✓ Completed
+### Milestone 0: Documentation - Running Milestone
+* Keep this README up to date
+* Update CONTRIBUTING to include our Code of Conduct
+* Create documentation for how to use the website
+* Keep all new code well commented and adhere to style guides
+* Create [blog posts](https://rcos.io/projects/ben-wolf/mergeable/blog) whenever a big update is made
 
-    * Create landing page
-    * Create account page
-    * Create text-editor page
-    * Documentation (LICENSING.md, CONTRIBUTING.md, etc…)
-    * Ace integration
-    * Aesthetic design/direction of website [Ongoing]
+### Milestone 1: Functionality - Goal 3/20
+* Run code in the browser
+* Ability to download documents
+* Fix existing bugs (normalize capitalization, and what is account specific/shared)
+* Redesign how code is saved and updated (instead of sending entire documents on update)
+* Create a design for how workshops are going to look and the creation process
+* Show goals for workshop when working on a document - (hazy until design is made)
 
-### Milestone 2 Text-Editor/Collaboration - GOAL: 3/20/2017 ✓ Completed
+### Milestone 2: More Functionality - Goal 4/20
+* Actual workshop implementation
+* Restrict profile access depending on login
+* Re-design the method of accessing a profile and a file (not through URL)
+* Give users ability to design workshops
+* Workshop grading, design and implementation
+* Look into deploying, and having a running instance -- Find more issues after
 
-    * Give users ability to choose text-editor language
-    * Give users ability to choose text-editor theme
-    * Allow for multiple users to view the same file (local)
-    * Allow for collaborative coding
-    * Allow for restrictions to be made (view/edit)
+### Milestone 3: Aesthetic/Design - Goal 2/25
+* More freeform, design a friendly and welcoming aesthetic direction for the project
+* This will require updating the HTML/CSS and JS behind all existing pages
+* Change Welcome page
+* Change Profile page
+* Change Document page
+* Establish new design principles for how we want the user to interact with the website
+* Add more pages and permission functionality based on new design principles
 
-### Milestone 3 Website Interactivity/Functionality - GOAL: 4/15/2017 ✓ Completed
+### Milestone 4: Full Functionality and Stretch Goals 5/1+
+* Clean up code architecture
+* Refactor into Angular
+* Deployed and user testing
+* Issues based off of user testing
+* Share capabilities
+* Lists of public workshops for people to try
 
-    * Set up database
-    * Create user and document schemas
-    * Account management
-    * Base permissions systems for files
-    * Give users ability to create accounts
-    * Ability to save documents
-    * Ability to update and share documents
-    * Update and manage account options
-
-### Milestone 4 Stretch Goals - Goal 5/8/2017
-
-    * Clean up code architecture
-    * Aesthetic rework
-    * Provide more intuitive permissions
-    * Ability to download documents
-    * Ability to run code
-    * Deploy to AWS
-    * Create classroom style workshop tools
 
 A specific list of issues filed under each respective milestone can be found [here](http://github.com/ben-wolf/mergeable/issues).
