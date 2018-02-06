@@ -62,7 +62,7 @@ module.exports = function(app, io) {
 
   // Send login form
   app.post('/login',
-    passport.authenticate('local', {failureRedirect:'/login', failureFlash: 'Invalid username or password.'}),
+    passport.authenticate('local', {failureRedirect:'/', failureFlash: 'Invalid username or password.'}),
     function(req, res) {
       console.log("Success");
       res.send({err: 0, redirectUrl: "/profile"});
