@@ -288,6 +288,7 @@ module.exports = function(app, io) {
         }
         if (info.title != "") {
           console.log("Found file... " + info.title);
+          console.log(info);
           res.send(info);
           return res.status(200).send();
         }
@@ -362,6 +363,8 @@ module.exports = function(app, io) {
         } else {
           console.log(doc);
           data.docId = doc._id;
+          data.location = doc._id;
+          console.log("LOCATIOIN = " + data.location);
           // Add document to user account
           var user = req.user;
           user.documents.push(doc._id);
@@ -408,6 +411,10 @@ module.exports = function(app, io) {
     res.send(data);
     data.err = 0;
     return res.status(200).send();
+    //
+    // res.send(data);
+    // data.err = 0;
+    // return res.status(200).send();
   });
 
   app.post('/save', function(req, res) {

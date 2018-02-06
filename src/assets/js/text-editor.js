@@ -17,22 +17,28 @@ $(document).ready(function() {
       var title = data.title;
       var file = data.file;
       var lang = data.lang;
+      console.log("arb: " + lang);
       if (data.permission) {
+        console.log("first run: " + lang);
         editor.getSession().setValue(file);
         $("#fileTitle").html(title);
         change(lang, "mode", languages);
         $("body").removeClass("loading");
+        $("#download").html('<a href="" id="link" onclick="setupDownloadLink(this)" download="' + title + '">Download</a>');
       }
       else {
         $.post("check_id", {id: id})
         .then(function(e) {
           if (e.permission) {
+            console.log("second" + lang);
             editor.getSession().setValue(file);
             $("#fileTitle").html(title);
             change(lang, "mode", languages);
             $("body").removeClass("loading");
           }
           else {
+            console.log("3");
+            $("body").removeClass("loading");
             alert("You do not have adequate permissions to access this file.");
             window.location.href = "/new"
           }
@@ -173,6 +179,7 @@ $(document).ready(function() {
             if (data.err == 0)
               alert("Document Saved");
               $('#savedoc-modal').modal('hide');
+              window.location.href = "/editor-" + data.location;
           });
   });
 
@@ -193,6 +200,7 @@ $(document).ready(function() {
 
   // Document downloading as found from http://cwestblog.com/2014/10/21/javascript-creating-a-downloadable-file-in-the-browser/
   setupDownloadLink = function(link) {
+    $("#download").html('<a href="" id="link" onclick="setupDownloadLink(this)" download="' + title + '">Download</a>');
     var code = editor.getValue();
     link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
   };
