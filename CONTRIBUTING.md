@@ -2,13 +2,13 @@
 
 ## Contribution and Code Usage
 
-Before Contributing to Mergeable, please make an effort to communicate your plans with the owners od the repository through Github issues or via email.
+Before Contributing to Mergeable, please make an effort to communicate your plans with the owners of the repository through Github issues or via email.
 
 ### Pull Requests
 
 All pull requests should be made from a forked repository:
 
-* Outlione all changes made withinthe pull request description
+* Outline all changes made within the pull request description
 * Refer to any issues your pull request addresses
 * Requests a code review, and if approved by an owner, it may be merged at any time after review
 
