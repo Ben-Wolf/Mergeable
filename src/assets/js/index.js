@@ -53,6 +53,9 @@ $(document).ready(function() {
         alert("Incorrect username");
       else if (data.err == 2)
         alert("Incorrect password");
+      else {
+          alert("Username or password incorrect");
+      }
     });
   }
 
