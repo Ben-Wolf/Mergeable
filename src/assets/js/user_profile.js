@@ -20,8 +20,8 @@ $(document).ready(function() {
   $.post("http://localhost:8080/get_info")
   .then(function(data) {
     $("#propic").attr("src", data.avatar);
-    $('#name').html(data.firstname + " " + data.lastname);
-    $('#description').html(data.description);
+    $('#name').text(data.firstname + " " + data.lastname);
+    $('#description').text(data.description);
     var listed = "";
 
     if (data.documents.length == 0) {
