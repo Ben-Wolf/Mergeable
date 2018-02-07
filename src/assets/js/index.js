@@ -54,7 +54,7 @@ $(document).ready(function() {
       else if (data.err == 2)
         alert("Incorrect password");
       else {
-          alert("Username or password incorrect");
+        alert("Entered the incorrect username or password.");
       }
     });
   }
