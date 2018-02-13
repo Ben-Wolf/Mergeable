@@ -276,6 +276,7 @@ module.exports = function(app, io) {
   app.post('/populate_editor', function(req, res) {
     var id = req.body.id;
     var info = {title: "", file: "", lang: "", permission: true};
+    console.log("FINDING DOC INFO");
 
     Document.findById(id, function(err, doc) {
       if (err) console.log(err);
@@ -285,6 +286,7 @@ module.exports = function(app, io) {
           info.file = doc.file;
           info.lang = doc.language;
           info.permission = !doc.hidden;
+          console.log("INFO\n", doc);
         }
         if (info.title != "") {
           console.log("Found file... " + info.title);
@@ -315,7 +317,7 @@ module.exports = function(app, io) {
     var date = Date.now();
     var file = req.body.file;
     var otherEditors = req.body.otherEditors;
-    var lang = req.body.lang;
+    var language = req.body.language;
     var description = req.body.description;
     var hidden = req.body.hidden;
 
@@ -343,7 +345,7 @@ module.exports = function(app, io) {
       dateCreated: date,
       lastModified: date,
       file: file,
-      lang: lang,
+      language: language,
       description: description,
       hidden: hidden
     });

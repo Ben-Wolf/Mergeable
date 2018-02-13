@@ -34,6 +34,11 @@ $(document).ready(function() {
 
     $('#savedList').html(listed);
     $("body").removeClass("loading");
+  })
+  // If a user who is not logged in tries to access a profile page -- redirect to login
+  .fail(function(data) {
+    alert("You are not logged in.");
+    window.location.href = "/";
   });
 
   $("#editButton").click(function() {
