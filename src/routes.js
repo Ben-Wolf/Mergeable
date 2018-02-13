@@ -25,6 +25,16 @@ module.exports = function(app, io) {
     res.render('index');
   });
 
+  // If someone somehow loads an empty text-editor redirect to new
+  app.get('/text-editor-', function(req, res) {
+    res.redirect('/new');
+  });
+
+  // If someone who's not signed in goes to profile, redirect to Homepage
+  app.get('/user_profile-', function(req, res) {
+    res.redirect('/');
+  });
+
   passport.serializeUser(function(user, done) {
     userid = user.id;
     return done(null, user.id);

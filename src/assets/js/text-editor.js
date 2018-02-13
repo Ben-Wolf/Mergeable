@@ -33,11 +33,17 @@ $(document).ready(function() {
             change(lang, "mode", languages);
             $("body").removeClass("loading");
           }
+          // If logged in, but don't have permissions, redirect to new file
           else {
-            alert("You do not have adequate permissions to access this file.");
+            alert("You do not have adequate permissions to access this file.\nRedirecting to new file.");
             window.location.href = "/new"
           }
         })
+        // If not logged in, and file is private, redirect to new file
+        .fail(function(e) {
+          alert("You do not have adequate permissions to access this file.\nRedirecting to new file.");
+          window.location.href = "/new";
+        });
       }
     });
   }
