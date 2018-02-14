@@ -14,6 +14,7 @@ $(document).ready(function() {
   if (id.length > 10) {
     $.post("populate_editor", {id: id})
     .then(function(data) {
+      console.log("Loading editor data:\n", data);
       var title = data.title;
       var file = data.file;
       var lang = data.lang;
@@ -32,11 +33,17 @@ $(document).ready(function() {
             change(lang, "mode", languages);
             $("body").removeClass("loading");
           }
+          // If logged in, but don't have permissions, redirect to new file
           else {
-            alert("You do not have adequate permissions to access this file.");
+            alert("You do not have adequate permissions to access this file.\nRedirecting to new file.");
             window.location.href = "/new"
           }
         })
+        // If not logged in, and file is private, redirect to new file
+        .fail(function(e) {
+          alert("You do not have adequate permissions to access this file.\nRedirecting to new file.");
+          window.location.href = "/new";
+        });
       }
     });
   }
@@ -169,13 +176,20 @@ $(document).ready(function() {
     var mode = editor.session.$modeId;
     var hidden = ($('#private').is(':checked'));
     mode = mode.substr(mode.lastIndexOf('/') + 1);
+    console.log("mode = ", mode);
 
     $.post("http://localhost:8080/save_new",
-          {title: title, otherEditors: otherEditors, description: description, file: file, lang: mode, hidden: hidden})
+          {title: title, otherEditors: otherEditors, description: description, file: file, language: mode, hidden: hidden})
           .then(function(data) {
-            if (data.err == 0)
+            if (data.err == 0) {
+              console.log("DATA FROM SAVING NEW", data);
               alert("Document Saved");
               $('#savedoc-modal').modal('hide');
+            }
+            else {
+              alert("Error saving document");
+              $('#savedoc-modal').modal('hide');
+            }
           });
   });
 
