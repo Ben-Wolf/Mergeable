@@ -49,12 +49,8 @@ $(document).ready(function() {
     .then(function(data) {
       if (data.err == 0)
         window.location.href = data.redirectUrl;
-      else if (data.err == 1)
-        alert("Incorrect username");
-      else if (data.err == 2)
-        alert("Incorrect password");
       else {
-        alert("Entered the incorrect username or password.");
+        $('#loginerror-modal').modal();
       }
     });
   }

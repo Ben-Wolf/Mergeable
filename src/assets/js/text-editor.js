@@ -174,7 +174,7 @@ $(document).ready(function() {
           {title: title, otherEditors: otherEditors, description: description, file: file, lang: mode, hidden: hidden})
           .then(function(data) {
             if (data.err == 0)
-              alert("Document Saved");
+              // alert("Document Saved");
               $('#savedoc-modal').modal('hide');
           });
   });
