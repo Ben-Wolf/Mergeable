@@ -94,67 +94,174 @@
   <!-- Save Options -->
   <!-- Modal -->
   <div class="modal fade" id="savedoc-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <!-- Modal Header -->
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">
-                         <span aria-hidden="true">&times;</span>
-                         <span class="sr-only">Close</span>
-                  </button>
-                  <h4 class="modal-title" id="myModalLabel">Save Document</h4>
-              </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Save Document</h4>
+            </div>
 
-              <!-- Modal Body -->
-              <div class="modal-body">
+            <!-- Modal Body -->
+            <div class="modal-body">
 
-                  <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Title</label>
-                      <div class="col-sm-10">
-                          <input type="text" class="form-control" id="title" name="title" placeholder="Untitled"/>
-                      </div>
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Untitled"/>
                     </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Description</label>
-                      <div class="col-sm-10">
-                          <input type="text" class="form-control" id="description" name="description" placeholder="A short description of your project."/>
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="description" name="description" placeholder="A short description of your project."/>
                     </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Grant Access To:</label>
-                      <div class="col-sm-10">
-                          <input type="text" class="form-control" id="additionalEditors" name="additionalEditors" placeholder="Separate emails by commas"/>
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Grant Access To:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="additionalEditors" name="additionalEditors" placeholder="Separate emails by commas"/>
                     </div>
-                    <div class="checkbox">
-                      <label class="col-sm-2 control-label"><input type="checkbox" id="private" value="">Private</label>
-                      <div class="col-sm-10">
-                      </div>
+                  </div>
+                  <div class="checkbox">
+                    <label class="col-sm-2 control-label"><input type="checkbox" id="private" value="">Private</label>
+                    <div class="col-sm-10">
                     </div>
-                  </form>
+                  </div>
+                </form>
 
-              </div>
+            </div>
 
-              <!-- Modal Footer -->
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-info" id="save_new">Save</button>
-              </div>
-          </div>
-      </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" id="save_new">Save</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- SIGN IN MODAL -->
+  <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-labelledby="signinModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="signinModalLabel">Sign In</h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+  						        <input type="email" class="form-control login-input" id="email" name = "email" placeholder="Enter email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+          						<input type="password" class="form-control login-input" id="pass" name = "password" placeholder="Enter password">
+                    </div>
+                  </div>
+                </form>
+                <a href="#" id="registerModalTrigger"> Don't have an account? Register here </a>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" id="sign_in">Sign in</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- REGISTER MODAL -->
+  <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="registerModalLabel">Register</h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+              <form class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">First Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control create-input" id="f_name" name="f_name" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Last Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control create-input" id="l_name" name="l_name" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-10">
+          					<input type="email" class="form-control create-input" id="e_mail" name="e_mail" placeholder="Enter email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+          					<input type="password" class="form-control create-input" id="pwd" name="pwd" placeholder="Enter password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Confirm Password</label>
+                  <div class="col-sm-10">
+          					<input type="password" class="form-control create-input" id="pwd2" name="pwd2" placeholder="Confirm password">
+                  </div>
+                </div>
+                </form>
+                <a href="#" id="signinModalTrigger"> Already have an account? Sign in here </a>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" id="register">Register</button>
+            </div>
+        </div>
+    </div>
   </div>
 
   <div class="loadal"></div>
   <!-- Text-editor (using Ace) -->
   <div id="editor"></div>
+  <!-- Alert modals -->
+  <div class="modal fade" id="signinAlert" role="dialog"></div>
+  <div class="modal fade" id="savedAlert" role="dialog"></div>
+  <div class="modal fade" id="titleAlert" role="dialog"></div>
+  <div class="modal fade" id="permissionsAlert" role="dialog"></div>
   <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Compiled/Minified bootstrap JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- Ace Integration -->
   <script src="../ace/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="../js/text-editor.js" type="text/javascript"></script>
-  <!-- Compiled/Minified bootstrap JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

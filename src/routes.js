@@ -139,6 +139,10 @@ module.exports = function(app, io) {
 
 /* USER-PROFILE PAGE */
   app.post('/get_info', function(req, res) {
+    // If a user is not logged in send a 500 status.
+    if (!req.user) {
+      return res.status(500).send();
+    }
     var info = {documents: []};
     info.avatar = gravatar.url(req.user.email, {s: '140', r: 'x', d: 'mm'});
     info.firstname = req.user.firstname;
@@ -286,7 +290,6 @@ module.exports = function(app, io) {
   app.post('/populate_editor', function(req, res) {
     var id = req.body.id;
     var info = {title: "", file: "", lang: "", permission: true};
-    console.log("FINDING DOC INFO");
 
     Document.findById(id, function(err, doc) {
       if (err) console.log(err);
@@ -322,6 +325,10 @@ module.exports = function(app, io) {
   });
 
   app.post('/save_new', function(req, res) {
+    // If the person viewing the document is not signed in, then send an error.
+    if (!req.user) {
+      return res.status(500).send();
+    }
     var owner = req.user.email;
     var title = req.body.title;
     var date = Date.now();
