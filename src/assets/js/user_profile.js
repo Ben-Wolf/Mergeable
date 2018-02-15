@@ -1,4 +1,5 @@
 var delete_document;
+var baseUrl = "http://localhost:8080";
 
 $(document).ready(function() {
   var img = "";
@@ -6,7 +7,7 @@ $(document).ready(function() {
 
   // Remove document
   delete_document = function (id) {
-    $.post("http://localhost:8080/remove_document", {id: id})
+    $.post(baseUrl + "/remove_document", {id: id})
     .then(function(data) {
       window.location.reload();
     });
@@ -17,7 +18,7 @@ $(document).ready(function() {
     alert("not implemented yet");
   }
 
-  $.post("http://localhost:8080/get_info")
+  $.post(baseUrl + "/get_info")
   .then(function(data) {
     $("#propic").attr("src", data.avatar);
     $('#name').text(data.firstname + " " + data.lastname);
@@ -47,7 +48,7 @@ $(document).ready(function() {
       curr = $('textarea#txt').val();
       $('#description').html(curr);
       $('#editButton').html('<a href="#"><span class="glyphicon glyphicon-plus"></span> Edit</a>');
-      $.post("http://localhost:8080/save_description",
+      $.post(baseUrl + "/save_description",
         {description: curr});
     }
     else {

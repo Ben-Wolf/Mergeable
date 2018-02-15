@@ -1,0 +1,11 @@
+<div class="modal-dialog" id="close">
+  <div class="alert alert-error">
+    You do not have adequate permissions to access this file. Redirecting to new file.
+  </div>
+</div>
+
+<script>
+  $("#close").on('hidden', function() {
+    window.location.href = "/new";
+  });
+</script>

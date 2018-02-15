@@ -1,4 +1,5 @@
 var editor = ace.edit("editor");
+var baseUrl = "http://localhost:8080";
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/javascript");
 editor.getSession().setValue("Your code here");
@@ -10,11 +11,17 @@ $(document).ready(function() {
   var id = getID(window.location.pathname);
   var holder = 0;
 
+  // Load in all our modals
+  $("#titleAlert").load("html/text-editor/title-alert.html");
+  $("#savedAlert").load("html/text-editor/saved-alert.html");
+  $("#signinAlert").load("html/text-editor/signin-alert.html");
+  $("#registerAlert").load("html/text-editor/register-alert.html");
+  // $("#signinModal").load("html/signin-modal.html");
+
   // Updates editor info if trying to load a document
   if (id.length > 10) {
     $.post("populate_editor", {id: id})
     .then(function(data) {
-      console.log("Loading editor data:\n", data);
       var title = data.title;
       var file = data.file;
       var lang = data.lang;
@@ -176,21 +183,21 @@ $(document).ready(function() {
     var mode = editor.session.$modeId;
     var hidden = ($('#private').is(':checked'));
     mode = mode.substr(mode.lastIndexOf('/') + 1);
-    console.log("mode = ", mode);
 
-    $.post("http://localhost:8080/save_new",
+    $.post(baseUrl + "/save_new",
           {title: title, otherEditors: otherEditors, description: description, file: file, language: mode, hidden: hidden})
           .then(function(data) {
             if (data.err == 0) {
-              console.log("DATA FROM SAVING NEW", data);
-              alert("Document Saved");
+              $("#savedAlert").modal("show");
               $('#savedoc-modal').modal('hide');
             }
             else {
-              alert("Error saving document");
-              $('#savedoc-modal').modal('hide');
+              $("#titleAlert").modal("show");
             }
-          });
+          })
+          .fail(function() {
+            $("#signin-modal").modal('show');
+          })
   });
 
   // Updates a previously saved document
@@ -201,11 +208,58 @@ $(document).ready(function() {
       var mode = editor.session.$modeId;
       mode = mode.substr(mode.lastIndexOf('/') + 1);
 
-      $.post("http://localhost:8080/save", {id: id, file: file, lang: mode})
+      $.post(baseUrl + "/save", {id: id, file: file, lang: mode})
       .then(function(data) {
         window.location.href = "/editor-" + data;
       });
     }
+  });
+
+  // For signing in through the sign in modal
+  $("#sign_in").click(function() {
+    var email = $("#email").val();
+    var password = $("#pass").val();
+    $.post("login", {email: email, password: password})
+    .then(function(response) {
+      if (response.err == 0) {
+        $("#signin-modal").modal("hide");
+        $("#signinAlert").modal("show");
+      } else {
+        alert("Incorrect email or password");
+      }
+    });
+  });
+
+  // For showing the register modal
+  $("#registerModalTrigger").click(function() {
+    $("#signin-modal").modal("hide");
+    $("#register-modal").modal("show");
+  });
+
+  // For showing the sign in modal
+  $("#signinModalTrigger").click(function() {
+    $("#signin-modal").modal("show");
+    $("#register-modal").modal("hide");
+  })
+
+  // For registering through the register modal
+  $("#register").click(function() {
+    var f_name = $("#f_name").val();
+    var l_name = $("#l_name").val();
+    var e_mail = $("#e_mail").val();
+    var pwd = $("#pwd").val();
+    var pwd2 = $("#pwd2").val();
+    $.post("create",
+      {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2})
+      .then(function(response) {
+        if (response.err == 0) {
+          $("#register-modal").modal("hide");
+        } else if (response.err == 1) {
+          alert(response.errors[0].msg);
+        } else if (response.err == 3) {
+          alert ("Email already exists in system");
+        }
+      });
   });
 
   // Document downloading as found from http://cwestblog.com/2014/10/21/javascript-creating-a-downloadable-file-in-the-browser/
