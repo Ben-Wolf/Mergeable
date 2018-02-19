@@ -1,0 +1,117 @@
+<div class="modal-dialog" id="signin-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <h4 class="modal-title" id="myModalLabel">Sign In</h4>
+
+    </div>
+    <div class="modal-body">
+      <div role="tabpanel">
+              <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#signinTab" aria-controls="signinTab" role="tab" data-toggle="tab">Sign In</a></li>
+          <li role="presentation"><a href="#registerTab" aria-controls="registerTab" role="tab" data-toggle="tab">Register</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="signinTab">
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control login-input" id="email" name = "email" placeholder="Enter email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control login-input" id="pass" name = "password" placeholder="Enter password">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="registerTab">Register
+            <div style="padding-top: 20px">
+              <form class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">First Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control create-input" id="f_name" name="f_name" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Last Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control create-input" id="l_name" name="l_name" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control create-input" id="e_mail" name="e_mail" placeholder="Enter email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control create-input" id="pwd" name="pwd" placeholder="Enter password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Confirm Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control create-input" id="pwd2" name="pwd2" placeholder="Confirm password">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary save" id="submit">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#submit").click(function() {
+    // If they are creating an account
+    if ($("#registerTab").hasClass("active")) {
+      var f_name = $("#f_name").val();
+      var l_name = $("#l_name").val();
+      var e_mail = $("#e_mail").val();
+      var pwd = $("#pwd").val();
+      var pwd2 = $("#pwd2").val();
+      $.post("create",
+        {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2})
+        .then(function(response) {
+          if (response.err == 0) {
+            alert("Success");
+            $("#signin-modal").modal("hide");
+          } else if (response.err == 1) {
+            alert(response.errors[0].msg);
+          } else if (response.err == 3) {
+            alert ("Email already exists in system");
+          }
+        });
+    }
+    // If they are signing in
+    else if ($("#signinTab").hasClass("active")) {
+      var email = $("#email").val();
+      var password = $("#pass").val();
+      $.post("login", {email: email, password: password})
+      .then(function(response) {
+        if (response.err == 0) {
+          alert("Success");
+          window.parent.document.getElementById('signin-modal').style.display = 'none';
+        } else {
+          alert("Incorrect email or password");
+        }
+      });
+    }
+  });
+
+</script>

@@ -25,6 +25,16 @@ module.exports = function(app, io) {
     res.render('index');
   });
 
+  // If someone somehow loads an empty text-editor redirect to new
+  app.get('/text-editor-', function(req, res) {
+    res.redirect('/new');
+  });
+
+  // If someone who's not signed in goes to profile, redirect to Homepage
+  app.get('/user_profile-', function(req, res) {
+    res.redirect('/');
+  });
+
   passport.serializeUser(function(user, done) {
     userid = user.id;
     return done(null, user.id);
@@ -129,6 +139,10 @@ module.exports = function(app, io) {
 
 /* USER-PROFILE PAGE */
   app.post('/get_info', function(req, res) {
+    // If a user is not logged in send a 500 status.
+    if (!req.user) {
+      return res.status(500).send();
+    }
     var info = {documents: []};
     info.avatar = gravatar.url(req.user.email, {s: '140', r: 'x', d: 'mm'});
     info.firstname = req.user.firstname;
@@ -285,6 +299,7 @@ module.exports = function(app, io) {
           info.file = doc.file;
           info.lang = doc.language;
           info.permission = !doc.hidden;
+          console.log("INFO\n", doc);
         }
         if (info.title != "") {
           console.log("Found file... " + info.title);
@@ -310,12 +325,16 @@ module.exports = function(app, io) {
   });
 
   app.post('/save_new', function(req, res) {
+    // If the person viewing the document is not signed in, then send an error.
+    if (!req.user) {
+      return res.status(500).send();
+    }
     var owner = req.user.email;
     var title = req.body.title;
     var date = Date.now();
     var file = req.body.file;
     var otherEditors = req.body.otherEditors;
-    var lang = req.body.lang;
+    var language = req.body.language;
     var description = req.body.description;
     var hidden = req.body.hidden;
 
@@ -343,7 +362,7 @@ module.exports = function(app, io) {
       dateCreated: date,
       lastModified: date,
       file: file,
-      lang: lang,
+      language: language,
       description: description,
       hidden: hidden
     });
