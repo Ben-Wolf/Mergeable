@@ -29,11 +29,21 @@ $(document).ready(function() {
       listed = '<a href="/new" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="/editor-' + data.documents[i]._id + '"  class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button><button type="button" class="pull-right"><span id="' + data.documents[i]._id + '" class="glyphicon glyphicon-wrench" onClick="edit_details(this.id)"></span></button></h3><p id=' + data.documents[i]._id + ' class="list-group-item-text">' + data.documents[i].description + '</p></a>\n';
+        listed += '<div class="list-group-item saved-doc"><a href="/editor-' + data.documents[i]._id + '"><h3 class="list-group-item-heading">' + data.documents[i].title + '</a><button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button><button type="button" class="pull-right"><span id="' + data.documents[i]._id + '" class="glyphicon glyphicon-wrench" onClick="edit_details(this.id)"></span></button></h3><p id=' + data.documents[i]._id + ' class="list-group-item-text">' + data.documents[i].description + '</p></div>\n';
       }
     }
 
+    var sharedList = "";
+
+    if (data.sharedDocuments.length == 0) {
+      $("#shared").hide();
+    }
+    for (var i = 0; i < data.sharedDocuments.length; i++) {
+      sharedList += '<div class="list-group-item saved-doc"><a href="/editor-' + data.sharedDocuments[i]._id + '"><h3 class="list-group-item-heading">' + data.sharedDocuments[i].title + '</a><button type="button" class="pull-right"><span id="' + data.sharedDocuments[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button><button type="button" class="pull-right"><span id="' + data.sharedDocuments[i]._id + '" class="glyphicon glyphicon-wrench" onClick="edit_details(this.id)"></span></button></h3><p id=' + data.sharedDocuments[i]._id + ' class="list-group-item-text">' + data.sharedDocuments[i].description + '</p></div>\n';
+    }
+
     $('#savedList').html(listed);
+    $('#sharedList').html(sharedList);
     $("body").removeClass("loading");
   })
   // If a user who is not logged in tries to access a profile page -- redirect to login

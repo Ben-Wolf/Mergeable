@@ -11,6 +11,31 @@ $(document).ready(function() {
   var id = getID(window.location.pathname);
   var holder = 0;
 
+  var callSave = function() {
+    var title = $("#title").val();
+    var description = $("#description").val();
+    var file = editor.getValue();
+    var otherEditors = $("#additionalEditors").val();
+    var mode = editor.session.$modeId;
+    var hidden = ($('#private').is(':checked'));
+    mode = mode.substr(mode.lastIndexOf('/') + 1);
+
+    $.post(baseUrl + "/save_new",
+          {title: title, otherEditors: otherEditors, description: description, file: file, language: mode, hidden: hidden})
+          .then(function(data) {
+            if (data.err == 0) {
+              $("#savedAlert").modal("show");
+              $('#savedoc-modal').modal('hide');
+            }
+            else {
+              $("#titleAlert").modal("show");
+            }
+          })
+          .fail(function() {
+            $("#signin-modal").modal('show');
+          });
+  }
+
   // Load in all our modals
   $("#titleAlert").load("html/text-editor/title-alert.html");
   $("#savedAlert").load("html/text-editor/saved-alert.html");
@@ -176,33 +201,12 @@ $(document).ready(function() {
 
   // Saves document for user and all other editors
   $("#save_new").click(function() {
-    var title = $("#title").val();
-    var description = $("#description").val();
-    var file = editor.getValue();
-    var otherEditors = $("#additionalEditors").val();
-    var mode = editor.session.$modeId;
-    var hidden = ($('#private').is(':checked'));
-    mode = mode.substr(mode.lastIndexOf('/') + 1);
-
-    $.post(baseUrl + "/save_new",
-          {title: title, otherEditors: otherEditors, description: description, file: file, language: mode, hidden: hidden})
-          .then(function(data) {
-            if (data.err == 0) {
-              $("#savedAlert").modal("show");
-              $('#savedoc-modal').modal('hide');
-            }
-            else {
-              $("#titleAlert").modal("show");
-            }
-          })
-          .fail(function() {
-            $("#signin-modal").modal('show');
-          })
+    callSave();
   });
 
   // Updates a previously saved document
   $("#save").click(function() {
-    if(id.length < 10) alert("Document can't be updated. Please 'Save As' first.");
+    if(id.length < 10) $("#savedoc-modal").modal("show");
     else {
       var file = editor.getValue();
       var mode = editor.session.$modeId;
