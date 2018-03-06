@@ -25,6 +25,17 @@ h2 {
   border-radius: 10px;
 }
 
+#shared{
+  margin-left: 350px;
+  margin-top: 80px;
+  width: 900px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+}
+
 button {
     appearance: none;
     -webkit-appearance: none;

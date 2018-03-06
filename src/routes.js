@@ -212,6 +212,27 @@ module.exports = function(app, io) {
     }
   });
 
+  app.post('/get_doc_info', function(req, res) {
+    var id = req.body.id;
+    var info = {};
+
+    Document.findById(id, function(err, doc) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (doc) {
+          info.title = doc.title;
+          info.description = doc.description;
+          info.dateCreated = doc.dateCreated;
+          info.otherEditors = doc.otherEditors;
+          info.owner = doc.owner;
+          res.send(info);
+          return res.status(200).send();
+        }
+      }
+    })
+  });
+
   app.get('/profile', function(req, res) {
     // Move to user_profile
     res.redirect('/user_profile-' + userid);
@@ -282,6 +303,17 @@ module.exports = function(app, io) {
                 }
               });
             }
+
+            // Delete document from documents database... only if the owner deletes it.
+            Document.removeDocumentById(id, function(err) {
+              if (err) {
+                console.log(err);
+                info.err = 1;
+              } else {
+                console.log("Document deleted!");
+                info.err = 0;
+              }
+            });
           } else {
             var index = req.user.sharedDocuments.indexOf(id);
             if (index > -1) {
@@ -296,17 +328,6 @@ module.exports = function(app, io) {
         } else {
           console.log("Document not found in database");
         }
-      }
-    });
-
-    // Remove document
-    Document.removeDocumentById(id, function(err) {
-      if (err) {
-        console.log(err);
-        info.err = 1;
-      } else {
-        console.log("Document deleted!");
-        info.err = 0;
       }
     });
 

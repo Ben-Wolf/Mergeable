@@ -15,7 +15,22 @@ $(document).ready(function() {
 
   // Edit document details
   edit_details = function(id) {
-    alert("not implemented yet");
+    $.post(baseUrl +"/get_doc_info", {id: id})
+    .then(function(data) {
+      console.log(data.description);
+      $("#documentName").attr('placeholder', data.title);
+      $("#documentDescription").attr('placeholder', data.description);
+      var editors = "";
+      for (var i = 0; i < data.otherEditors.length; i++) {
+        if (i != data.otherEditors.length - 1) editors += data.otherEditors[i] + ", ";
+        else editors += data.otherEditors[i];
+      }
+      $("#editors").attr('placeholder', editors);
+      if (data.private) {
+        $("#private").prop('checked', true);
+      }
+    });
+    $("#editModal").modal("show");
   }
 
   $.post(baseUrl + "/get_info")
