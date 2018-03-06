@@ -163,14 +163,21 @@ $(document).ready(function() {
   });
 
   $("#run").click(function() {
-    var code = editor.getValue();
-    alert($("#JavaScript").hasClass("active"));
-    if ($("#JavaScript").hasClass("active")) {
-      alert(eval(code));
-    }
 
-    else {
-      alert("Currently only supports JavaScript");
+    var popup = window.open("", "_blank");
+    popup.document.body.onload = runFunction();
+  
+    function runFunction() {
+      var code = editor.getValue();
+      var script = popup.document.createElement('script');        
+      try {
+        script.appendChild(popup.document.createTextNode(code));
+        popup.document.body.appendChild(script);
+        popup.alert("Please check your browser's console if you believe you have errors in your code.");   
+      } catch (e) {
+        script.text = code;
+        popup.document.body.appendChild(script);
+      }
     }
   });
 
