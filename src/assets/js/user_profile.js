@@ -17,7 +17,6 @@ $(document).ready(function() {
   edit_details = function(id) {
     $.post(baseUrl +"/get_doc_info", {id: id})
     .then(function(data) {
-      console.log(data.description);
       $("#documentName").attr('placeholder', data.title);
       $("#documentDescription").attr('placeholder', data.description);
       var editors = "";
@@ -26,13 +25,19 @@ $(document).ready(function() {
         else editors += data.otherEditors[i];
       }
       $("#editors").attr('placeholder', editors);
-      if (data.private) {
+      if (data.hidden) {
         $("#private").prop('checked', true);
       }
     });
     $("#editModal").modal("show");
   }
 
+  // Update a document after editing document details
+  $("#updateDocument").click(function() {
+
+  });
+
+  // Populate the user profile page with all the saved and shared documents, propic, name and description.
   $.post(baseUrl + "/get_info")
   .then(function(data) {
     $("#propic").attr("src", data.avatar);
@@ -67,6 +72,7 @@ $(document).ready(function() {
     window.location.href = "/";
   });
 
+  // Edit the user profile description
   $("#editButton").click(function() {
     if ($('#editButton').html() == '<a href="#"><span class="glyphicon glyphicon-plus"></span> Save</a>') {
       var temp = $('#description').html();
@@ -82,10 +88,5 @@ $(document).ready(function() {
       $('#description').html('<textarea id="txt" name="txt" class="form-control" style="overflow:auto;resize:none" rows="5">' + curr + '</textarea>');
     }
   });
-
-  $(".saved-doc").click(function() {
-    //not implemented yet.
-  });
-
   // End of document.ready
 });

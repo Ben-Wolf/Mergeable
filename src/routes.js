@@ -225,6 +225,7 @@ module.exports = function(app, io) {
           info.description = doc.description;
           info.dateCreated = doc.dateCreated;
           info.otherEditors = doc.otherEditors;
+          info.hidden = doc.hidden;
           info.owner = doc.owner;
           res.send(info);
           return res.status(200).send();
@@ -321,6 +322,14 @@ module.exports = function(app, io) {
               req.user.save(function(err) {
                 if (err) { console.log(err); }
                 else { console.log("Shared document removed from " + req.user.email); }
+              });
+            }
+
+            var index = doc.otherEditors.indexOf(req.user.email);
+            if (index > -1) {
+              doc.otherEditors.splice(index, 1);
+              doc.save(function(err) {
+                if (err) { console.log(err); }
               });
             }
           }
