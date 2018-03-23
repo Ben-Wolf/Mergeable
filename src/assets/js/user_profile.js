@@ -15,9 +15,29 @@ $(document).ready(function() {
 
   // Edit document details
   edit_details = function(id) {
-    alert("not implemented yet");
+    $.post(baseUrl +"/get_doc_info", {id: id})
+    .then(function(data) {
+      $("#documentName").attr('placeholder', data.title);
+      $("#documentDescription").attr('placeholder', data.description);
+      var editors = "";
+      for (var i = 0; i < data.otherEditors.length; i++) {
+        if (i != data.otherEditors.length - 1) editors += data.otherEditors[i] + ", ";
+        else editors += data.otherEditors[i];
+      }
+      $("#editors").attr('placeholder', editors);
+      if (data.hidden) {
+        $("#private").prop('checked', true);
+      }
+    });
+    $("#editModal").modal("show");
   }
 
+  // Update a document after editing document details
+  $("#updateDocument").click(function() {
+
+  });
+
+  // Populate the user profile page with all the saved and shared documents, propic, name and description.
   $.post(baseUrl + "/get_info")
   .then(function(data) {
     $("#propic").attr("src", data.avatar);
@@ -29,11 +49,21 @@ $(document).ready(function() {
       listed = '<a href="/new" class="list-group-item"><h3 class="list-group-item-heading">No Documents Found</h3> <p class="list-group-item-text"></p>Click New and start Coding!</a>\n'
     } else {
       for (var i = 0; i < data.documents.length; i++) {
-        listed += '<a href="/editor-' + data.documents[i]._id + '"  class="list-group-item saved-doc"><h3 class="list-group-item-heading">' + data.documents[i].title + '<button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button><button type="button" class="pull-right"><span id="' + data.documents[i]._id + '" class="glyphicon glyphicon-wrench" onClick="edit_details(this.id)"></span></button></h3><p id=' + data.documents[i]._id + ' class="list-group-item-text">' + data.documents[i].description + '</p></a>\n';
+        listed += '<div class="list-group-item saved-doc"><a href="/editor-' + data.documents[i]._id + '"><h3 class="list-group-item-heading">' + data.documents[i].title + '</a><button type="button" class="pull-right"><span id="' + data.documents[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button><button type="button" class="pull-right"><span id="' + data.documents[i]._id + '" class="glyphicon glyphicon-wrench" onClick="edit_details(this.id)"></span></button></h3><p id=' + data.documents[i]._id + ' class="list-group-item-text">' + data.documents[i].description + '</p></div>\n';
       }
     }
 
+    var sharedList = "";
+
+    if (data.sharedDocuments.length == 0) {
+      $("#shared").hide();
+    }
+    for (var i = 0; i < data.sharedDocuments.length; i++) {
+      sharedList += '<div class="list-group-item saved-doc"><a href="/editor-' + data.sharedDocuments[i]._id + '"><h3 class="list-group-item-heading">' + data.sharedDocuments[i].title + '</a><button type="button" class="pull-right"><span id="' + data.sharedDocuments[i]._id + '"class="glyphicon glyphicon-trash" onClick="delete_document(this.id)"></span></button><button type="button" class="pull-right"><span id="' + data.sharedDocuments[i]._id + '" class="glyphicon glyphicon-wrench" onClick="edit_details(this.id)"></span></button></h3><p id=' + data.sharedDocuments[i]._id + ' class="list-group-item-text">' + data.sharedDocuments[i].description + '</p></div>\n';
+    }
+
     $('#savedList').html(listed);
+    $('#sharedList').html(sharedList);
     $("body").removeClass("loading");
   })
   // If a user who is not logged in tries to access a profile page -- redirect to login
@@ -42,6 +72,7 @@ $(document).ready(function() {
     window.location.href = "/";
   });
 
+  // Edit the user profile description
   $("#editButton").click(function() {
     if ($('#editButton').html() == '<a href="#"><span class="glyphicon glyphicon-plus"></span> Save</a>') {
       var temp = $('#description').html();
@@ -57,10 +88,5 @@ $(document).ready(function() {
       $('#description').html('<textarea id="txt" name="txt" class="form-control" style="overflow:auto;resize:none" rows="5">' + curr + '</textarea>');
     }
   });
-
-  $(".saved-doc").click(function() {
-    //not implemented yet.
-  });
-
   // End of document.ready
 });

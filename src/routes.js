@@ -143,7 +143,9 @@ module.exports = function(app, io) {
     if (!req.user) {
       return res.status(500).send();
     }
-    var info = {documents: []};
+
+    console.log(req.user);
+    var info = {documents: [], sharedDocuments: []};
     info.avatar = gravatar.url(req.user.email, {s: '140', r: 'x', d: 'mm'});
     info.firstname = req.user.firstname;
     info.lastname = req.user.lastname;
@@ -170,7 +172,35 @@ module.exports = function(app, io) {
             data.id = doc._id;
             data.description = doc.description
             info.documents.push(data);
-            if (info.documents.length == req.user.documents.length) {
+          } else {
+            console.log("Document not found");
+            info.documents.push({_id: "ERROR", title: "ERROR", dateCreated: "ERROR", description: "ERROR"});
+          }
+        }
+        if (info.documents.length == req.user.documents.length && info.sharedDocuments.length == req.user.sharedDocuments.length) {
+          res.send(info);
+          return res.status(200).send();
+        }
+      });
+    }
+
+    for (var i=0; i<req.user.sharedDocuments.length; i++) {
+      Document.getDocumentById(req.user.sharedDocuments[i], function(err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (doc) {
+            var data = {};
+            data._id = doc._id;
+            data.title = doc.title;
+            data.dateCreated = doc.dateCreated;
+            data.lastModified = doc.lastModified;
+            data.file = doc.file;
+            data.otherEditors = doc.otherEditors;
+            data.id = doc._id;
+            data.description = doc.description
+            info.sharedDocuments.push(data);
+            if (info.documents.length == req.user.documents.length && info.sharedDocuments.length == req.user.sharedDocuments.length) {
               res.send(info);
               return res.status(200).send();
             }
@@ -180,6 +210,28 @@ module.exports = function(app, io) {
         }
       });
     }
+  });
+
+  app.post('/get_doc_info', function(req, res) {
+    var id = req.body.id;
+    var info = {};
+
+    Document.findById(id, function(err, doc) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (doc) {
+          info.title = doc.title;
+          info.description = doc.description;
+          info.dateCreated = doc.dateCreated;
+          info.otherEditors = doc.otherEditors;
+          info.hidden = doc.hidden;
+          info.owner = doc.owner;
+          res.send(info);
+          return res.status(200).send();
+        }
+      }
+    })
   });
 
   app.get('/profile', function(req, res) {
@@ -213,27 +265,8 @@ module.exports = function(app, io) {
       } else {
         if (doc) {
           // Remove file from owner
-          User.getUserByEmail(doc.owner, function(err, user) {
-            if (user) {
-              var index = user.documents.indexOf(id);
-              if (index > -1) {
-                user.documents.splice(index, 1);
-                user.save(function(err) {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    console.log("Document removed from owner");
-                  }
-                });
-              }
-            } else {
-              console.log("Owner not found");
-            }
-          });
-
-          // Remove file from other editors
-          for (var i=0; i<doc.otherEditors.length; i++){
-            User.getUserByEmail(doc.otherEditors[i], function(err, user) {
+          if (doc.owner == req.user.email) {
+            User.getUserByEmail(doc.owner, function(err, user) {
               if (user) {
                 var index = user.documents.indexOf(id);
                 if (index > -1) {
@@ -242,30 +275,68 @@ module.exports = function(app, io) {
                     if (err) {
                       console.log(err);
                     } else {
-                      console.log("Document removed from editor");
+                      console.log("Document removed from owner");
                     }
                   });
                 }
               } else {
-                console.log("Editor not found");
+                console.log("Owner not found");
               }
             });
+
+            // Remove file from other editors
+            for (var i=0; i<doc.otherEditors.length; i++){
+              User.getUserByEmail(doc.otherEditors[i], function(err, user) {
+                if (user) {
+                  var index = user.sharedDocuments.indexOf(id);
+                  if (index > -1) {
+                    user.sharedDocuments.splice(index, 1);
+                    user.save(function(err) {
+                      if (err) {
+                        console.log(err);
+                      } else {
+                        console.log("Document removed from editor");
+                      }
+                    });
+                  }
+                } else {
+                  console.log("Editor not found");
+                }
+              });
+            }
+
+            // Delete document from documents database... only if the owner deletes it.
+            Document.removeDocumentById(id, function(err) {
+              if (err) {
+                console.log(err);
+                info.err = 1;
+              } else {
+                console.log("Document deleted!");
+                info.err = 0;
+              }
+            });
+          } else {
+            var index = req.user.sharedDocuments.indexOf(id);
+            if (index > -1) {
+              req.user.sharedDocuments.splice(index, 1);
+              req.user.save(function(err) {
+                if (err) { console.log(err); }
+                else { console.log("Shared document removed from " + req.user.email); }
+              });
+            }
+
+            var index = doc.otherEditors.indexOf(req.user.email);
+            if (index > -1) {
+              doc.otherEditors.splice(index, 1);
+              doc.save(function(err) {
+                if (err) { console.log(err); }
+              });
+            }
           }
 
         } else {
           console.log("Document not found in database");
         }
-      }
-    });
-
-    // Remove document
-    Document.removeDocumentById(id, function(err) {
-      if (err) {
-        console.log(err);
-        info.err = 1;
-      } else {
-        console.log("Document deleted!");
-        info.err = 0;
       }
     });
 
@@ -311,6 +382,9 @@ module.exports = function(app, io) {
   });
 
   app.post('/check_id', function(req, res) {
+    if (!req.user) {
+      return res.status(500).send();
+    }
     var id = req.body.id;
     var data = {permission: false};
 
@@ -408,7 +482,7 @@ module.exports = function(app, io) {
                     }
                   });
                   console.log(doc.otherEditors);
-                  user.documents.push(doc._id);
+                  user.sharedDocuments.push(doc._id);
                   user.save(function(err) {
                     if (err) {
                       console.log(err);
