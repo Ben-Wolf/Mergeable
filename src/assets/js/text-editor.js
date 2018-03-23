@@ -206,12 +206,43 @@ $(document).ready(function() {
   }
   
   function runJavascript(code, popup) {
-    var script = popup.document.createElement('script');        
+    var script = popup.document.createElement('script');
+    var mylog = popup.document.createElement('div');
+    mylog.id = 'mylog';
+    // Displays the executed JavaScript code or an error after running it.    
     try {
+      popup.document.body.appendChild(mylog);
+
+      var baseLogFunction = popup.console.log;
+      popup.console.log = function(){
+          baseLogFunction.apply(console, arguments);
+          
+          var args = Array.prototype.slice.call(arguments);
+          for(var i=0; i<args.length; i++){
+              var node = createLogNode(args[i]);
+              popup.document.querySelector("#mylog").appendChild(node);
+          }            
+      }
+  
+      function createLogNode(message){
+          var node = popup.document.createElement("div");
+          var textNode = popup.document.createTextNode(message);
+          node.appendChild(textNode);
+          return node;
+      }
+  
+      popup.onerror = function(message, url, linenumber) {
+          popup.console.log("JavaScript error: " + message + " on line " +
+              linenumber + " for " + url + ". Please check your browser's" +
+              " console by pressing F12 for more details.");
+      };
+      
       script.appendChild(popup.document.createTextNode(code));
-      popup.document.body.appendChild(script);  
+      popup.document.body.appendChild(script);
+
     } catch (e) {
-      popup.alert("Please check your browser's console if you believe you have errors in your code.");
+      popup.alert("Please check your browser's" + 
+      " console by pressing F12 for more details.");
       script.text = code;
       popup.document.body.appendChild(script);
     }
