@@ -162,17 +162,60 @@ $(document).ready(function() {
     changeSize("#size48", 48, sizes);
   });
 
+  // This runs javascript code in the browser. If the code is in a different language other than Javascript,
+  // it converts/compiles the code into Javascript before it runs in the browser.
   $("#run").click(function() {
-    var code = editor.getValue();
-    alert($("#JavaScript").hasClass("active"));
-    if ($("#JavaScript").hasClass("active")) {
-      alert(eval(code));
-    }
-
-    else {
-      alert("Currently only supports JavaScript");
+    var code = editor.getValue();      
+    var popup = window.open("", "_blank");
+    var language = editor.session.getMode()["$id"].replace("ace/mode/","");
+    switch(language) {
+      case "csharp":
+        console.log(language);
+        break;
+      case "css":
+        runCSSOrHTML(code, popup);      
+        break;
+      case "html":
+        runCSSOrHTML(code, popup);
+        break;
+      case "java":
+        console.log(language);
+        break;
+      case "python":
+        console.log(language);
+        break;
+      case "typescript":
+        console.log(language);
+        require(['typescript'], function() {
+          var result = ts.transpileModule(code, {compilerOptions: {module: ts.ModuleKind.CommonJS}});
+          popup.document.body.onload = runJavascript(result["outputText"], popup);
+        });      
+        break;
+      case "c_cpp":
+        console.log(language);
+        break;
+      default: // javascript
+        popup.document.body.onload = runJavascript(code, popup);      
+        break;    
     }
   });
+
+  function runCSSOrHTML(code, popup) {
+    var info = String(editor.getValue());
+    popup.document.write(info);
+  }
+  
+  function runJavascript(code, popup) {
+    var script = popup.document.createElement('script');        
+    try {
+      script.appendChild(popup.document.createTextNode(code));
+      popup.document.body.appendChild(script);  
+    } catch (e) {
+      popup.alert("Please check your browser's console if you believe you have errors in your code.");
+      script.text = code;
+      popup.document.body.appendChild(script);
+    }
+  }
 
   // Saves document for user and all other editors
   $("#save_new").click(function() {
