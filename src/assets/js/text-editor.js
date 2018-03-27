@@ -1,9 +1,9 @@
 var editor = ace.edit("editor");
+var currentLang = "Javascript";
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/javascript");
 editor.getSession().setValue("Your code here");
 editor.$blockScrolling = Infinity;
-
 $(document).ready(function() {
   // Access the socket
   var socket = io();
@@ -197,7 +197,43 @@ $(document).ready(function() {
   // Document downloading as found from http://cwestblog.com/2014/10/21/javascript-creating-a-downloadable-file-in-the-browser/
   setupDownloadLink = function(link) {
     var code = editor.getValue();
-    link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
+
+    if(currentLang == "Javascript"){
+      link.href = 'data:plain/text;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.js"
+    }
+    else if(currentLang == "C_cpp"){
+      link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.cpp"
+    }
+    else if(currentLang == "Python"){
+      link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.py"
+    }
+    else if(currentLang == "CSharp"){
+      link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.NET"
+    }
+    else if(currentLang == "CSS"){
+      link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.css"
+    }
+    else if(currentLang == "HTML"){
+      link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.html"
+    }
+    else if(currentLang == "Java"){
+      link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.java"
+    }
+    else if(currentLang == "TypeScript"){
+      link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
+      link.download = "MergeableDoc.ts"
+    }
+    else{
+      link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
+    }
+
   };
 
   // Function to change a theme or language
@@ -223,6 +259,7 @@ $(document).ready(function() {
     $("#" + temp).parent().addClass("active");
     // Checks if we wanted to change language (editor mode)
     if (type == "mode") {
+      currentLang = temp;
       editor.session.setMode(file);
       $("#language").html(temp + " <span class='caret'></span>");
     }
