@@ -16,6 +16,7 @@
   },
   "bugs": "https://Github.com/Ben-Wolf/Mergeable/issues",
   "dependencies": {
+    "@types/node": "^9.4.6",
     "bcryptjs": "*",
     "body-parser": "^1.17.1",
     "connect-flash": "*",
@@ -32,7 +33,8 @@
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*",
-    "socket.io": "^1.7.2"
+    "socket.io": "^1.7.2",
+    "typescript": "^2.7.2"
   },
   "license": "MIT"
 }

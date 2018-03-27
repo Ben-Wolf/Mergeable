@@ -1,0 +1,78 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                   <span aria-hidden="true">&times;</span>
+                   <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="registerModalLabel">Register</h4>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">First Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control create-input" id="f_name" name="f_name" placeholder="First Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Last Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control create-input" id="l_name" name="l_name" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control create-input" id="e_mail" name="e_mail" placeholder="Enter email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control create-input" id="pwd" name="pwd" placeholder="Enter password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Confirm Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control create-input" id="pwd2" name="pwd2" placeholder="Confirm password">
+              </div>
+            </div>
+            </form>
+            <a href="#" id="signinModalTrigger" data-toggle="modal" data-target="signin-modal"> Already have an account? Sign in here </a>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-info" id="register">Register</button>
+        </div>
+    </div>
+</div>
+
+<script>
+  // For registering through the register modal
+  $("#register").click(function() {
+    var f_name = $("#f_name").val();
+    var l_name = $("#l_name").val();
+    var e_mail = $("#e_mail").val();
+    var pwd = $("#pwd").val();
+    var pwd2 = $("#pwd2").val();
+    $.post("create",
+      {f_name: f_name, l_name: l_name, e_mail: e_mail, pwd: pwd, pwd2: pwd2})
+      .then(function(response) {
+        if (response.err == 0) {
+          $("#register-modal").modal("hide");
+        } else if (response.err == 1) {
+          alert(response.errors[0].msg);
+        } else if (response.err == 3) {
+          alert ("Email already exists in system");
+        }
+      });
+  });
+</script>

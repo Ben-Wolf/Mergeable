@@ -21,6 +21,10 @@ var userSchema = mongoose.Schema({
   documents: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Document'
+  },
+  sharedDocuments: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Document'
   }
 });
 
