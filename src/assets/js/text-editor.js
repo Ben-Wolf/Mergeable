@@ -1,5 +1,6 @@
 var editor = ace.edit("editor");
 var currentLang = "Javascript";
+var saved_title = "MergeableDoc";
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/javascript");
 editor.getSession().setValue("Your code here");
@@ -162,6 +163,7 @@ $(document).ready(function() {
 
   // Saves document for user and all other editors
   $("#save_new").click(function() {
+    saved_title = $("#title").val();
     var title = $("#title").val();
     var description = $("#description").val();
     var file = editor.getValue();
@@ -200,35 +202,35 @@ $(document).ready(function() {
 
     if(currentLang == "Javascript"){
       link.href = 'data:plain/text;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.js"
+      link.download = saved_title + ".js"
     }
     else if(currentLang == "C_cpp"){
       link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.cpp"
+      link.download = saved_title + ".cpp"
     }
     else if(currentLang == "Python"){
       link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.py"
+      link.download = saved_title + ".py"
     }
     else if(currentLang == "CSharp"){
       link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.NET"
+      link.download = saved_title + ".NET"
     }
     else if(currentLang == "CSS"){
       link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.css"
+      link.download = saved_title + ".css"
     }
     else if(currentLang == "HTML"){
       link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.html"
+      link.download = saved_title + ".html"
     }
     else if(currentLang == "Java"){
       link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.java"
+      link.download = saved_title + ".java"
     }
     else if(currentLang == "TypeScript"){
       link.href = 'data:text/octet-stream;charset=utf-8,' + encodeURIComponent(code);
-      link.download = "MergeableDoc.ts"
+      link.download = saved_title + ".ts"
     }
     else{
       link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
