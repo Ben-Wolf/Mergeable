@@ -1,5 +1,6 @@
 var delete_document;
 var baseUrl = "http://localhost:8080";
+var docID;
 
 $(document).ready(function() {
   var img = "";
@@ -15,6 +16,7 @@ $(document).ready(function() {
 
   // Edit document details
   edit_details = function(id) {
+    docID = id;
     $.post(baseUrl +"/get_doc_info", {id: id})
     .then(function(data) {
       $("#documentName").attr('placeholder', data.title);
@@ -34,7 +36,21 @@ $(document).ready(function() {
 
   // Update a document after editing document details
   $("#updateDocument").click(function() {
-
+    var name = $("#documentName").val();
+    var description = $("#documentDescription").val();
+    var editors = $("#editors").val();
+    var hidden = document.getElementById('private').checked;
+    var args = {};
+    console.log(docID);
+    args.id = docID;
+    args.name = name;
+    args.description = description;
+    args.editors = editors;
+    args.hidden = hidden;
+    $.post(baseUrl + "/update_doc_info", args)
+    .then(function(response) {
+      window.location.reload();
+    });
   });
 
   // Populate the user profile page with all the saved and shared documents, propic, name and description.

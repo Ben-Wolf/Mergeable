@@ -234,6 +234,34 @@ module.exports = function(app, io) {
     })
   });
 
+  app.post('/update_doc_info', function(req, res) {
+    var title = req.body.name;
+    var description = req.body.description;
+    var otherEditors = req.body.editors;
+    var hidden = req.body.hidden;
+    var id = req.body.id;
+
+    Document.findById(id, function(err, doc) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (doc) {
+          doc.title = title;
+          doc.description = description;
+          doc.hidden = hidden;
+          doc.save(function(err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("Updated document successfully!");
+              return res.status(200).send();
+            }
+          });
+        }
+      }
+    })
+  });
+
   app.get('/profile', function(req, res) {
     // Move to user_profile
     res.redirect('/user_profile-' + userid);
