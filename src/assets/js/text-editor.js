@@ -1,15 +1,50 @@
 var editor = ace.edit("editor");
 var currentLang = "Javascript";
+var baseUrl = "http://localhost:8080";
 var saved_title = "MergeableDoc";
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/javascript");
 editor.getSession().setValue("Your code here");
 editor.$blockScrolling = Infinity;
+
+
 $(document).ready(function() {
   // Access the socket
   var socket = io();
   var id = getID(window.location.pathname);
   var holder = 0;
+
+  var callSave = function() {
+    var title = $("#title").val();
+    var description = $("#description").val();
+    var file = editor.getValue();
+    var otherEditors = $("#additionalEditors").val();
+    var mode = editor.session.$modeId;
+    var hidden = ($('#private').is(':checked'));
+    mode = mode.substr(mode.lastIndexOf('/') + 1);
+
+    $.post(baseUrl + "/save_new",
+          {title: title, otherEditors: otherEditors, description: description, file: file, language: mode, hidden: hidden})
+          .then(function(data) {
+            if (data.err == 0) {
+              $("#savedAlert").modal("show");
+              $('#savedoc-modal').modal('hide');
+            }
+            else {
+              $("#titleAlert").modal("show");
+            }
+          })
+          .fail(function() {
+            $("#signin-modal").modal('show');
+          });
+  }
+
+  // Load in all our modals
+  $("#titleAlert").load("html/text-editor/title-alert.html");
+  $("#savedAlert").load("html/text-editor/saved-alert.html");
+  $("#signinAlert").load("html/text-editor/signin-alert.html");
+  $("#registerAlert").load("html/text-editor/register-alert.html");
+  // $("#signinModal").load("html/signin-modal.html");
 
   // Updates editor info if trying to load a document
   if (id.length > 10) {
@@ -213,7 +248,7 @@ $(document).ready(function() {
     var hidden = ($('#private').is(':checked'));
     mode = mode.substr(mode.lastIndexOf('/') + 1);
 
-    $.post("http://localhost:8080/save_new",
+    $.post(baseUrl + "/save_new",
           {title: title, otherEditors: otherEditors, description: description, file: file, lang: mode, hidden: hidden})
           .then(function(data) {
             if (data.err == 0)
@@ -230,7 +265,7 @@ $(document).ready(function() {
       var mode = editor.session.$modeId;
       mode = mode.substr(mode.lastIndexOf('/') + 1);
 
-      $.post("http://localhost:8080/save", {id: id, file: file, lang: mode})
+      $.post(baseUrl + "/save", {id: id, file: file, lang: mode})
       .then(function(data) {
         window.location.href = "/editor-" + data;
       });
