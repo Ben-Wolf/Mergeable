@@ -261,8 +261,18 @@ $(document).ready(function() {
     $("#" + temp).parent().addClass("active");
     // Checks if we wanted to change language (editor mode)
     if (type == "mode") {
-      currentLang = temp;
       editor.session.setMode(file);
+      // Change label of certain languages
+      switch(temp) {
+        case "CSharp":
+          temp = "C#";
+          break;
+        case "C_cpp":
+          temp = "C++";
+          break;
+        default:
+          break;
+      }
       $("#language").html(temp + " <span class='caret'></span>");
     }
     // Checks if we wanted to change theme (editor theme)
