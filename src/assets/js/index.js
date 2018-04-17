@@ -42,6 +42,8 @@ function isValid(email) {
 
 $(document).ready(function() {
 
+  $("#loginAlert").load("html/login-alert.html");
+
   function callLogin() {
     var email = $("#email").val();
     var password = $("#pass").val();
@@ -50,7 +52,7 @@ $(document).ready(function() {
       if (data.err == 0)
         window.location.href = data.redirectUrl;
       else {
-        $('#loginerror-modal').modal();
+        $('#loginAlert').modal();
       }
     });
   }
