@@ -150,16 +150,57 @@ $(document).ready(function() {
   });
 
   $("#run").click(function() {
-    var code = editor.getValue();
-    alert($("#JavaScript").hasClass("active"));
-    if ($("#JavaScript").hasClass("active")) {
-      alert(eval(code));
-    }
+    var code = editor.getValue();      
+    var popup = window.open("", "_blank");
+    var language = editor.session.getMode()["$id"].replace("ace/mode/","");
+    switch(language) {
+        case "csharp":
+          console.log(language);
+          break;
+        case "css":
+          runCSSOrHTML(code, popup);      
+          break;
+        case "html":
+          runCSSOrHTML(code, popup);
+          break;
+        case "java":
+          console.log(language);
+          break;
+        case "python":
+          console.log(language);
+          break;
+        case "typescript":
+          console.log(language);
+          require(['typescript'], function() {
+            var result = ts.transpileModule(code, {compilerOptions: {module: ts.ModuleKind.CommonJS}});
+            popup.document.body.onload = runJavascript(result["outputText"], popup);
+          });      
+          break;
+        case "c_cpp":
+          console.log(language);
+          break;
+        default: // javascript
+          popup.document.body.onload = runJavascript(code, popup);      
+          break;    
+      }
+    });
 
-    else {
-      alert("Currently only supports JavaScript");
+  function runCSSOrHTML(code, popup) {
+    var info = String(editor.getValue());
+    popup.document.write(info);
+  }
+  
+  function runJavascript(code, popup) {
+    var script = popup.document.createElement('script');        
+    try {
+      script.appendChild(popup.document.createTextNode(code));
+      popup.document.body.appendChild(script);  
+    } catch (e) {
+      popup.alert("Please check your browser's console if you believe you have errors in your code.");
+      script.text = code;
+      popup.document.body.appendChild(script);
     }
-  });
+  }
 
   // Saves document for user and all other editors
   $("#save_new").click(function() {
@@ -261,6 +302,7 @@ $(document).ready(function() {
     $("#" + temp).parent().addClass("active");
     // Checks if we wanted to change language (editor mode)
     if (type == "mode") {
+      currentLang = temp;
       editor.session.setMode(file);
       // Change label of certain languages
       switch(temp) {
