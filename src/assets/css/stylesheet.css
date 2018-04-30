@@ -1,7 +1,8 @@
 body {
-  background-color: rgb(40,40,50);
+  /* background-color: rgb(40,40,50); */
+  color: black;
   font-size: 100%;
-  font-family: Monaco, monospace;
+  font-family: Helvetica, Monaco, monospace;
 }
 
 /*Logo*/
@@ -27,24 +28,45 @@ h5 {
   width: 100%;
   text-align: center;
   bottom: 0px;
-  color: rgb(220,220,220);
-  background-color: rgb(60,60,70);
+  color: white;
+  background-color: #242423;
 }
 
 /*Main Page*/
-.btn.homepage {
-  font-size: 4.3em;
-}
-
-.buttons {
-  padding-top: 30px;
-  padding-right: 52px;
-  float: right;
-}
-
 .form-group {
   text-align: center;
   padding-bottom: 5px;
+}
+
+.navbar .container-fluid {
+  background-color: white;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+
+.navbar-brand img {
+  width: 12.609em;
+  height: 3em;
+}
+
+.navbar-default .navbar-nav li a {
+  color: black;
+  font-size: 2.5em;
+  padding: 1.1em 0 1.1em 1.1em;
+
+}
+
+.navbar-fixed-bottom {
+  background-color: #242423;
+  height: 5%;
+}
+
+.navbar-header {
+  height: 7.5em;
+}
+
+.navbar-right {
+  margin: 0;
 }
 
 /*Main Page Numbering*/
@@ -56,12 +78,18 @@ h5 {
   padding-left: 15px;
 }
 
-#page1, #page2, #page3 {
-  height: 100vh;
+#page1 img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  height: 95%;
 }
 
-#page2, #page3 {
-  padding-top: 10px;
+#page1, #page2, #page3 {
+  height: 100vh;
+  background-color: #f0f0f0;
+  padding-top: 7.5em;
 }
 
 /* Start by setting display:none to make this hidden.
