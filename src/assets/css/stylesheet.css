@@ -1,35 +1,27 @@
 body {
-  /* background-color: rgb(40,40,50); */
+  background-color: #f0f0f0;  
   color: black;
   font-size: 100%;
   font-family: Helvetica, Monaco, monospace;
 }
 
-/*Logo*/
-h1 {
-  padding-top: 90px;
-  padding-left: 30px;
-  text-align: left;
-  font-size: 15em;
-  color: rgb(220,220,220);
-}
-
-/*Sign In Header*/
+/*Sign In and Account Creation Headers*/
 h2 {
-  padding-top: 0.6em;
+  color: black;
+  font-family: Helvetica, Monaco, monospace;
   font-size: 7em;
+  padding-top: 0.6em;
   text-align: center;
-  color: rgb(220,220,220);
 }
 
 /*Project Info and Names On Bottom*/
 h5 {
-  position: fixed;
-  width: 100%;
-  text-align: center;
   bottom: 0px;
   color: white;
-  background-color: #242423;
+  font-family: Helvetica, Monaco, monospace;
+  position: fixed;
+  text-align: center;
+  width: 100%;
 }
 
 /*Main Page*/
@@ -52,7 +44,7 @@ h5 {
 .navbar-default .navbar-nav li a {
   color: black;
   font-size: 2.5em;
-  padding: 1.1em 0 1.1em 1.1em;
+  padding: 1.1em 0.54em 1.1em 0.56em;
 
 }
 
@@ -69,13 +61,25 @@ h5 {
   margin: 0;
 }
 
-/*Main Page Numbering*/
-.numbering {
-  color: rgb(150,150,150)
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+  color: #fd817c;
+  background-color: #e7e7e7;
 }
 
-.tab {
-  padding-left: 15px;
+/*Main Page Numbering*/
+.btn-info, .btn-info:hover {
+  background-color: #fd817c;
+  border-color: #fd817c;
+}
+
+#create_account_btn {
+  color: white;
+  margin: 0.56em;
+  padding: 0.5em;
+}
+
+#create_account_btn:hover {
+  color: #fd817c;
 }
 
 #page1 img {
