@@ -54,6 +54,7 @@ $(document).ready(function() {
       var file = data.file;
       var lang = data.lang;
       if (data.permission) {
+        console.log(data);
         editor.getSession().setValue(file);
         $("#fileTitle").html(title);
         change(lang, "mode", languages);
@@ -185,7 +186,7 @@ $(document).ready(function() {
   });
 
   $("#run").click(function() {
-    var code = editor.getValue();      
+    var code = editor.getValue();
     var popup = window.open("", "_blank");
     var language = editor.session.getMode()["$id"].replace("ace/mode/","");
     switch(language) {
@@ -193,7 +194,7 @@ $(document).ready(function() {
           console.log(language);
           break;
         case "css":
-          runCSSOrHTML(code, popup);      
+          runCSSOrHTML(code, popup);
           break;
         case "html":
           runCSSOrHTML(code, popup);
@@ -209,14 +210,14 @@ $(document).ready(function() {
           require(['typescript'], function() {
             var result = ts.transpileModule(code, {compilerOptions: {module: ts.ModuleKind.CommonJS}});
             popup.document.body.onload = runJavascript(result["outputText"], popup);
-          });      
+          });
           break;
         case "c_cpp":
           console.log(language);
           break;
         default: // javascript
-          popup.document.body.onload = runJavascript(code, popup);      
-          break;    
+          popup.document.body.onload = runJavascript(code, popup);
+          break;
       }
     });
 
@@ -224,12 +225,12 @@ $(document).ready(function() {
     var info = String(editor.getValue());
     popup.document.write(info);
   }
-  
+
   function runJavascript(code, popup) {
-    var script = popup.document.createElement('script');        
+    var script = popup.document.createElement('script');
     try {
       script.appendChild(popup.document.createTextNode(code));
-      popup.document.body.appendChild(script);  
+      popup.document.body.appendChild(script);
     } catch (e) {
       popup.alert("Please check your browser's console if you believe you have errors in your code.");
       script.text = code;
@@ -244,22 +245,22 @@ $(document).ready(function() {
     var description = $("#description").val();
     var file = editor.getValue();
     var otherEditors = $("#additionalEditors").val();
-    var mode = editor.session.$modeId;
+    var language = editor.session.$modeId;
     var hidden = ($('#private').is(':checked'));
-    mode = mode.substr(mode.lastIndexOf('/') + 1);
+    language = language.substr(language.lastIndexOf('/') + 1);
 
     $.post(baseUrl + "/save_new",
-          {title: title, otherEditors: otherEditors, description: description, file: file, lang: mode, hidden: hidden})
+          {title: title, otherEditors: otherEditors, description: description, file: file, language: language, hidden: hidden})
           .then(function(data) {
             if (data.err == 0)
-              alert("Document Saved");
+              $('#savedAlert').modal('show');
               $('#savedoc-modal').modal('hide');
           });
   });
 
   // Updates a previously saved document
   $("#save").click(function() {
-    if(id.length < 10) alert("Document can't be updated. Please 'Save As' first.");
+    if(id.length < 10) $('#savedoc-modal').modal('show');
     else {
       var file = editor.getValue();
       var mode = editor.session.$modeId;
@@ -267,6 +268,7 @@ $(document).ready(function() {
 
       $.post(baseUrl + "/save", {id: id, file: file, lang: mode})
       .then(function(data) {
+      $('#savedAlert').modal('show');
         window.location.href = "/editor-" + data;
       });
     }

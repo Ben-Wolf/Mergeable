@@ -469,6 +469,8 @@ module.exports = function(app, io) {
       hidden: hidden
     });
 
+    console.log("Creating\n", newDocument);
+
     req.checkBody('title', 'Document name is required').notEmpty();
     var errors = req.validationErrors();
 

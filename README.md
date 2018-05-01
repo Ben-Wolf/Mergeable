@@ -8,8 +8,8 @@ From there we would like to focus on creating the method of designing and implem
 
 Mergeable is a website that hosts account creation and collaborative document editing through Ace's text-editor.
 
+![Mergeable Homepage](src/assets/images/index.png)
 ![Mergeable Accounts](src/assets/images/account.png)
-![Mergeable Example](src/assets/images/text-editor.png)
 
 In order to run Mergeable locally:
 
@@ -30,7 +30,7 @@ In order to run Mergeable locally:
 * Keep all new code well commented and adhere to style guides
 * Create [blog posts](https://rcos.io/projects/ben-wolf/mergeable/blog) whenever a big update is made
 
-### Milestone 1: Functionality - Goal 3/20
+### Milestone 1: Functionality - Goal 3/20 ! Completed
 * Run code in the browser
 * Ability to download documents
 * Fix existing bugs (normalize capitalization, and what is account specific/shared)
@@ -46,7 +46,7 @@ In order to run Mergeable locally:
 * Workshop grading, design and implementation
 * Look into deploying, and having a running instance -- Find more issues after
 
-### Milestone 3: Aesthetic/Design - Goal 2/25
+### Milestone 3: Aesthetic/Design - Goal 2/25 ! Completed
 * More freeform, design a friendly and welcoming aesthetic direction for the project
 * This will require updating the HTML/CSS and JS behind all existing pages
 * Change Welcome page

@@ -1,5 +1,5 @@
 body {
-  background-color: #f0f0f0;  
+  background-color: #f0f0f0;
   color: black;
   font-size: 100%;
   font-family: Helvetica, Monaco, monospace;
@@ -92,7 +92,7 @@ a, a:hover {
   border-color:  #ff564f;
 }
 
-#page1 .mySlides img {  
+#page1 .mySlides img {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -115,12 +115,12 @@ a, a:hover {
 }
 
 @-webkit-keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
 
 @keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
 
@@ -174,4 +174,8 @@ body.loading {
    modal element will be visible */
 body.loading .loadal {
     display: block;
+}
+
+.glyphicon {
+  font-size: 20px;
 }
