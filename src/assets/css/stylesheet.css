@@ -24,6 +24,10 @@ h5 {
   width: 100%;
 }
 
+a, a:hover {
+  color: #fd817c;
+}
+
 /*Main Page*/
 .form-group {
   text-align: center;
@@ -82,18 +86,56 @@ h5 {
   color: #fd817c;
 }
 
-#page1 img {
+#page1 .mySlides img {  
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
-  height: 95%;
+  width: 60%;
+  height: 85%;
 }
 
 #page1, #page2, #page3 {
   height: 100vh;
   background-color: #f0f0f0;
   padding-top: 7.5em;
+}
+
+/* Fading animation */
+.slide-fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* The dots/bullets/indicators */
+.dots {
+  text-align: center;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #fd817c;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #ff564f;
 }
 
 /* Start by setting display:none to make this hidden.
