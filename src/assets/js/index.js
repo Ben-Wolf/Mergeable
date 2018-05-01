@@ -1,5 +1,6 @@
 var logo = "Mergeable"
 var i = 0;
+var slideIndex = 1;
 
 function cursorAnimation() {
     $('#cursor').animate({
@@ -9,17 +10,37 @@ function cursorAnimation() {
     }, 'slow', 'swing');
 }
 
-function showButtons() {
-  $(".buttons").fadeIn();
+// Shows image slide depending on what dot the user clicks on.
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
 }
 
 function type() {
   $('#logo').html(logo.substr(0, i++));
   if (i < 10) {
     setTimeout(type, 100)
-  }
-  if (i==10) {
-    setTimeout(showButtons, 100)
   }
 }
 
@@ -79,7 +100,6 @@ $(document).ready(function() {
       });
   }
 
-  $(".buttons").hide();
   $("#page2").hide();
   $("#page3").hide();
   type();
@@ -134,11 +154,11 @@ $(document).ready(function() {
     callCreate();
   });
 
-$(".create-input").keypress(function(e) {
-  if (e.which == 13) {
-    callCreate();
-  }
-});
+  $(".create-input").keypress(function(e) {
+    if (e.which == 13) {
+      callCreate();
+    }
+  });
 
 
   //End of document ready

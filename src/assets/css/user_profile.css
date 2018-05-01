@@ -1,3 +1,7 @@
+.user-info {
+  padding-top: 7.5em;
+}
+
 h2 {
   text-align: left;
   font-size: 50px;
@@ -10,11 +14,11 @@ h2 {
   margin-top: 80px;
   margin-left: 20px;
   width: 300px;
-  color: rgb(220,220,220);
+  color: black;
   text-align: center;
 }
 
-#saved{
+#saved {
   margin-left: 350px;
   margin-top: 80px;
   width: 900px;
