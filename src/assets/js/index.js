@@ -10,10 +10,6 @@ function cursorAnimation() {
     }, 'slow', 'swing');
 }
 
-function showButtons() {
-  $(".buttons").fadeIn();
-}
-
 // Shows image slide depending on what dot the user clicks on.
 showSlides(slideIndex);
 
@@ -45,9 +41,6 @@ function type() {
   $('#logo').html(logo.substr(0, i++));
   if (i < 10) {
     setTimeout(type, 100)
-  }
-  if (i==10) {
-    setTimeout(showButtons, 100)
   }
 }
 
@@ -107,7 +100,6 @@ $(document).ready(function() {
       });
   }
 
-  $(".buttons").hide();
   $("#page2").hide();
   $("#page3").hide();
   type();

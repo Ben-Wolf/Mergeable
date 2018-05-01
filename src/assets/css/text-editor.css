@@ -1,9 +1,17 @@
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav li a {
-    color: black;
+    font-size: 1.5em;
+}
+
+.navbar, .navbar-inverse .container-fluid {
+    background-color: #242423;    
+    margin: 0;
+}
+.navbar-header, .navbar-nav {
+    padding-top: 12.5px;
 }
 
 #editor {
     position: absolute;
-    width: 1500px;
+    width: 100%;
     height: 800px;
 }

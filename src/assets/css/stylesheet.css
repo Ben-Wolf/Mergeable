@@ -34,6 +34,7 @@ a, a:hover {
   padding-bottom: 5px;
 }
 
+/*Header and Footer*/
 .navbar .container-fluid {
   background-color: white;
   padding-left: 3em;
@@ -71,9 +72,13 @@ a, a:hover {
 }
 
 /*Main Page Numbering*/
-.btn-info, .btn-info:hover {
+.btn-info {
   background-color: #fd817c;
   border-color: #fd817c;
+}
+.btn-info:hover, .btn-info:active:hover {
+  border-color: #fd817c;
+  background-color: #ff564f;
 }
 
 #create_account_btn {
@@ -83,7 +88,8 @@ a, a:hover {
 }
 
 #create_account_btn:hover {
-  color: #fd817c;
+  color: #ff564f;
+  border-color:  #ff564f;
 }
 
 #page1 .mySlides img {  
